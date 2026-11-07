@@ -13,6 +13,12 @@ An offline Windows editor for GameSir G7 8K stream overlays, with an editable ne
 No Node.js, account, or internet connection is required to run the downloaded app.
 See [START-HERE.txt](START-HERE.txt) for OBS setup and input limitations.
 
+## Customize your design
+
+Use the five sections on the left: **Shell**, **Buttons**, **Artwork**, **Effects** and **Layout**. Only the section you need is shown. In Buttons, click a control on the preview to select it. Fine position and ambient settings stay under expandable controls. **Export & OBS** opens the export/setup dialog.
+
+Artwork includes eight offline fonts: Rajdhani, Orbitron, Oxanium, Teko, Bebas Neue, Barlow Condensed, Montserrat and Inter. Choose **Fonts on this computer** to browse installed Windows font families. Included fonts are embedded in exported HTML; system fonts must be installed on the computer displaying the overlay. The original system font is retained when opening older projects.
+
 ## Included
 
 - Neutral starting design, custom text and PNG/JPEG logo import.
@@ -21,11 +27,13 @@ See [START-HERE.txt](START-HERE.txt) for OBS setup and input limitations.
 - Gamepad base color, accent and pressed-input colors, breathing glow and input previews.
 - Individual resting and pressed colors for every button, D-pad direction, stick cap and trigger.
 - Special effects menu: rainbow accents, neon pulse and reactive input flash.
-- Clean vector Home pressed emblem clipped inside its button face.
+- Clean vector Home pressed emblem and complete, seam-aligned LB/RB colors.
+- Red/charcoal interface with a focused inspector, keyboard navigation and one export dialog.
+- Curated offline font library plus Windows installed-font discovery.
 - Project files, autosave, undo/redo, HTML and transparent PNG export.
 - Standard gamepad input forwarded to OBS through a local bridge.
 
-Use **Send to OBS** and add `http://127.0.0.1:18777/overlay` as a Browser Source at **1672 × 1241**. Keep the editor running. After publishing changes, refresh the OBS source.
+Use **Export & OBS → Create / update OBS URL** and add `http://127.0.0.1:18777/overlay` as a Browser Source at **1672 × 1241**. Keep the editor running. After publishing changes, refresh the OBS source.
 
 ## Early build status
 
@@ -36,3 +44,5 @@ Browser editor/export tests and a mocked desktop bridge test passed in the devel
 Install Node.js 22+, then run `npm ci` and `npm start`. Build a Windows ZIP with `npm run build:win`. See [DEVELOPMENT.md](DEVELOPMENT.md) for architecture and provenance.
 
 The Cudi artwork was supplied for this project. No license granting public reuse or redistribution of the artwork is asserted.
+
+The interface is independently built, with visual direction inspired by [GameSir](https://gamesir.com/). Overlay Studio is not an official GameSir application. Included font sources and redistribution licenses are in [app/fonts/licenses](app/fonts/licenses).

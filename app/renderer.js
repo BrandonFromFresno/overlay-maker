@@ -1,4 +1,11 @@
-async function createOverlayRenderer(canvas, assets) {
+async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
+ await Promise.all(Object.entries(fontAssets).map(async([family,record])=>{
+  const alias='OSL '+family;
+  const existing=Array.from(document.fonts).find(face=>face.family.replaceAll('"','')===alias);
+  if(existing){await existing.loaded;return;}
+  const face=new FontFace(alias,`url("${record.source}")`,{weight:record.weight});
+  document.fonts.add(face);await face.load();
+ }));
  const images = {};
  await Promise.all(Object.entries(assets).map(async ([key, src]) => {
   const image = new Image(); image.src = src; await image.decode(); images[key] = image;
@@ -24,8 +31,24 @@ async function createOverlayRenderer(canvas, assets) {
    fill: node.getAttribute('fill') !== 'none', stroke: node.hasAttribute('stroke'), width: +(node.getAttribute('stroke-width') || 3)
   }))};
  }
+ // Match each bumper to the actual visible shoulder, including the upper lip.
+ // Its top edge follows the shell alpha; the lower edge follows the shell seam.
+ const outlineCanvas=document.createElement('canvas');outlineCanvas.width=1672;outlineCanvas.height=941;
+ const outlineContext=outlineCanvas.getContext('2d',{willReadFrequently:true});outlineContext.drawImage(images.base,0,0,1672,941);
+ const alpha=outlineContext.getImageData(0,0,1672,180).data;
+ for(const [key,start,end] of [['LB',310,640],['RB',1032,1362]]){
+  const path=new Path2D();let started=false;
+  for(let x=start;x<=end;x++){
+   let y=0;while(y<180&&alpha[(y*1672+x)*4+3]<128)y++;
+   if(y===180)continue;
+   if(!started){path.moveTo(x,y);started=true;}else path.lineTo(x,y);
+  }
+  if(key==='LB'){path.lineTo(640,49);path.quadraticCurveTo(440,45,310,121);}
+  else{path.lineTo(1362,121);path.quadraticCurveTo(1232,45,1032,49);}
+  path.closePath();faces[key].path=path;
+ }
  let logo = null, logoSrc = '', tintColor = '', lastActive = -Infinity;
- const tinted = {}, capCache = new Map();
+ const tinted = {}, capCache = new Map(), shoulderCache = new Map();
  function tint(image, color, width, height) {
   const c = document.createElement('canvas'); c.width = width; c.height = height;
   const g = c.getContext('2d'); g.drawImage(image, 0, 0, width, height);
@@ -65,7 +88,7 @@ async function createOverlayRenderer(canvas, assets) {
   ctx.save(); ctx.clip(f.path);
   const gradient=ctx.createLinearGradient(x,y-55,x,y+65);
   gradient.addColorStop(0,mix(color,'#ffffff',pressed?.24:.08)); gradient.addColorStop(1,mix(color,'#000000',.12));
-  ctx.fillStyle=gradient; ctx.fill(f.path);
+  if(key==='LB'||key==='RB'){if(!shoulderCache.has(color)){if(shoulderCache.size>=4)shoulderCache.clear();shoulderCache.set(color,tint(images.base,color,1672,941));}ctx.drawImage(shoulderCache.get(color),0,0);}else{ctx.fillStyle=gradient;ctx.fill(f.path);}
   ctx.strokeStyle=mix(color,'#000000',.5); ctx.lineWidth=2; ctx.stroke(f.path);
   if (pressed) {
    ctx.translate(x,y);
@@ -94,6 +117,7 @@ async function createOverlayRenderer(canvas, assets) {
   if(pressure)label(right?'RT':'LT',right?1180:457,162,29,mix(pressed,'#000000',.7));
  }
  return {
+  hitTest(x,y){for(const key of faceKeys)if(ctx.isPointInPath(faces[key].path,x,y))return key;if(Math.hypot(x-456,y-290)<90)return 'LSB';if(Math.hypot(x-1033,y-523)<90)return 'RSB';if(y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
   async setLogo(src) {if(src===logoSrc)return;logoSrc=src;logo=null;if(src){const image=new Image();image.src=src;await image.decode();if(logoSrc===src)logo=image;}},
   draw(p,state={},time=0,peak=false) {
    const colors=p.buttonColors||{}, color=(key,which)=>colors[key]?.[which]||(which==='rest'?(p.baseColor||'#ffffff'):p.pressed);
@@ -117,7 +141,7 @@ async function createOverlayRenderer(canvas, assets) {
    if(p.mode!=='original') {
     lc.clearRect(0,0,1672,941);lc.save();lc.translate(p.x,p.y);lc.rotate(p.angle*Math.PI/180);
     if(p.mode==='logo'&&logo){const h=p.size*logo.height/logo.width;lc.drawImage(logo,-p.size/2,-h/2,p.size,h);}
-    else{lc.fillStyle=accent;lc.font=`italic 900 ${Math.round(p.size/3.5)}px Segoe UI, Arial, sans-serif`;lc.textAlign='center';lc.textBaseline='middle';lc.fillText(p.text,0,0,p.size);}
+    else{lc.fillStyle=accent;lc.font=`${(p.fontItalic??true)?"italic ":""}${p.fontWeight||900} ${Math.round(p.size/3.5)}px ${JSON.stringify((p.fontSource==='library'?'OSL ':'')+(p.fontFamily||'Segoe UI'))}, Arial, sans-serif`;lc.textAlign='center';lc.textBaseline='middle';lc.fillText(p.text,0,0,p.size);}
     lc.restore();lc.globalCompositeOperation='destination-in';lc.drawImage(images.base,0,0,1672,941);lc.drawImage(images.clearance,0,0,1672,941);lc.globalCompositeOperation='source-over';
     ctx.save();ctx.globalAlpha=strength;ctx.shadowColor=accent;ctx.shadowBlur=glow*strength;ctx.drawImage(layer,0,0);ctx.restore();
    }

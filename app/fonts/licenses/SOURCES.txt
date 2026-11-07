@@ -1,0 +1,10 @@
+Bundled fonts downloaded from the Google Fonts repository. Each family retains its SIL Open Font License and copyright notice in this directory. No fonts are required to be downloaded at runtime.
+
+https://github.com/google/fonts/tree/main/ofl/rajdhani
+https://github.com/google/fonts/tree/main/ofl/orbitron
+https://github.com/google/fonts/tree/main/ofl/oxanium
+https://github.com/google/fonts/tree/main/ofl/teko
+https://github.com/google/fonts/tree/main/ofl/bebasneue
+https://github.com/google/fonts/tree/main/ofl/barlowcondensed
+https://github.com/google/fonts/tree/main/ofl/montserrat
+https://github.com/google/fonts/tree/main/ofl/inter

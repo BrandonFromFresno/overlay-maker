@@ -1,4 +1,4 @@
-# Overlay Studio 0.3.0
+# Overlay Studio 0.4.0
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -74,3 +74,31 @@ drawn synchronously with Canvas/Path2D. Home uses a new circular emblem with a
 single X silhouette, inset inside the face to preserve its chrome rim. The
 renderer no longer creates asynchronously recolored button images each frame.
 Effects use the existing animation loop, without network assets or libraries.
+
+## Inspector, bumper coverage and fonts
+
+`node ui-fonts-shoulders-test.cjs` (app/ served at port 8766) checks full LB/RB
+rest/press coverage and independent colors, transparent shoulders, click picking,
+keyboard tabs, eight bundled fonts, installed-font picker, font project data,
+licensed embedded-font export, dialog focus/Escape and responsive widths.
+Existing browser tests were updated for the inspector tabs and export dialog.
+
+Bumper top contours follow the base alpha; lower contours follow the shell
+seams. Their clipped fills reuse the textured base rather than an incomplete
+front-face polygon. Hit tests use these same paths.
+
+Included fonts come from the official Google Fonts repository. Original SIL
+Open Font Licenses/copyright notices and source URLs accompany every family in
+app/fonts/licenses and the exported font record. Renderer-only CSS aliases
+(OSL prefix) distinguish included fonts from identically named system fonts.
+Only the chosen included family is embedded in an HTML export. Font choices
+are schema-validated and optional for backward-compatible version-1 projects.
+
+The main process lists Windows font family names through a fixed, noninteractive
+PowerShell/System.Drawing command, UTF-8 output and a 15-second timeout. No
+user text is interpolated into the command and font files are not read or copied.
+The bridge test calls this handler and requires nonempty discovery on Windows.
+Other development platforms retain the common-font fallback list.
+
+Visual direction reference: https://gamesir.com/. Overlay Studio retains its
+own branding; the interface does not claim official GameSir affiliation.

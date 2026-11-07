@@ -1,4 +1,4 @@
-OVERLAY STUDIO — EARLY WINDOWS BUILD (0.3.0)
+OVERLAY STUDIO — EARLY WINDOWS BUILD (0.4.0)
 
 1. Extract the ENTIRE ZIP into a folder on your Windows x64 computer.
 2. Open Overlay Studio.exe. Keep all of the adjacent files and folders.
@@ -14,10 +14,10 @@ OVERLAY STUDIO — EARLY WINDOWS BUILD (0.3.0)
 6. Save project to keep an editable .overlay file with its artwork embedded.
 
 OBS
-Choose Send to OBS. Add a Browser Source with this URL:
+Choose Export & OBS, then Create / update OBS URL. Add a Browser Source with this URL:
 http://127.0.0.1:18777/overlay
 Set Width 1672 and Height 1241. Keep Overlay Studio running.
-After updating the design, choose Send to OBS again, then refresh the source
+After updating the design, create/update the URL again, then refresh the source
 in OBS. Turn off "Shutdown source when not visible" if you want the connection
 to stay open between scenes.
 
@@ -72,3 +72,20 @@ Reactive flash is clipped to the shell and fades over 600 ms after release.
 Effects are applied by the same renderer in preview, OBS, HTML and PNG exports.
 PNG exports remain still images. Re-send to OBS and refresh the source after
 changing your design. Old projects inherit the global colors with effects off.
+
+NEW MENU AND FONT LIBRARY
+Shell: main base/accent/input colors.
+Buttons: individual colors; click a button on the preview to select it.
+Artwork: text/logo, font library or installed fonts, weight, italic, size/angle.
+Effects: rainbow/neon/reactive, with ambient settings under the disclosure.
+Layout: grab-to-move controls, centering, and optional precise coordinates.
+Project options holds the New neutral design button.
+Export & OBS opens the OBS setup, HTML export and PNG export dialog.
+
+Included offline fonts: Rajdhani, Orbitron, Oxanium, Teko, Bebas Neue,
+Barlow Condensed, Montserrat and Inter. Their SIL Open Font Licenses are
+included under resources/app.asar (app/fonts/licenses in the source).
+The selected included font is embedded with its license in exported HTML.
+Windows installed-font discovery reads family names using System.Drawing.
+System fonts are used locally and are not copied into the export: install the
+same font on other computers before displaying that overlay there.
