@@ -25,6 +25,7 @@ jobs:
           node --check app/studio.js
           node --check app/renderer.js
           node --check app/fonts.js
+          node --check app/presets.js
       - name: Test local OBS bridge
         run: node bridge-test.cjs
       - name: Build Windows x64 ZIP

@@ -1,4 +1,4 @@
-# Overlay Studio 0.4.0
+# Overlay Studio 0.5.0
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -102,3 +102,24 @@ Other development platforms retain the common-font fallback list.
 
 Visual direction reference: https://gamesir.com/. Overlay Studio retains its
 own branding; the interface does not claim official GameSir affiliation.
+
+## Independent shell, effects and preset tests
+
+`node shell-presets-test.cjs` checks shell/default color isolation across all
+19 existing controls at rest and pressed, seven new animated shell-only effects,
+seven protected patterns, all 16 presets, keep-artwork/font behavior, preserved
+layout, Undo, legacy migration, persistence, responsive menus and standalone HTML.
+
+The renderer derives a control protection mask from the actual button paths,
+bumpers, chrome, D-pad and stick regions. A complementary shell mask excludes
+those controls from tint/patterns/effects. The base composites complementary
+shell/control layers additively to retain the original alpha. Default resting
+controls use buttonBaseColor, independent from baseColor. Older version-1 files
+without buttonBaseColor copy their old baseColor once during validation.
+
+Presets are local validated data in app/presets.js; fonts remain in the existing
+licensed offline library. Patterns and effects are deterministic Canvas vectors,
+with no character images, third-party assets, external dependencies or downloads.
+Each preset applies visual fields; all placement fields are preserved. An optional
+wordmark switch preserves the user's logo/text and font properties when disabled.
+There is no new L5/R5 input integration in this release.

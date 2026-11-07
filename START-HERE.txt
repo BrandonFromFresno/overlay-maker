@@ -1,4 +1,4 @@
-OVERLAY STUDIO — EARLY WINDOWS BUILD (0.4.0)
+OVERLAY STUDIO — EARLY WINDOWS BUILD (0.5.0)
 
 1. Extract the ENTIRE ZIP into a folder on your Windows x64 computer.
 2. Open Overlay Studio.exe. Keep all of the adjacent files and folders.
@@ -58,7 +58,7 @@ shell. The packaged Windows application, physical G7 8K and actual OBS capture
 still require testing on Windows. This is an unsigned early build.
 
 INDIVIDUAL COLORS AND EFFECTS
-In Individual button colors, choose a button. Uncheck Use gamepad base color
+In Individual button colors, choose a button. Uncheck Use default button color
 or Use global pressed color to set a custom color. Resting and pressed colors
 are independent. Preview selected press shows that input; Clear input preview
 releases all simulated inputs. Reset all button colors restores inheritance.
@@ -89,3 +89,19 @@ The selected included font is embedded with its license in exported HTML.
 Windows installed-font discovery reads family names using System.Drawing.
 System fonts are used locally and are not copied into the export: install the
 same font on other computers before displaying that overlay there.
+
+SHELL SEPARATION AND ANIME PRESETS (0.5)
+Shell color no longer recolors buttons, sticks, bumpers or triggers. Use
+Buttons > All-button defaults for a separate resting/pressed palette. Individual
+button overrides remain independent. Older projects keep their previous default
+button color when opened; future shell edits leave it alone.
+
+Presets contains 16 anime-inspired palettes with original procedural patterns,
+fonts and effects. Applying a preset preserves positions, angles and artwork size.
+Uncheck Include preset wordmark to preserve your own text/logo and font choices.
+Undo restores the entire previous design in one step. All settings remain editable.
+
+Seven additional effects: Energy aura, Aura waves, Lightning, Manga speed lines,
+Drifting embers, Halftone pulse and Energy sweep. Shell patterns/effects avoid
+physical controls. Included preset artwork is procedural motifs and wordmarks,
+rather than character illustrations. All presets and effects work offline.

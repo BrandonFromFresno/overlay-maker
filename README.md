@@ -15,7 +15,7 @@ See [START-HERE.txt](START-HERE.txt) for OBS setup and input limitations.
 
 ## Customize your design
 
-Use the five sections on the left: **Shell**, **Buttons**, **Artwork**, **Effects** and **Layout**. Only the section you need is shown. In Buttons, click a control on the preview to select it. Fine position and ambient settings stay under expandable controls. **Export & OBS** opens the export/setup dialog.
+Use the sections on the left: **Shell**, **Buttons**, **Artwork**, **Effects**, **Layout** and **Presets**. Only the section you need is shown. In Buttons, click a control on the preview to select it. Fine position and ambient settings stay under expandable controls. **Export & OBS** opens the export/setup dialog.
 
 Artwork includes eight offline fonts: Rajdhani, Orbitron, Oxanium, Teko, Bebas Neue, Barlow Condensed, Montserrat and Inter. Choose **Fonts on this computer** to browse installed Windows font families. Included fonts are embedded in exported HTML; system fonts must be installed on the computer displaying the overlay. The original system font is retained when opening older projects.
 
@@ -24,9 +24,11 @@ Artwork includes eight offline fonts: Rajdhani, Orbitron, Oxanium, Teko, Bebas N
 - Neutral starting design, custom text and PNG/JPEG logo import.
 - Optional Cudi reference preset under Reference presets.
 - Drag-to-move controller positioning, separate artwork dragging, centering and keyboard nudges.
-- Gamepad base color, accent and pressed-input colors, breathing glow and input previews.
+- Shell-only color, independent button defaults, accent colors, breathing glow and input previews.
 - Individual resting and pressed colors for every button, D-pad direction, stick cap and trigger.
-- Special effects menu: rainbow accents, neon pulse and reactive input flash.
+- Ten animated effects, including aura, waves, lightning, speed lines, embers, halftone and energy sweep.
+- Sixteen editable anime-inspired presets and seven shell patterns.
+- Shell tint, patterns and shell effects stay separate from physical controls.
 - Clean vector Home pressed emblem and complete, seam-aligned LB/RB colors.
 - Red/charcoal interface with a focused inspector, keyboard navigation and one export dialog.
 - Curated offline font library plus Windows installed-font discovery.
@@ -46,3 +48,19 @@ Install Node.js 22+, then run `npm ci` and `npm start`. Build a Windows ZIP with
 The Cudi artwork was supplied for this project. No license granting public reuse or redistribution of the artwork is asserted.
 
 The interface is independently built, with visual direction inspired by [GameSir](https://gamesir.com/). Overlay Studio is not an official GameSir application. Included font sources and redistribution licenses are in [app/fonts/licenses](app/fonts/licenses).
+
+## Anime presets and independent shell color
+
+**Presets** has 16 Shonen Jump anime-inspired designs. Each applies a palette,
+procedural pattern, included typeface and effect. **Include preset wordmark**
+replaces the artwork; uncheck it to retain your text/logo and font settings.
+Positions and size stay in place. Applying a preset is one Undo step.
+See [PRESETS.md](PRESETS.md) for the full list.
+
+**Shell → Shell color** affects only the housing. **Buttons → All-button defaults**
+controls the default resting/pressed colors independently; individual overrides
+still take priority. On upgrading an older project, its previous default button
+color is retained so subsequent shell edits cannot change the controls.
+
+After updating a published overlay, create/update the OBS URL again and refresh
+the browser source. The older exported HTML does not update itself.
