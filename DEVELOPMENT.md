@@ -1,4 +1,4 @@
-# Overlay Studio 0.1.0
+# Overlay Studio 0.2.0
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -46,3 +46,12 @@ Test the ZIP on Windows with the physical G7 8K and OBS, including focus loss,
 minimize/restore, disconnect/reconnect, simultaneous input, pressure ramps and
 live refresh. Add a GameSir adapter only after inspecting actual host reports.
 Use vendor event streams rather than guessing mappings for M/Home/Capture.
+
+## Base color and positioning checks
+
+Serve app/ at http://127.0.0.1:8766 and run `node positioning-test.cjs`.
+Override STUDIO_URL or CHROMIUM_PATH as needed. This checks old-project
+migration, tint pixels/transparency, whole-overlay translation, pointer
+dragging for controller/artwork, undo/redo, centering, keyboard input,
+autosave and independently rendered HTML. Base tint is cached until the
+color changes; translations apply to the entire renderer, including meters.

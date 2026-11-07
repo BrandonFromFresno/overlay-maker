@@ -16,7 +16,8 @@ See [START-HERE.txt](START-HERE.txt) for OBS setup and input limitations.
 ## Included
 
 - Original Cudi template, custom text and PNG/JPEG logo import.
-- Artwork placement, colors, breathing glow and input previews.
+- Drag-to-move controller positioning, separate artwork dragging, centering and keyboard nudges.
+- Gamepad base color, accent and pressed-input colors, breathing glow and input previews.
 - Project files, autosave, undo/redo, HTML and transparent PNG export.
 - Standard gamepad input forwarded to OBS through a local bridge.
 
@@ -24,7 +25,7 @@ Use **Send to OBS** and add `http://127.0.0.1:18777/overlay` as a Browser Source
 
 ## Early build status
 
-Browser editor/export tests and a mocked desktop bridge test passed in the development environment. The GitHub workflow checks syntax, tests the bridge, and packages the Windows app. Physical G7 8K input, focus/background behavior and actual OBS capture still need Windows testing. M and vendor-specific buttons are not mapped. The shell is fixed white, and its neutral base includes faint baked original artwork. This is an unsigned early build.
+Browser editor/export tests and a mocked desktop bridge test passed in the development environment. The GitHub workflow checks syntax, tests the bridge, and packages the Windows app. Physical G7 8K input, focus/background behavior and actual OBS capture still need Windows testing. M and vendor-specific buttons are not mapped. Base color tints the original shell and controls while retaining the underlying texture; its neutral base includes faint baked original artwork. This is an unsigned early build.
 
 ## Development
 

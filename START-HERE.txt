@@ -1,10 +1,13 @@
-OVERLAY STUDIO — EARLY WINDOWS BUILD (0.1.0)
+OVERLAY STUDIO — EARLY WINDOWS BUILD (0.2.0)
 
 1. Extract the ENTIRE ZIP into a folder on your Windows x64 computer.
 2. Open Overlay Studio.exe. Keep all of the adjacent files and folders.
 3. Choose Original Cudi, Your text, or Import PNG / JPEG logo.
-4. Adjust accent colors, glow and breathing speed. Drag custom artwork into
-   place, or use the horizontal and vertical controls.
+4. Choose Gamepad base color, accent colors, glow and breathing speed.
+   Move controller is selected by default: grab the preview and drag.
+   Choose Move artwork to drag custom text or a logo separately.
+   Center controller restores its position. Arrow keys nudge the selected
+   target; hold Shift for 10 pixels. Content outside the canvas is cropped.
 5. Use Peak glow and the input preview buttons to check legibility.
 6. Save project to keep an editable .overlay file with its artwork embedded.
 
@@ -40,8 +43,8 @@ Node.js or separate GameSir server is needed to run it. The OBS bridge is local.
 
 EARLY BUILD LIMITS
 The original Cudi appearance is reused from your supplied CSS. This is a
-raster/vector template, not an editable 3D controller model. White shell and
-stock seams are fixed; the original neutral base contains faint baked artwork.
+raster/vector template, not an editable 3D controller model. Base color is a tint of the existing shell and controls, retaining their
+texture and seams; the original neutral base contains faint baked artwork.
 New logos do not recreate a physical printed finish automatically. Rotation and
 position controls affect custom text/logos; Original Cudi placement stays fixed.
 The native GameSir frontend is not included and this app does not patch it.
