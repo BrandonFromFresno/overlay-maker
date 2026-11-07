@@ -1,8 +1,10 @@
-OVERLAY STUDIO — EARLY WINDOWS BUILD (0.2.0)
+OVERLAY STUDIO — EARLY WINDOWS BUILD (0.2.1)
 
 1. Extract the ENTIRE ZIP into a folder on your Windows x64 computer.
 2. Open Overlay Studio.exe. Keep all of the adjacent files and folders.
-3. Choose Original Cudi, Your text, or Import PNG / JPEG logo.
+3. Start with PLAYER text, type your own wordmark, or Import PNG / JPEG logo.
+   The original Cudi example is optional under Reference presets.
+   New neutral design resets the editor; Undo restores your previous work.
 4. Choose Gamepad base color, accent colors, glow and breathing speed.
    Move controller is selected by default: grab the preview and drag.
    Choose Move artwork to drag custom text or a logo separately.

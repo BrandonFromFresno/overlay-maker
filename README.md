@@ -1,6 +1,6 @@
 # Overlay Studio
 
-An offline Windows editor for GameSir G7 8K stream overlays, starting with the supplied Cudi template.
+An offline Windows editor for GameSir G7 8K stream overlays, with an editable neutral starting design.
 
 ## Download the Windows app
 
@@ -15,7 +15,8 @@ See [START-HERE.txt](START-HERE.txt) for OBS setup and input limitations.
 
 ## Included
 
-- Original Cudi template, custom text and PNG/JPEG logo import.
+- Neutral starting design, custom text and PNG/JPEG logo import.
+- Optional Cudi reference preset under Reference presets.
 - Drag-to-move controller positioning, separate artwork dragging, centering and keyboard nudges.
 - Gamepad base color, accent and pressed-input colors, breathing glow and input previews.
 - Project files, autosave, undo/redo, HTML and transparent PNG export.
@@ -25,7 +26,7 @@ Use **Send to OBS** and add `http://127.0.0.1:18777/overlay` as a Browser Source
 
 ## Early build status
 
-Browser editor/export tests and a mocked desktop bridge test passed in the development environment. The GitHub workflow checks syntax, tests the bridge, and packages the Windows app. Physical G7 8K input, focus/background behavior and actual OBS capture still need Windows testing. M and vendor-specific buttons are not mapped. Base color tints the original shell and controls while retaining the underlying texture; its neutral base includes faint baked original artwork. This is an unsigned early build.
+Browser editor/export tests and a mocked desktop bridge test passed in the development environment. The GitHub workflow checks syntax, tests the bridge, and packages the Windows app. Physical G7 8K input, focus/background behavior and actual OBS capture still need Windows testing. M and vendor-specific buttons are not mapped. Base color tints the original shell and controls while retaining the underlying texture; the supplied shell still includes faint baked Cudi artwork, so a clean base asset is needed to remove that trace completely. This is an unsigned early build.
 
 ## Development
 

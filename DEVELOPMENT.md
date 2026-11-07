@@ -1,4 +1,4 @@
-# Overlay Studio 0.2.0
+# Overlay Studio 0.2.1
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -55,3 +55,7 @@ migration, tint pixels/transparency, whole-overlay translation, pointer
 dragging for controller/artwork, undo/redo, centering, keyboard input,
 autosave and independently rendered HTML. Base tint is cached until the
 color changes; translations apply to the entire renderer, including meters.
+
+The default design uses editable PLAYER text; the Cudi example is an optional
+reference preset. Existing saved projects are preserved rather than reset.
+A clean shell asset is still needed to eliminate faint baked reference artwork.
