@@ -1,4 +1,4 @@
-OVERLAY STUDIO — EARLY WINDOWS BUILD (0.2.1)
+OVERLAY STUDIO — EARLY WINDOWS BUILD (0.3.0)
 
 1. Extract the ENTIRE ZIP into a folder on your Windows x64 computer.
 2. Open Overlay Studio.exe. Keep all of the adjacent files and folders.
@@ -56,3 +56,19 @@ handling, responsive layouts and independently rendered exported HTML. Local
 publish/SSE bridge and native save handlers were tested with a mocked Electron
 shell. The packaged Windows application, physical G7 8K and actual OBS capture
 still require testing on Windows. This is an unsigned early build.
+
+INDIVIDUAL COLORS AND EFFECTS
+In Individual button colors, choose a button. Uncheck Use gamepad base color
+or Use global pressed color to set a custom color. Resting and pressed colors
+are independent. Preview selected press shows that input; Clear input preview
+releases all simulated inputs. Reset all button colors restores inheritance.
+All 19 controls have color settings, including each D-pad direction, L3/R3,
+LT/RT and Home. Vendor-only inputs can still only be previewed until a host
+adapter provides them.
+
+Special effects has None, Rainbow accents, Neon pulse and Reactive input flash.
+Intensity changes the strength. Cycle controls rainbow/neon animation timing.
+Reactive flash is clipped to the shell and fades over 600 ms after release.
+Effects are applied by the same renderer in preview, OBS, HTML and PNG exports.
+PNG exports remain still images. Re-send to OBS and refresh the source after
+changing your design. Old projects inherit the global colors with effects off.

@@ -1,4 +1,4 @@
-# Overlay Studio 0.2.1
+# Overlay Studio 0.3.0
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -59,3 +59,18 @@ color changes; translations apply to the entire renderer, including meters.
 The default design uses editable PLAYER text; the Cudi example is an optional
 reference preset. Existing saved projects are preserved rather than reset.
 A clean shell asset is still needed to eliminate faint baked reference artwork.
+
+## Button colors, Home and effects
+
+Serve app/ at port 8766 and run `node colors-effects-test.cjs`. It verifies
+rest/pressed color independence, inheritance, backward compatibility, invalid
+project rejection, Home clipping, effect animation/decay, transparency,
+autosave/undo and exported HTML. Colors live in optional buttonColors entries
+with rest/pressed hex values. Missing entries inherit baseColor and pressed.
+Older version-1 projects default to an empty map and effect=none.
+
+Button clip paths and symbols are parsed once from the supplied SVGs, then
+drawn synchronously with Canvas/Path2D. Home uses a new circular emblem with a
+single X silhouette, inset inside the face to preserve its chrome rim. The
+renderer no longer creates asynchronously recolored button images each frame.
+Effects use the existing animation loop, without network assets or libraries.

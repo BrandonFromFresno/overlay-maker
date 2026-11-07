@@ -19,6 +19,9 @@ See [START-HERE.txt](START-HERE.txt) for OBS setup and input limitations.
 - Optional Cudi reference preset under Reference presets.
 - Drag-to-move controller positioning, separate artwork dragging, centering and keyboard nudges.
 - Gamepad base color, accent and pressed-input colors, breathing glow and input previews.
+- Individual resting and pressed colors for every button, D-pad direction, stick cap and trigger.
+- Special effects menu: rainbow accents, neon pulse and reactive input flash.
+- Clean vector Home pressed emblem clipped inside its button face.
 - Project files, autosave, undo/redo, HTML and transparent PNG export.
 - Standard gamepad input forwarded to OBS through a local bridge.
 

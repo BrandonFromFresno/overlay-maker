@@ -2,3 +2,7 @@
 [hidden]{display:none!important}
 
 details{margin:12px 0;color:var(--muted);font-size:12px}summary{cursor:pointer;padding:8px 0}summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+select{display:block;width:100%;padding:9px;margin-top:7px;background:#10191c;color:var(--text);border:1px solid #415055;border-radius:4px;font:inherit}select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}input:disabled,select:disabled{opacity:.45;cursor:not-allowed}
+/* Keep the preview in view while working through the longer inspector. */
+@media(min-width:1101px){main{height:calc(100vh - 112px);min-height:0}main>aside,main>article{overflow-y:auto;min-height:0;scrollbar-gutter:stable}footer{height:36px}}
