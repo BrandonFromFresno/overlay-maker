@@ -1,0 +1,53 @@
+OVERLAY STUDIO — EARLY WINDOWS BUILD (0.1.0)
+
+1. Extract the ENTIRE ZIP into a folder on your Windows x64 computer.
+2. Open Overlay Studio.exe. Keep all of the adjacent files and folders.
+3. Choose Original Cudi, Your text, or Import PNG / JPEG logo.
+4. Adjust accent colors, glow and breathing speed. Drag custom artwork into
+   place, or use the horizontal and vertical controls.
+5. Use Peak glow and the input preview buttons to check legibility.
+6. Save project to keep an editable .overlay file with its artwork embedded.
+
+OBS
+Choose Send to OBS. Add a Browser Source with this URL:
+http://127.0.0.1:18777/overlay
+Set Width 1672 and Height 1241. Keep Overlay Studio running.
+After updating the design, choose Send to OBS again, then refresh the source
+in OBS. Turn off "Shutdown source when not visible" if you want the connection
+to stay open between scenes.
+
+LIVE CONTROLLER INPUT
+Connect the controller, focus the editor, and press a button. The connection
+label shows detection. Live controller lets you inspect standard buttons,
+sticks and trigger pressure. The OBS bridge always sends physical controller
+input; preview simulations are never sent to OBS.
+Only devices reported with standard browser gamepad mapping are supported.
+GameSir M and vendor-specific controls have no live mapping in this build.
+Home/Capture availability depends on what Windows/browser exposes.
+Keep the editor open and visible for the initial physical-controller check.
+The local bridge uses port 18777; run one copy of Overlay Studio at a time.
+
+EXPORTS
+Export overlay HTML creates a self-contained visual with embedded artwork.
+Its live input still comes from the running desktop app on this computer.
+Export PNG still creates a transparent image at peak glow; it has no motion.
+Save project creates an editable JSON-based .overlay project.
+Autosave is a convenience; use Save project for backups, especially large logos.
+
+OFFLINE
+After downloading and extracting this build, no installation, account, internet,
+Node.js or separate GameSir server is needed to run it. The OBS bridge is local.
+
+EARLY BUILD LIMITS
+The original Cudi appearance is reused from your supplied CSS. This is a
+raster/vector template, not an editable 3D controller model. White shell and
+stock seams are fixed; the original neutral base contains faint baked artwork.
+New logos do not recreate a physical printed finish automatically. Rotation and
+position controls affect custom text/logos; Original Cudi placement stays fixed.
+The native GameSir frontend is not included and this app does not patch it.
+
+Verified here: Chromium editing, save/open, undo/redo, autosave, invalid project
+handling, responsive layouts and independently rendered exported HTML. Local
+publish/SSE bridge and native save handlers were tested with a mocked Electron
+shell. The packaged Windows application, physical G7 8K and actual OBS capture
+still require testing on Windows. This is an unsigned early build.

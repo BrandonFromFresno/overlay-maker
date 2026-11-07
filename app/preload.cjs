@@ -1,0 +1,2 @@
+const {contextBridge,ipcRenderer}=require('electron');
+contextBridge.exposeInMainWorld('desktop',{saveImage:data=>ipcRenderer.invoke('save-image',data),save:(name,data)=>ipcRenderer.invoke('save-file',{name,data}),publish:html=>ipcRenderer.invoke('publish',html),input:state=>ipcRenderer.send('input-state',state),onError:fn=>ipcRenderer.on('bridge-error',(_,message)=>fn(message))});
