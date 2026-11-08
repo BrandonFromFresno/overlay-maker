@@ -16,11 +16,16 @@ function createHolographicPainter(ctx,mask,forceCPU=false){
    const fragment=compile(gl.FRAGMENT_SHADER,`
     precision highp float;
     uniform vec2 resolution; uniform float zoom, complexity, washout, whiteMix, hue, seed, phase; uniform int style;
+    vec3 rotateHue(vec3 rgb,float angle){
+     float y=dot(rgb,vec3(.299,.587,.114)),i=dot(rgb,vec3(.596,-.275,-.321)),q=dot(rgb,vec3(.212,-.523,.311));
+     float ri=i*cos(angle)-q*sin(angle),rq=i*sin(angle)+q*cos(angle);
+     return clamp(vec3(y+.956*ri+.621*rq,y-.272*ri-.647*rq,y-1.106*ri+1.703*rq),0.,1.);
+    }
     void main(){
      vec2 q=(gl_FragCoord.xy/resolution-.5)*vec2(1.78,1.)*(25./zoom);
      q.x+=.42*sin(q.y*3.1+phase+seed);q.y+=.36*sin(q.x*2.7-phase*.7+seed*.7);
      float f=sin(q.x*3.8+sin(q.y*2.2)*complexity*2.)+.55*sin(q.y*4.3+q.x*1.8)+.25*cos(q.x*6.2-q.y*3.9+phase);
-     float b=f*complexity*1.8+phase*.16+hue;
+     float b=f*complexity*1.8+phase*.16;
      float t=.5+.5*sin(f*1.3+seed);vec3 rgb=.5+.5*cos(vec3(b+1.7,b+3.8,b+5.9));
      if(style==0)rgb=mix(mix(vec3(.08,.25,.95),vec3(.75,.18,.88),.5+.5*sin(b)),vec3(.04,.92,1.),pow(t,4.)*.55);
      if(style==1)rgb=rgb*.45+.55;
@@ -30,6 +35,7 @@ function createHolographicPainter(ctx,mask,forceCPU=false){
      if(style==5)rgb=mix(vec3(1.,.18,.65),vec3(.12,.93,1.),.5+.5*sin(b));
      if(style==6)rgb=vec3(1.,.66,.16)*(.25+.75*t);
      if(style==7)rgb=mix(mix(vec3(1.,.77,.86),vec3(.2,.9,.84),t),vec3(1.,.93,.71),.3);
+     if(abs(hue)>.0001)rgb=rotateHue(rgb,hue);
      float shade=.47+.45*(.5+.5*sin(f*1.6));float shine=pow(.5+.5*sin(f*1.6),24.)*.6;
      rgb=clamp(rgb*shade+shine,0.,1.);float gray=dot(rgb,vec3(.2126,.7152,.0722));rgb=mix(rgb,vec3(gray),washout);rgb=mix(rgb,vec3(1.),whiteMix*.8);
      gl_FragColor=vec4(rgb,1.);
@@ -40,14 +46,15 @@ function createHolographicPainter(ctx,mask,forceCPU=false){
   }catch{failed=true;backend='cpu';}
  }
  function cpuDraw(p,phase){
-  const zoom=25/(p.holoZoom||5),complexity=p.holoComplexity||1,seed=(p.holoSeed||1)*.137,style=styles.indexOf(p.holoStyle),hue=(p.holoHue||0)*Math.PI/180,white=p.holoWhiteMix??.12,wash=p.holoWashout??.18;
+  const zoom=25/(p.holoZoom||5),complexity=p.holoComplexity||1,seed=(p.holoSeed||1)*.137,style=styles.indexOf(p.holoStyle),hue=(p.holoHue||0)*Math.PI/180,white=p.holoWhiteMix??.12,wash=p.holoWashout??.18,cosHue=Math.cos(hue),sinHue=Math.sin(hue);
   for(let y=0;y<162;y++)for(let x=0;x<288;x++){
    let qx=((x+.5)/288-.5)*1.78*zoom,qy=(.5-(y+.5)/162)*zoom;qx+=.42*Math.sin(qy*3.1+phase+seed);qy+=.36*Math.sin(qx*2.7-phase*.7+seed*.7);
-   const f=Math.sin(qx*3.8+Math.sin(qy*2.2)*complexity*2)+.55*Math.sin(qy*4.3+qx*1.8)+.25*Math.cos(qx*6.2-qy*3.9+phase),b=f*complexity*1.8+phase*.16+hue,t=.5+.5*Math.sin(f*1.3+seed),v=.5+.5*Math.sin(b),shade=.47+.45*(.5+.5*Math.sin(f*1.6)),shine=(.5+.5*Math.sin(f*1.6))**24*.6;
+   const f=Math.sin(qx*3.8+Math.sin(qy*2.2)*complexity*2)+.55*Math.sin(qy*4.3+qx*1.8)+.25*Math.cos(qx*6.2-qy*3.9+phase),b=f*complexity*1.8+phase*.16,t=.5+.5*Math.sin(f*1.3+seed),v=.5+.5*Math.sin(b),shade=.47+.45*(.5+.5*Math.sin(f*1.6)),shine=(.5+.5*Math.sin(f*1.6))**24*.6;
    let rgb=[.5+.5*Math.cos(b+1.7),.5+.5*Math.cos(b+3.8),.5+.5*Math.cos(b+5.9)];
    if(style===0){const k=t**4*.55;rgb=[(.08+.67*v)*(1-k)+.04*k,(.25-.07*v)*(1-k)+.92*k,(.95-.07*v)*(1-k)+k];}
    if(style===1)rgb=rgb.map(n=>n*.45+.55);if(style===2)rgb=[.18+.7*t,.18+.7*t,.18+.7*t];if(style===3)rgb=rgb.map(n=>n*.64);
    if(style===4)rgb=[.03+(.52-.03)*v,.93+(.12-.93)*v,.8+.2*v];if(style===5)rgb=[1+(.12-1)*v,.18+(.93-.18)*v,.65+.35*v];if(style===6)rgb=[1,.66,.16].map(n=>n*(.25+.75*t));if(style===7)rgb=[(1-.8*t)*.7+.3,(.77+.13*t)*.7+.279,(.86-.02*t)*.7+.213];
+   if(Math.abs(hue)>.0001){const yy=rgb[0]*.299+rgb[1]*.587+rgb[2]*.114,ii=rgb[0]*.596-rgb[1]*.275-rgb[2]*.321,qq=rgb[0]*.212-rgb[1]*.523+rgb[2]*.311,ri=ii*cosHue-qq*sinHue,rq=ii*sinHue+qq*cosHue;rgb=[yy+.956*ri+.621*rq,yy-.272*ri-.647*rq,yy-1.106*ri+1.703*rq].map(n=>Math.max(0,Math.min(1,n)));}
    rgb=rgb.map(n=>Math.max(0,Math.min(1,n*shade+shine)));const gray=rgb[0]*.2126+rgb[1]*.7152+rgb[2]*.0722,i=(y*288+x)*4;
    for(let k=0;k<3;k++)pixels.data[i+k]=((rgb[k]*(1-wash)+gray*wash)*(1-white*.8)+white*.8)*255;pixels.data[i+3]=255;
   }c.putImageData(pixels,0,0);return cpu;

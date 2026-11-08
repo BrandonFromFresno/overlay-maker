@@ -42,7 +42,9 @@ and PNG in several aspect ratios and credits GlslCanvas and Lewis Lepton. It dif
 from the photographic tttexture collection analyzed in TEXTURES.md.
 
 The Holographic tab implements an original offline liquid-field renderer and these
-four controls, plus finish strength, hue, blend, seed variation and optional motion.
+four controls, plus finish strength, hue, blend, seed variation and optional motion. Hue rotates
+the actual palette in both graphics paths. Hue and washout are disabled for neutral
+chrome, where color adjustments do not apply.
 It does not embed the website, copy its shader, use GlslCanvas, fetch external assets
 or redistribute website-generated images. The reference can be opened in a browser
 through a fixed desktop link.
