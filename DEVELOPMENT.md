@@ -1,4 +1,4 @@
-# Overlay Studio 0.6.0
+# Overlay Studio 0.7.0
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -146,3 +146,31 @@ Set STUDIO_URL to the local app server for browser tests.
 
 The paused controller gallery/Tarantula work is retained separately on the local
 `paused-controller-gallery` branch. This release builds on the G7-only 0.5 editor.
+
+## Texture layers and preset UX (0.7)
+
+`textures.js` provides the serializable createTexturePainter factory, the original
+finish catalogue and a private IndexedDB image library. The painter caches both
+seeded 512px procedural surfaces and the transformed 1672×941 shell layer. Pattern
+transforms are applied to canvas patterns rather than oversized filtered surfaces.
+Opacity/blend changes reuse the same layer. Image-generation tokens reject stale
+decodes; exports await image readiness. texture-ui.js handles local imports and
+library state. Renderer setTexture is independent from setLogo.
+
+Version-1 projects gain validated texture fields and presetOrigin. Imported images
+are limited to 4MB after optimization; projects allow up to 17MB to accommodate an
+existing 12MB logo and texture. Autosave quota errors still ask users to save a file.
+HTML export embeds only the selected texture image and painter, without IndexedDB
+or external image URLs. TEXTURES.md records the provided site's license and analysis.
+The desktop API can open only the fixed tttexture URL, without accepting a URL from
+the renderer; the bridge test verifies that destination.
+
+preset-ui.js handles favorites, filters, demo and restore. buildPresetProject and
+presetButtonColors in presets.js are shared by cards and actual application, which
+keeps thumbnails in sync with the theme. Theme signatures stay in the serialized
+Canvas painter, including per-button symbol variation and adaptive contrast.
+
+Run textures-presets-test.cjs with STUDIO_URL pointed at the local server. Optional
+FFFUEL_REFERENCE points to a private downloaded JPEG to exercise a real collection
+image without distributing it as a test fixture. tools/capture-anime-textures.cjs
+produces the public preview figures exclusively from bundled procedural artwork.

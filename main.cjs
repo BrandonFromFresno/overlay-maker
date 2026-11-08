@@ -1,4 +1,4 @@
-const {app,BrowserWindow,ipcMain,dialog}=require('electron');
+const {app,BrowserWindow,ipcMain,dialog,shell}=require('electron');
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 let win,server;const clients=new Set();let live='';
 app.whenReady().then(()=>{
@@ -13,6 +13,7 @@ app.whenReady().then(()=>{
  win.setMenuBarVisibility(false);win.loadFile('app/index.html');
  win.webContents.setWindowOpenHandler(()=>({action:'deny'}));
  ipcMain.on('input-state',(_,state)=>{const msg='data: '+JSON.stringify(state)+'\n\n';for(const client of clients)client.write(msg);});
+ ipcMain.handle('open-texture-source',()=>shell.openExternal('https://www.fffuel.co/tttexture/'));
  ipcMain.handle('list-fonts',async()=>{
   if(process.platform!=='win32')return {families:[]};
   const {execFile}=require('node:child_process');

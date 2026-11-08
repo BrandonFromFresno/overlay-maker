@@ -10,7 +10,45 @@ function createThemePainter(ctx, faces, shellMask) {
  function leaf(c,x,y,r){c.beginPath();c.moveTo(x,y+r);c.bezierCurveTo(x-r*1.6,y,x-r,y-r*1.2,x,y-r);c.bezierCurveTo(x+r,y-r*1.2,x+r*1.6,y,x,y+r);c.fill();}
  function sigil(c,kind,r,phase=0){
   c.lineWidth=Math.max(1.5,r*.055);c.lineCap='round';c.lineJoin='round';
-  if(kind==='rasengan'){
+  if(kind==='straw-hat'){
+   c.beginPath();c.ellipse(0,r*.2,r,r*.22,0,0,TAU);c.stroke();
+   c.beginPath();c.moveTo(-r*.63,r*.08);c.bezierCurveTo(-r*.6,-r*.85,r*.6,-r*.85,r*.63,r*.08);c.stroke();line(c,[[-r*.6,-r*.08],[r*.6,-r*.08]]);
+  }else if(kind==='pirate-skull'){
+   for(const sign of [-1,1])line(c,[[-r*.85,sign*r*.8],[r*.85,-sign*r*.8]]);
+   c.beginPath();c.ellipse(0,-r*.17,r*.57,r*.52,0,0,TAU);c.stroke();
+   for(const sign of [-1,1]){c.beginPath();c.arc(sign*r*.22,-r*.2,r*.1,0,TAU);c.fill();}c.strokeRect(-r*.3,r*.25,r*.6,r*.3);
+  }else if(kind==='anchor'){
+   ring(c,0,-r*.72,r*.17);line(c,[[0,-r*.53],[0,r*.85]]);line(c,[[-r*.4,-r*.25],[r*.4,-r*.25]]);
+   c.beginPath();c.moveTo(-r*.8,r*.1);c.quadraticCurveTo(-r*.75,r*.75,0,r*.85);c.quadraticCurveTo(r*.75,r*.75,r*.8,r*.1);c.stroke();
+  }else if(kind==='kunai'){
+   line(c,[[0,-r],[-r*.32,r*.12],[0,r*.35],[r*.32,r*.12],[0,-r]]);line(c,[[0,r*.35],[0,r*.7]]);ring(c,0,r*.85,r*.12);
+  }else if(kind==='leaf-seal'){
+   spiral(c,-r*.1,0,r*.55,1.5);line(c,[[r*.2,-r*.45],[r*.85,-r*.85],[r*.62,-r*.2]]);line(c,[[-r*.55,r*.3],[-r*.8,r*.65]]);
+  }else if(kind==='shuriken'){
+   c.save();c.rotate(phase*.2);c.beginPath();for(let i=0;i<8;i++){const a=i*TAU/8,d=i%2?r*.24:r;c.lineTo(Math.cos(a)*d,Math.sin(a)*d);}c.closePath();c.stroke();ring(c,0,0,r*.15);c.restore();
+  }else if(kind==='hell-butterfly'){
+   for(const sign of [-1,1]){c.save();c.scale(sign,1);c.beginPath();c.moveTo(0,0);c.bezierCurveTo(r*.9,-r*1.2,r*1.3,-r*.75,r*.85,-r*.1);c.bezierCurveTo(r*1.1,r*.6,r*.35,r*1.1,0,0);c.stroke();line(c,[[r*.1,0],[r*.7,-r*.45]]);c.restore();}line(c,[[0,-r*.4],[0,r*.55]]);
+  }else if(kind==='hero-bolt'){
+   line(c,[[r*.2,-r],[-r*.7,r*.14],[0,r*.1],[-r*.25,r],[r*.7,-r*.25],[r*.05,-r*.15],[r*.2,-r]]);
+  }else if(kind==='hunter-mark'){
+   for(const x of [-r*.45,r*.45]){line(c,[[x-r*.28,-r*.8],[x+r*.28,r*.8]]);line(c,[[x+r*.28,-r*.8],[x-r*.28,r*.8]]);}line(c,[[-r*.8,0],[r*.8,0]]);
+  }else if(kind==='anti-magic'){
+   c.save();c.rotate(-.45);line(c,[[-r*.22,-r*.9],[r*.3,-r*.75],[r*.2,r*.35],[-r*.15,r*.35],[-r*.22,-r*.9]]);line(c,[[-r*.55,r*.35],[r*.55,r*.35]]);line(c,[[0,r*.35],[0,r]]);c.restore();
+  }else if(kind==='ladybug'){
+   c.beginPath();c.ellipse(0,r*.1,r*.63,r*.78,0,0,TAU);c.stroke();ring(c,0,-r*.73,r*.22);line(c,[[0,-r*.48],[0,r*.87]]);
+   for(const sign of [-1,1])for(const y of [-.12,.4]){c.beginPath();c.arc(sign*r*.3,y*r,r*.1,0,TAU);c.fill();}
+  }else if(kind==='chimera'){
+   c.beginPath();c.moveTo(-r*.65,-r*.35);c.lineTo(-r*.8,-r*.95);c.lineTo(-r*.25,-r*.64);c.quadraticCurveTo(0,-r*.8,r*.25,-r*.64);c.lineTo(r*.8,-r*.95);c.lineTo(r*.65,-r*.35);c.bezierCurveTo(r,r*.7,-r,r*.7,-r*.65,-r*.35);c.stroke();
+   for(const sign of [-1,1])ring(c,sign*r*.3,-r*.08,r*.1);line(c,[[-r*.13,r*.22],[0,r*.32],[r*.13,r*.22]]);
+  }else if(kind==='kaiju-mask'){
+   line(c,[[-r*.8,-r*.9],[-r*.5,-r*.45],[-r*.65,r*.15],[-r*.35,r*.85],[r*.35,r*.85],[r*.65,r*.15],[r*.5,-r*.45],[r*.8,-r*.9]]);
+   line(c,[[-r*.45,-r*.05],[-r*.13,r*.05]]);line(c,[[r*.45,-r*.05],[r*.13,r*.05]]);line(c,[[-r*.35,r*.4],[r*.35,r*.4]]);for(let i=-1;i<=1;i++)line(c,[[i*r*.2,r*.35],[i*r*.2,r*.62]]);
+  }else if(kind==='round-glasses'){
+   ring(c,-r*.43,-r*.1,r*.34);ring(c,r*.43,-r*.1,r*.34);line(c,[[-r*.1,-r*.15],[r*.1,-r*.15]]);line(c,[[-r*.33,r*.63],[0,r*.49],[r*.33,r*.63]]);
+  }else if(kind==='pull-cord'){
+   c.strokeRect(-r*.7,-r*.8,r*1.4,r*.4);line(c,[[0,-r*.4],[0,r*.4]]);c.beginPath();c.roundRect(-r*.42,r*.4,r*.84,r*.5,r*.12);c.stroke();
+  }else if(kind==='rasengan'){
+   for(let j=0;j<3;j++){c.save();c.rotate(-phase+j*TAU/3);c.globalAlpha*=.55;spiral(c,0,0,r*.96,1.6,j);c.restore();}
    for(let i=0;i<5;i++){c.save();c.rotate(phase+i*TAU/5);c.scale(1,.48);ring(c,0,0,r*(.48+i*.08));c.restore();}
    spiral(c,0,0,r*.8,2,-phase);c.beginPath();c.arc(0,0,r*.13,0,TAU);c.fill();
   }else if(kind==='sharingan'){
@@ -49,6 +87,7 @@ function createThemePainter(ctx, faces, shellMask) {
    for(let j=0;j<5;j++)line(g,[[180,770+j*18],[440,690+j*16],[890,245+j*20],[1400,180+j*22]]);
   }else if(style==='pirate'){
    g.save();g.translate(290,590);sigil(g,'compass',165);g.restore();
+   g.save();g.translate(1440,580);sigil(g,'pirate-skull',100);g.translate(0,-80);sigil(g,'straw-hat',90);g.restore();
    g.setLineDash([12,14]);g.beginPath();g.moveTo(270,800);g.bezierCurveTo(380,420,1150,750,1400,340);g.stroke();g.setLineDash([]);
    for(let j=0;j<4;j++)line(g,[[90,480+j*36],[1450,120+j*36]]);
   }else if(style==='saiyan'){
@@ -56,7 +95,10 @@ function createThemePainter(ctx, faces, shellMask) {
    for(let j=0;j<11;j++){const x=160+j*130;line(g,[[x,900],[x+45,640],[x+15,670],[x+130,220]]);}
   }else if(style==='water'){
    for(let j=0;j<9;j++){g.beginPath();for(let x=50;x<1650;x+=12)g.lineTo(x,180+j*72+Math.sin(x/150+j*.65)*42);g.stroke();}
-  }else if(style==='soul'||style==='flame'){
+  }else if(style==='soul'){
+   for(const [x,y,a] of [[240,560,-.3],[1440,540,.3]]){g.save();g.translate(x,y);g.rotate(a);sigil(g,'hell-butterfly',120);g.restore();}
+   for(let i=0;i<4;i++)line(g,[[500+i*14,830],[1030+i*14,100]]);
+  }else if(style==='flame'){
    for(let i=0;i<13;i++){g.save();g.translate(110+i*125,650+(i%3)*65);g.rotate((i%3-1)*.15);sigil(g,'flame',55+i%3*20);g.restore();}
    line(g,[[480,780],[1030,90]]);line(g,[[500,790],[1050,100]]);
   }else if(style==='curse'){
@@ -72,17 +114,19 @@ function createThemePainter(ctx, faces, shellMask) {
    for(const [x,y,a] of [[230,550,-.3],[1420,580,.3]]){g.save();g.translate(x,y);g.rotate(a);sigil(g,style==='hunter'?'card':'millennium',140);g.restore();}
    g.setLineDash([4,12]);g.strokeRect(140,170,1390,620);
   }else if(style==='clover'){
+   g.save();g.translate(1420,560);sigil(g,'anti-magic',140);g.restore();
    for(let i=0;i<10;i++){g.save();g.translate(170+(i*313)%1400,190+(i*167)%600);g.rotate(i*.7);sigil(g,'clover',40+i%3*12);g.restore();}
    for(let i=0;i<3;i++)ring(g,835,470,260+i*28);
   }else if(style==='gold'){
    for(let i=0;i<22;i++)star(g,130+(i*233)%1430,170+(i*149)%660,15+i%4*7);
-   for(const x of [220,1450]){g.save();g.translate(x,590);sigil(g,'rose',110);g.restore();}
+   for(const x of [220,1450]){g.save();g.translate(x,590);sigil(g,'ladybug',110);g.restore();}
   }else if(style==='spy'){
    for(const x of [220,1440]){g.save();g.translate(x,560);sigil(g,'rose',100);g.restore();}
    for(let i=0;i<14;i++)line(g,[[100+i*115,900],[620+i*115,80]]);
   }else if(style==='occult'){
    for(const x of [220,1440]){g.save();g.translate(x,560);sigil(g,'alien',100);g.restore();for(let i=0;i<4;i++)ring(g,x,560,120+i*20);}
   }else if(style==='assassin'){
+   g.save();g.translate(1440,550);sigil(g,'round-glasses',105);g.restore();
    for(const x of [230,1440]){g.save();g.translate(x,550);sigil(g,'crosshair',125);g.restore();}
    for(let i=0;i<8;i++)line(g,[[100,270+i*60],[1570,270+i*60]]);
   }
@@ -94,11 +138,14 @@ function createThemePainter(ctx, faces, shellMask) {
   const f=faces[key];if(!f||style==='none'||!style)return;
   const home=key==='Home',active=!!state[key],r=(f.radius||50)-5;
   ctx.save();ctx.clip(f.path);ctx.translate(...f.center);ctx.scale(r/56,r/56);
-  const phase=time/(p.effectSpeed*1000)*TAU,boost=active?1:.72;
+  const phase=time/(p.effectSpeed*1000)*TAU,boost=active?1:.92;
   let bg=p.buttonColors?.[key]?.[active?'pressed':'rest']||(active?p.pressed:p.buttonBaseColor),ink=p.accent;
   // Theme materials deliberately replace the face; its pressed color becomes the rim.
   const orb=style==='dragon-balls',eye=style==='sharingan';
-  if(orb)bg='#f28b18';if(eye)bg='#b5102a';if(style==='rasengan')bg='#064a80';
+  if(orb)bg='#f28b18';if(eye)bg='#b5102a';if(style==='rasengan')bg='#064a80';if(style==='straw-hat')bg='#825221';if(style==='flame')bg='#7e1925';
+  const luminance=color=>{const v=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16)/255).map(c=>c<=.04045?c/12.92:((c+.055)/1.055)**2.4);return v[0]*.2126+v[1]*.7152+v[2]*.0722;};
+  const bgL=luminance(bg),inkL=luminance(ink);
+  if((Math.max(bgL,inkL)+.05)/(Math.min(bgL,inkL)+.05)<3)ink=(bgL+.05)/(.01+.05)>(.9+.05)/(bgL+.05)?'#19131d':'#fff1d6';
   const grad=ctx.createRadialGradient(-18,-22,2,0,0,65);grad.addColorStop(0,orb?'#fff1a5':eye?'#f84454':style==='rasengan'?'#b0f5ff':bg);grad.addColorStop(.6,bg);grad.addColorStop(1,orb?'#9c3d03':eye?'#540512':style==='rasengan'?'#032547':'#10131e');
   ctx.fillStyle=grad;ctx.beginPath();ctx.arc(0,0,56,0,TAU);ctx.fill();
   ctx.lineWidth=active?5:2;ctx.strokeStyle=active?(p.buttonColors?.[key]?.pressed||p.pressed):orb?'#ffcc5e':eye?'#2d0610':p.accent;ring(ctx,0,0,52);
@@ -107,10 +154,12 @@ function createThemePainter(ctx, faces, shellMask) {
    if(count===1)star(ctx,0,0,13);else for(let i=0;i<count;i++){const a=i*TAU/count-Math.PI/2;star(ctx,Math.cos(a)*20,Math.sin(a)*20,9);}
   }else{
    const motifs={'ninja-seals':'rasengan','pirate-coins':'compass','slayer-crests':'water-crest','soul-marks':'soul-flame','cursed-seals':'void','hero-tech':'crosshair','saw-teeth':'saw','hunter-cards':'card','clover-runes':'clover','duel-gems':'millennium','gold-stars':'star','spy-tech':'rose','occult-eyes':'alien','kaiju-cores':'ki-core','crosshairs':'crosshair'};
-   e.clearRect(0,0,128,128);e.save();e.translate(64,64);e.strokeStyle=e.fillStyle=eye?'#180710':style==='rasengan'?'#d6ffff':ink;e.globalAlpha=boost;sigil(e,motifs[style]||style,home?38:29,phase*(eye?.22:1));e.restore();ctx.drawImage(emblemCanvas,-64,-64);
+   const variants={'ninja-seals':['leaf-seal','kunai','shuriken','rasengan'],'pirate-coins':['straw-hat','anchor','pirate-skull','compass'],'soul-marks':['hell-butterfly','anti-magic','soul-flame','hell-butterfly'],'gold-stars':['ladybug','star','rose','ladybug'],'hero-tech':['hero-bolt','crosshair','hero-bolt','crosshair']};
+   const motif=variants[style]?.[['A','B','X','Y'].indexOf(key)]||motifs[style]||style;
+   e.clearRect(0,0,128,128);e.save();e.translate(64,64);e.strokeStyle=e.fillStyle=eye?'#180710':style==='rasengan'?'#d6ffff':style==='straw-hat'?'#ffe1a4':ink;e.globalAlpha=boost;sigil(e,motif,home?38:29,phase*(eye?.22:1));e.restore();ctx.drawImage(emblemCanvas,-64,-64);
   }
   // Labels stay legible on stylized ABXY buttons; Home is always reserved for its emblem.
-  if(!home&&(p.themeLabels??true)){ctx.fillStyle='#ffffff';ctx.shadowColor='#000';ctx.shadowBlur=4;ctx.font='700 16px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(key,34,33);ctx.shadowBlur=0;}
+  if(!home&&(p.themeLabels??true)){ctx.fillStyle='#101018d9';ctx.beginPath();ctx.arc(34,33,11,0,TAU);ctx.fill();ctx.fillStyle='#ffffff';ctx.shadowColor='#000';ctx.shadowBlur=4;ctx.font='700 16px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(key,34,33);ctx.shadowBlur=0;}
   ctx.restore();
  }
  return {

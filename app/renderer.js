@@ -65,7 +65,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  for(const [x,y,r] of [[833.28,209.7,65],[634.34,529.42,124],[456,290,125],[1033,523,125]]){cm.beginPath();cm.arc(x,y,r,0,Math.PI*2);cm.fill();}
  const shellMask=document.createElement('canvas');shellMask.width=1672;shellMask.height=941;
  const sm=shellMask.getContext('2d');sm.drawImage(images.base,0,0,1672,941);sm.globalCompositeOperation='destination-out';sm.drawImage(controlMask,0,0);sm.globalCompositeOperation='source-over';
- const themePainter=createThemePainter(ctx,faces,shellMask);
+ const themePainter=createThemePainter(ctx,faces,shellMask),texturePainter=createTexturePainter(ctx,shellMask);
  let patternKey='',patternCanvas=null;
  function prepareBase(color,buttonColor) {
   const key=color+'|'+buttonColor;if(key===tintColor)return;tintColor=key;
@@ -158,6 +158,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  }
  return {
   hitTest(x,y){for(const key of faceKeys)if(ctx.isPointInPath(faces[key].path,x,y))return key;if(Math.hypot(x-456,y-290)<90)return 'LSB';if(Math.hypot(x-1033,y-523)<90)return 'RSB';if(y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
+  async setTexture(src){await texturePainter.setImage(src||'');},
   async setLogo(src) {if(src===logoSrc)return;logoSrc=src;logo=null;if(src){const image=new Image();image.src=src;await image.decode();if(logoSrc===src)logo=image;}},
   draw(p,state={},time=0,peak=false) {
    const rawTime=time;themePainter.update(p,state,rawTime);time=p.animationMode==='still'?1200:p.animationMode==='reduced'?time*.35:time;
@@ -169,7 +170,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    const strength=peak?1:effect==='neon'?(.018+.982*breathe)*(1-amount*.7+amount*.7*pulse):.018+.982*breathe;
    const glow=p.glow+(effect==='neon'?24*amount*(peak?1:pulse):0);
    prepareBase(p.baseColor||'#ffffff',p.buttonBaseColor||'#ffffff');ctx.clearRect(0,0,1672,1241);ctx.save();ctx.translate(p.offsetX||0,p.offsetY||0);
-   ctx.save();ctx.translate(0,300);ctx.drawImage(tinted.base,0,0,1672,941);
+   ctx.save();ctx.translate(0,300);ctx.drawImage(tinted.base,0,0,1672,941);texturePainter.draw(p);
    if(p.shellPattern&&p.shellPattern!=='none'){ctx.save();ctx.globalAlpha=p.shellPattern==='checker'?.65:.24;ctx.drawImage(shellPattern(p.shellPattern,p.accent),0,0);ctx.restore();}
    if(['aura','waves','lightning','speedlines','embers','halftone','sweep'].includes(effect)&&amount>0)shellEffect(effect,accent,time,seconds,amount);
    themePainter.shell(p,state,time);themePainter.bursts(p,rawTime);

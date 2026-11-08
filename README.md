@@ -69,3 +69,18 @@ After updating a published overlay, create/update the OBS URL again and refresh
 the browser source. The older exported HTML does not update itself.
 
 [View the new theme artwork](docs/anime-theme-preview.png).
+
+## Signature polish and textures (0.7)
+
+The 18 anime themes now include more specific motifs: straw hats, Hell Butterflies,
+hunter badges, ladybugs, kaiju masks and round glasses, with contrast-safe button
+ink. Presets adds favorites, a demo, source-theme tracking and Restore theme look.
+Keep my shell & button colors preserves custom palettes when switching designs.
+See [PRESETS.md](PRESETS.md).
+
+**Textures** adds eight offline finishes and a personal JPG/PNG library for images
+from [fffuel tttexture](https://www.fffuel.co/tttexture/) or your own artwork.
+Choose strength, blend, inversion, monochrome, scale and rotation. The collection's
+license prohibits redistributing its images, so those photographs are imported
+locally rather than bundled. See [TEXTURES.md](TEXTURES.md) for the source analysis,
+license, import limits and offline export behavior.
