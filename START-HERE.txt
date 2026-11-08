@@ -1,4 +1,4 @@
-OVERLAY STUDIO — EARLY WINDOWS BUILD (0.5.0)
+OVERLAY STUDIO — EARLY WINDOWS BUILD (0.6.0)
 
 1. Extract the ENTIRE ZIP into a folder on your Windows x64 computer.
 2. Open Overlay Studio.exe. Keep all of the adjacent files and folders.
@@ -105,3 +105,15 @@ Seven additional effects: Energy aura, Aura waves, Lightning, Manga speed lines,
 Drifting embers, Halftone pulse and Energy sweep. Shell patterns/effects avoid
 physical controls. Included preset artwork is procedural motifs and wordmarks,
 rather than character illustrations. All presets and effects work offline.
+
+ANIME THEME ARTWORK (0.6)
+18 themes now have button artwork, Home emblems, shell details and animation.
+Try Limit Break for 1-to-4-star Dragon Balls, Ninja Way for a Rasengan Home,
+or Scarlet Eye for a rotating Sharingan. Flame Heart adds another Slayer variant.
+Presets has actual controller previews and search by anime/theme/effect.
+Effects > Signature artwork lets you mix ABXY, Home and shell treatments.
+Themed faces use their own material; individual pressed colors light the rim.
+Keep ABXY labels, remove theme artwork, or choose reduced/still motion as needed.
+Energy rings fire once per press. Still mode retains live input feedback.
+Uncheck Include preset wordmark to preserve all of your own artwork placement.
+Republish the OBS URL and refresh the Browser Source to use the updated design.

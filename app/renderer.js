@@ -25,7 +25,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   } else path.addPath(new Path2D(shape.getAttribute('d')));
   const group = svg.querySelector('g[transform]');
   const center = group.getAttribute('transform').match(/translate\(([-\d.]+)[ ,]+([-\d.]+)\)/).slice(1).map(Number);
-  faces[key] = {path, center, symbols: Array.from(group.children).map(node => ({
+  faces[key] = {path, center, radius: shape.tagName==='circle'?+shape.getAttribute('r'):50, symbols: Array.from(group.children).map(node => ({
    tag: node.tagName, path: node.tagName === 'path' ? new Path2D(node.getAttribute('d')) : null,
    text: node.textContent, size: +(node.getAttribute('font-size') || 24),
    fill: node.getAttribute('fill') !== 'none', stroke: node.hasAttribute('stroke'), width: +(node.getAttribute('stroke-width') || 3)
@@ -65,6 +65,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  for(const [x,y,r] of [[833.28,209.7,65],[634.34,529.42,124],[456,290,125],[1033,523,125]]){cm.beginPath();cm.arc(x,y,r,0,Math.PI*2);cm.fill();}
  const shellMask=document.createElement('canvas');shellMask.width=1672;shellMask.height=941;
  const sm=shellMask.getContext('2d');sm.drawImage(images.base,0,0,1672,941);sm.globalCompositeOperation='destination-out';sm.drawImage(controlMask,0,0);sm.globalCompositeOperation='source-over';
+ const themePainter=createThemePainter(ctx,faces,shellMask);
  let patternKey='',patternCanvas=null;
  function prepareBase(color,buttonColor) {
   const key=color+'|'+buttonColor;if(key===tintColor)return;tintColor=key;
@@ -159,8 +160,9 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   hitTest(x,y){for(const key of faceKeys)if(ctx.isPointInPath(faces[key].path,x,y))return key;if(Math.hypot(x-456,y-290)<90)return 'LSB';if(Math.hypot(x-1033,y-523)<90)return 'RSB';if(y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
   async setLogo(src) {if(src===logoSrc)return;logoSrc=src;logo=null;if(src){const image=new Image();image.src=src;await image.decode();if(logoSrc===src)logo=image;}},
   draw(p,state={},time=0,peak=false) {
+   const rawTime=time;themePainter.update(p,state,rawTime);time=p.animationMode==='still'?1200:p.animationMode==='reduced'?time*.35:time;
    const colors=p.buttonColors||{}, color=(key,which)=>colors[key]?.[which]||(which==='rest'?(p.buttonBaseColor||'#ffffff'):p.pressed);
-   const effect=p.effect||'none', amount=p.effectIntensity??.6, seconds=p.effectSpeed||5;
+   const effect=p.effect||'none', amount=(p.effectIntensity??.6)*(p.animationMode==='reduced'?.45:1), seconds=p.effectSpeed||5;
    const accent=effect==='rainbow'?mix(p.accent,rainbow(time,seconds),amount):p.accent;
    const pulse=(1-Math.cos(time*2*Math.PI/(seconds*1000)))/2;
    const breathe=p.breathing?(1-Math.cos(time*2*Math.PI/(p.speed*1000)))/2:1;
@@ -170,10 +172,12 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    ctx.save();ctx.translate(0,300);ctx.drawImage(tinted.base,0,0,1672,941);
    if(p.shellPattern&&p.shellPattern!=='none'){ctx.save();ctx.globalAlpha=p.shellPattern==='checker'?.65:.24;ctx.drawImage(shellPattern(p.shellPattern,p.accent),0,0);ctx.restore();}
    if(['aura','waves','lightning','speedlines','embers','halftone','sweep'].includes(effect)&&amount>0)shellEffect(effect,accent,time,seconds,amount);
+   themePainter.shell(p,state,time);themePainter.bursts(p,rawTime);
    if(time<lastActive)lastActive=-Infinity;
    if(Object.entries(state).some(([key,v])=>key!=='axes'&&(v===true||typeof v==='number'&&v>0)))lastActive=time;
    if(effect==='reactive') {
-    const power=Math.max(0,1-(time-lastActive)/600)*amount;
+    const active=Object.entries(state).some(([key,v])=>key!=='axes'&&(v===true||typeof v==='number'&&v>0));
+    const power=(p.animationMode==='still'?(active?1:0):Math.max(0,1-(time-lastActive)/600))*amount;
     if(power){recolor(shellMask,accent);ctx.save();ctx.globalAlpha=.38*power;ctx.drawImage(layer,0,0);ctx.restore();}
    }
    for(const key of faceKeys)if(colors[key]?.rest)face(key,colors[key].rest,false);
@@ -187,6 +191,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
     ctx.save();ctx.globalAlpha=strength;ctx.shadowColor=accent;ctx.shadowBlur=glow*strength;ctx.drawImage(layer,0,0);ctx.restore();
    }
    for(const key of faceKeys)if(state[key])face(key,color(key,'pressed'),true);
+   themePainter.controls(p,state,time);
    [[456,290,'leftStick','LSB',0],[1033,523,'rightStick','RSB',2]].forEach(([x,y,key,button,i])=>{
     const axes=state.axes||[];x+=(axes[i]||0)*38;y+=(axes[i+1]||0)*38;ctx.drawImage(cap(key,color(button,'rest')),x-90,y-90,180,180);
     if(state[button]){ctx.fillStyle=color(button,'pressed');ctx.globalAlpha=.85;ctx.beginPath();ctx.arc(x,y,68,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;label(button==='LSB'?'L3':'R3',x,y,33,mix(color(button,'pressed'),'#000000',.8));}

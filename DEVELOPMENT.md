@@ -1,4 +1,4 @@
-# Overlay Studio 0.5.0
+# Overlay Studio 0.6.0
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -123,3 +123,26 @@ with no character images, third-party assets, external dependencies or downloads
 Each preset applies visual fields; all placement fields are preserved. An optional
 wordmark switch preserves the user's logo/text and font properties when disabled.
 There is no new L5/R5 input integration in this release.
+
+## Anime painter (0.6)
+
+`app/themes.js` is a dependency-free Canvas factory serialized into HTML export
+alongside the renderer. It receives parsed face geometry and the protected shell
+mask. A cached engraving canvas, reusable pulse canvas and 128px emblem scratch
+canvas avoid per-frame allocation. Presets select independent themeStyle,
+buttonStyle and homeStyle settings. Explicit rest/pressed colors still exist;
+themed materials overlay ABXY/Home and expose pressed color on their rims.
+
+Animation modes use a fixed timestamp in Still mode or slower timestamp and lower
+shell opacity in Reduced mode. Input edge detection uses the original timestamp,
+so ring lifetimes remain 700ms at either motion speed. Backward timestamps clear
+transient state. Full/Reduced/Still do not alter Gamepad API or OBS bridge input.
+New fields have validated defaults for older version-1 saved files.
+
+`node anime-themes-test.cjs` checks every preset's animation, theme distinctions,
+still frames and live press response, shell/control isolation, event expiry and
+rearming, search, Undo, save/reopen, reduced-motion preference and exported HTML.
+Set STUDIO_URL to the local app server for browser tests.
+
+The paused controller gallery/Tarantula work is retained separately on the local
+`paused-controller-gallery` branch. This release builds on the G7-only 0.5 editor.

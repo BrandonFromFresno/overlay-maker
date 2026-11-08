@@ -39,7 +39,7 @@ Use **Export & OBS → Create / update OBS URL** and add `http://127.0.0.1:18777
 
 ## Early build status
 
-Browser editor/export tests and a mocked desktop bridge test passed in the development environment. The GitHub workflow checks syntax, tests the bridge, and packages the Windows app. Physical G7 8K input, focus/background behavior and actual OBS capture still need Windows testing. M and vendor-specific buttons are not mapped. Base color tints the original shell and controls while retaining the underlying texture; the supplied shell still includes faint baked Cudi artwork, so a clean base asset is needed to remove that trace completely. This is an unsigned early build.
+Browser editor/export tests and a mocked desktop bridge test passed in the development environment. The GitHub workflow checks syntax, tests the bridge, and packages the Windows app. Physical G7 8K input, focus/background behavior and actual OBS capture still need Windows testing. M and vendor-specific buttons are not mapped. Shell and button colors stay independent while retaining the underlying texture; the supplied shell still includes faint baked Cudi artwork, so a clean base asset is needed to remove that trace completely. This is an unsigned early build.
 
 ## Development
 
@@ -51,10 +51,13 @@ The interface is independently built, with visual direction inspired by [GameSir
 
 ## Anime presets and independent shell color
 
-**Presets** has 16 Shonen Jump anime-inspired designs. Each applies a palette,
-procedural pattern, included typeface and effect. **Include preset wordmark**
+**Presets** has 18 anime-inspired designs with rendered previews and search. Each
+applies themed ABXY artwork, a Home emblem, shell details, palette, font and effect. **Include preset wordmark**
 replaces the artwork; uncheck it to retain your text/logo and font settings.
-Positions and size stay in place. Applying a preset is one Undo step.
+Controller position stays in place. Preset wordmarks include a small grip-title
+placement; disable that option to preserve your artwork and its layout. Applying
+a preset is one Undo step. Effects lets you mix theme parts independently, enable
+press-triggered energy rings and choose Full, Reduced or Still motion.
 See [PRESETS.md](PRESETS.md) for the full list.
 
 **Shell → Shell color** affects only the housing. **Buttons → All-button defaults**
@@ -64,3 +67,5 @@ color is retained so subsequent shell edits cannot change the controls.
 
 After updating a published overlay, create/update the OBS URL again and refresh
 the browser source. The older exported HTML does not update itself.
+
+[View the new theme artwork](docs/anime-theme-preview.png).

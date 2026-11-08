@@ -10,7 +10,15 @@ const PRESET_DATA=[
     "shellPattern": "clouds",
     "effect": "aura",
     "text": "NINJA WAY",
-    "fontFamily": "Rajdhani"
+    "fontFamily": "Rajdhani",
+    "themeStyle": "ninja",
+    "buttonStyle": "ninja-seals",
+    "homeStyle": "rasengan",
+    "description": "Spiral seals · spinning Rasengan · wind trails",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "grand-line",
@@ -23,7 +31,15 @@ const PRESET_DATA=[
     "shellPattern": "stars",
     "effect": "waves",
     "text": "GRAND LINE",
-    "fontFamily": "Bebas Neue"
+    "fontFamily": "Bebas Neue",
+    "themeStyle": "pirate",
+    "buttonStyle": "pirate-coins",
+    "homeStyle": "compass",
+    "description": "Compass coins · sea rings · chart lines",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "limit-break",
@@ -36,7 +52,15 @@ const PRESET_DATA=[
     "shellPattern": "slashes",
     "effect": "aura",
     "text": "LIMIT BREAK",
-    "fontFamily": "Teko"
+    "fontFamily": "Teko",
+    "themeStyle": "saiyan",
+    "buttonStyle": "dragon-balls",
+    "homeStyle": "ki-core",
+    "description": "1–4 star Dragon Balls · ki core · rising energy",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "soul-reaper",
@@ -49,7 +73,15 @@ const PRESET_DATA=[
     "shellPattern": "split",
     "effect": "sweep",
     "text": "SOUL REAPER",
-    "fontFamily": "Barlow Condensed"
+    "fontFamily": "Barlow Condensed",
+    "themeStyle": "soul",
+    "buttonStyle": "soul-marks",
+    "homeStyle": "soul-flame",
+    "description": "Soul-flame marks · blade lines · spirit sweep",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "water-breath",
@@ -62,7 +94,15 @@ const PRESET_DATA=[
     "shellPattern": "checker",
     "effect": "waves",
     "text": "WATER BREATH",
-    "fontFamily": "Rajdhani"
+    "fontFamily": "Rajdhani",
+    "themeStyle": "water",
+    "buttonStyle": "slayer-crests",
+    "homeStyle": "water-crest",
+    "description": "Water crests · flowing tides · checkered haori",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "domain",
@@ -75,7 +115,15 @@ const PRESET_DATA=[
     "shellPattern": "hex",
     "effect": "lightning",
     "text": "DOMAIN",
-    "fontFamily": "Oxanium"
+    "fontFamily": "Oxanium",
+    "themeStyle": "curse",
+    "buttonStyle": "cursed-seals",
+    "homeStyle": "void",
+    "description": "Cursed seals · orbital void · domain circles",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "plus-ultra",
@@ -88,7 +136,15 @@ const PRESET_DATA=[
     "shellPattern": "slashes",
     "effect": "lightning",
     "text": "PLUS ULTRA",
-    "fontFamily": "Barlow Condensed"
+    "fontFamily": "Barlow Condensed",
+    "themeStyle": "hero",
+    "buttonStyle": "hero-tech",
+    "homeStyle": "crosshair",
+    "description": "Hero tech · charged circuit paths · lightning",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "devil-hunter",
@@ -101,7 +157,15 @@ const PRESET_DATA=[
     "shellPattern": "slashes",
     "effect": "embers",
     "text": "DEVIL HUNTER",
-    "fontFamily": "Bebas Neue"
+    "fontFamily": "Bebas Neue",
+    "themeStyle": "chainsaw",
+    "buttonStyle": "saw-teeth",
+    "homeStyle": "saw",
+    "description": "Saw-tooth buttons · chain links · flying embers",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "hunter",
@@ -114,7 +178,15 @@ const PRESET_DATA=[
     "shellPattern": "stars",
     "effect": "sweep",
     "text": "HUNTER",
-    "fontFamily": "Rajdhani"
+    "fontFamily": "Rajdhani",
+    "themeStyle": "hunter",
+    "buttonStyle": "hunter-cards",
+    "homeStyle": "card",
+    "description": "License cards · badge borders · scanning light",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "grimoire",
@@ -127,7 +199,15 @@ const PRESET_DATA=[
     "shellPattern": "hex",
     "effect": "aura",
     "text": "GRIMOIRE",
-    "fontFamily": "Orbitron"
+    "fontFamily": "Orbitron",
+    "themeStyle": "clover",
+    "buttonStyle": "clover-runes",
+    "homeStyle": "clover",
+    "description": "Five-leaf runes · magic circles · green aura",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "duelist",
@@ -140,12 +220,20 @@ const PRESET_DATA=[
     "shellPattern": "split",
     "effect": "sweep",
     "text": "DUELIST",
-    "fontFamily": "Oxanium"
+    "fontFamily": "Oxanium",
+    "themeStyle": "duelist",
+    "buttonStyle": "duel-gems",
+    "homeStyle": "millennium",
+    "description": "Golden eye · triangular seals · card frames",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "golden-wind",
     "name": "Golden Wind",
-    "inspiration": "JoJo\u2019s Bizarre Adventure",
+    "inspiration": "JoJo’s Bizarre Adventure",
     "baseColor": "#78405f",
     "buttonBaseColor": "#302537",
     "accent": "#f2be65",
@@ -153,7 +241,15 @@ const PRESET_DATA=[
     "shellPattern": "halftone",
     "effect": "halftone",
     "text": "GOLDEN WIND",
-    "fontFamily": "Montserrat"
+    "fontFamily": "Montserrat",
+    "themeStyle": "gold",
+    "buttonStyle": "gold-stars",
+    "homeStyle": "star",
+    "description": "Gold stars · rose engravings · manga dots",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "twilight",
@@ -166,7 +262,15 @@ const PRESET_DATA=[
     "shellPattern": "hex",
     "effect": "sweep",
     "text": "TWILIGHT",
-    "fontFamily": "Inter"
+    "fontFamily": "Inter",
+    "themeStyle": "spy",
+    "buttonStyle": "spy-tech",
+    "homeStyle": "rose",
+    "description": "Rose seals · pinstripes · soft scanner sweep",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "occult",
@@ -179,7 +283,15 @@ const PRESET_DATA=[
     "shellPattern": "clouds",
     "effect": "speedlines",
     "text": "OCCULT",
-    "fontFamily": "Teko"
+    "fontFamily": "Teko",
+    "themeStyle": "occult",
+    "buttonStyle": "occult-eyes",
+    "homeStyle": "alien",
+    "description": "Alien eyes · signal rings · speed streaks",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "defense-force",
@@ -192,7 +304,15 @@ const PRESET_DATA=[
     "shellPattern": "hex",
     "effect": "lightning",
     "text": "DEFENSE FORCE",
-    "fontFamily": "Orbitron"
+    "fontFamily": "Orbitron",
+    "themeStyle": "kaiju",
+    "buttonStyle": "kaiju-cores",
+    "homeStyle": "ki-core",
+    "description": "Reactor cores · fracture lines · electric surge",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   },
   {
     "id": "off-duty",
@@ -205,6 +325,56 @@ const PRESET_DATA=[
     "shellPattern": "split",
     "effect": "speedlines",
     "text": "OFF DUTY",
-    "fontFamily": "Barlow Condensed"
+    "fontFamily": "Barlow Condensed",
+    "themeStyle": "assassin",
+    "buttonStyle": "crosshairs",
+    "homeStyle": "crosshair",
+    "description": "Target buttons · sight lines · motion streaks",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
+  },
+  {
+    "id": "scarlet-eye",
+    "name": "Scarlet Eye",
+    "inspiration": "Naruto · Uchiha",
+    "baseColor": "#171921",
+    "buttonBaseColor": "#29242b",
+    "accent": "#ed405b",
+    "pressed": "#ffa176",
+    "shellPattern": "clouds",
+    "effect": "embers",
+    "text": "SCARLET EYE",
+    "fontFamily": "Oxanium",
+    "themeStyle": "uchiha",
+    "buttonStyle": "ninja-seals",
+    "homeStyle": "sharingan",
+    "description": "Rotating Sharingan · scarlet seals · drifting embers",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
+  },
+  {
+    "id": "flame-heart",
+    "name": "Flame Heart",
+    "inspiration": "Demon Slayer · Flame",
+    "baseColor": "#302028",
+    "buttonBaseColor": "#2d2028",
+    "accent": "#ffb547",
+    "pressed": "#fff0ab",
+    "shellPattern": "slashes",
+    "effect": "embers",
+    "text": "SET YOUR HEART",
+    "fontFamily": "Bebas Neue",
+    "themeStyle": "flame",
+    "buttonStyle": "soul-marks",
+    "homeStyle": "flame",
+    "description": "Flame crests · burning blade trails · warm embers",
+    "size": 340,
+    "angle": -55,
+    "x": 300,
+    "y": 650
   }
 ];
