@@ -13,6 +13,7 @@ app.whenReady().then(()=>{
  win.setMenuBarVisibility(false);win.loadFile('app/index.html');
  win.webContents.setWindowOpenHandler(()=>({action:'deny'}));
  ipcMain.on('input-state',(_,state)=>{const msg='data: '+JSON.stringify(state)+'\n\n';for(const client of clients)client.write(msg);});
+ ipcMain.handle('open-holo-source',()=>shell.openExternal('https://www.fffuel.co/hhholographic/'));
  ipcMain.handle('open-texture-source',()=>shell.openExternal('https://www.fffuel.co/tttexture/'));
  ipcMain.handle('list-fonts',async()=>{
   if(process.platform!=='win32')return {families:[]};

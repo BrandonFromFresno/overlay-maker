@@ -65,8 +65,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  for(const [x,y,r] of [[833.28,209.7,65],[634.34,529.42,124],[456,290,125],[1033,523,125]]){cm.beginPath();cm.arc(x,y,r,0,Math.PI*2);cm.fill();}
  const shellMask=document.createElement('canvas');shellMask.width=1672;shellMask.height=941;
  const sm=shellMask.getContext('2d');sm.drawImage(images.base,0,0,1672,941);sm.globalCompositeOperation='destination-out';sm.drawImage(controlMask,0,0);sm.globalCompositeOperation='source-over';
- const themePainter=createThemePainter(ctx,faces,shellMask),texturePainter=createTexturePainter(ctx,shellMask);
- let patternKey='',patternCanvas=null;
+ const themePainter=createThemePainter(ctx,faces,shellMask),texturePainter=createTexturePainter(ctx,shellMask),surfacePainter=createSurfacePainter(ctx,shellMask),holoPainter=createHolographicPainter(ctx,shellMask);
  function prepareBase(color,buttonColor) {
   const key=color+'|'+buttonColor;if(key===tintColor)return;tintColor=key;
   if(tinted.base)tinted.base.width=0;
@@ -74,33 +73,6 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   const controls=tint(images.base,buttonColor,1672,941),g=controls.getContext('2d');
   g.globalCompositeOperation='destination-in';g.drawImage(controlMask,0,0);
   const body=tinted.base.getContext('2d');body.globalCompositeOperation='destination-out';body.drawImage(controlMask,0,0);body.globalCompositeOperation='lighter';body.drawImage(controls,0,0);body.globalCompositeOperation='source-over';controls.width=0;
- }
- function shellPattern(pattern,accent){
-  const key=pattern+'|'+accent;if(key===patternKey)return patternCanvas;
-  patternKey=key;if(patternCanvas)patternCanvas.width=0;
-  patternCanvas=document.createElement('canvas');patternCanvas.width=1672;patternCanvas.height=941;
-  const g=patternCanvas.getContext('2d');g.fillStyle=accent;g.strokeStyle=accent;g.lineWidth=6;
-  if(pattern==='checker'){g.fillStyle='#0a0c12';for(let y=0;y<941;y+=110)for(let x=0;x<1672;x+=110)if((x/110+y/110)%2===0)g.fillRect(x,y,110,110);}
-  if(pattern==='slashes'){for(let x=-900;x<2200;x+=190){g.beginPath();g.moveTo(x,1000);g.lineTo(x+650,-80);g.lineTo(x+690,-80);g.lineTo(x+40,1000);g.fill();}}
-  if(pattern==='clouds'){for(let y=90;y<1000;y+=230)for(let x=100;x<1800;x+=300){g.beginPath();g.arc(x,y,60,0,Math.PI*1.7);g.arc(x+54,y-18,33,Math.PI,Math.PI*3);g.stroke();}}
-  if(pattern==='stars'){for(let i=0;i<20;i++){const x=90+(i*251)%1500,y=100+(i*173)%750;g.save();g.translate(x,y);g.beginPath();for(let j=0;j<10;j++){const r=j%2?10:25,a=j*Math.PI/5-Math.PI/2;g.lineTo(Math.cos(a)*r,Math.sin(a)*r);}g.closePath();g.fill();g.restore();}}
-  if(pattern==='hex'){for(let y=0;y<1000;y+=140)for(let x=0;x<1750;x+=160){g.beginPath();for(let j=0;j<6;j++){const a=j*Math.PI/3;g.lineTo(x+(y/140%2)*80+Math.cos(a)*72,y+Math.sin(a)*72);}g.closePath();g.stroke();}}
-  if(pattern==='halftone'){g.beginPath();for(let y=15;y<941;y+=38)for(let x=15;x<1672;x+=38){const r=2+6*(x/1672);g.moveTo(x+r,y);g.arc(x,y,r,0,Math.PI*2);}g.fill();}
-  if(pattern==='split'){g.beginPath();g.moveTo(800,0);g.lineTo(1600,0);g.lineTo(930,941);g.lineTo(130,941);g.closePath();g.fill();}
-  g.globalCompositeOperation='destination-in';g.drawImage(shellMask,0,0);g.globalCompositeOperation='source-over';return patternCanvas;
- }
- function shellEffect(effect,accent,time,seconds,amount){
-  const phase=((time/(seconds*1000))%1+1)%1,hash=i=>{const n=Math.sin(i*127.1+9.2)*43758.5453;return n-Math.floor(n);};
-  lc.clearRect(0,0,1672,941);lc.save();lc.fillStyle=accent;lc.strokeStyle=accent;lc.lineCap='round';lc.shadowColor=accent;lc.shadowBlur=14;
-  if(effect==='aura'){for(let j=0;j<7;j++){lc.beginPath();for(let y=1000;y>=-80;y-=18){const x=180+j*220+Math.sin(y/160+phase*Math.PI*2+j)*65;lc.lineTo(x,y);}lc.lineWidth=4+j%3*3;lc.stroke();}}
-  if(effect==='waves'){for(let j=0;j<5;j++){lc.beginPath();lc.arc(835,480,90+((phase+j/5)%1)*850,0,Math.PI*2);lc.lineWidth=9;lc.stroke();}}
-  if(effect==='lightning'){for(let j=0;j<5;j++){lc.beginPath();const start=150+j*330;lc.moveTo(start,-20);for(let y=20,i=0;y<1000;y+=55,i++)lc.lineTo(start+Math.sin(i*3.8+j+Math.floor(phase*18))*55+(y/941)*150,y);lc.lineWidth=3;lc.stroke();}}
-  if(effect==='speedlines'){for(let i=0;i<28;i++){const x=((i*129+phase*2400)%2400)-500,y=hash(i)*1100;lc.beginPath();lc.moveTo(x,y);lc.lineTo(x+140+hash(i+7)*200,y-100);lc.lineWidth=1+hash(i+3)*4;lc.stroke();}}
-  if(effect==='embers'){lc.fillStyle=mix(accent,'#fff2cc',.35);for(let i=0;i<45;i++){const x=60+hash(i)*1550+Math.sin(phase*Math.PI*2+i)*28,y=1000-((phase+hash(i+30))%1)*1100;lc.beginPath();lc.arc(x,y,2+hash(i+10)*4,0,Math.PI*2);lc.fill();}}
-  if(effect==='halftone'){lc.shadowBlur=0;lc.beginPath();for(let y=24;y<941;y+=42)for(let x=24;x<1672;x+=42){const r=2+(1+Math.sin(phase*Math.PI*2+x/300+y/250))*4;lc.moveTo(x+r,y);lc.arc(x,y,r,0,Math.PI*2);}lc.fill();}
-  if(effect==='sweep'){lc.shadowBlur=0;const x=-700+phase*3000;const g=lc.createLinearGradient(x,0,x+420,0);g.addColorStop(0,accent+'00');g.addColorStop(.5,mix(accent,'#ffffff',.45)+'d0');g.addColorStop(1,accent+'00');lc.fillStyle=g;lc.transform(1,0,-.45,1,450,0);lc.fillRect(x,0,420,941);}
-  lc.restore();lc.globalCompositeOperation='destination-in';lc.drawImage(shellMask,0,0);lc.globalCompositeOperation='source-over';
-  ctx.save();ctx.globalAlpha=amount*.65;ctx.drawImage(layer,0,0);ctx.restore();
  }
  function cap(key, color) {
   const id = key + color;
@@ -170,9 +142,9 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    const strength=peak?1:effect==='neon'?(.018+.982*breathe)*(1-amount*.7+amount*.7*pulse):.018+.982*breathe;
    const glow=p.glow+(effect==='neon'?24*amount*(peak?1:pulse):0);
    prepareBase(p.baseColor||'#ffffff',p.buttonBaseColor||'#ffffff');ctx.clearRect(0,0,1672,1241);ctx.save();ctx.translate(p.offsetX||0,p.offsetY||0);
-   ctx.save();ctx.translate(0,300);ctx.drawImage(tinted.base,0,0,1672,941);texturePainter.draw(p);
-   if(p.shellPattern&&p.shellPattern!=='none'){ctx.save();ctx.globalAlpha=p.shellPattern==='checker'?.65:.24;ctx.drawImage(shellPattern(p.shellPattern,p.accent),0,0);ctx.restore();}
-   if(['aura','waves','lightning','speedlines','embers','halftone','sweep'].includes(effect)&&amount>0)shellEffect(effect,accent,time,seconds,amount);
+   ctx.save();ctx.translate(0,300);ctx.drawImage(tinted.base,0,0,1672,941);holoPainter.draw(p,time);texturePainter.draw(p);
+   surfacePainter.pattern(p);
+   if(!['none','rainbow','neon','reactive'].includes(effect)&&amount>0)surfacePainter.effect(effect,accent,time,seconds,amount,p);
    themePainter.shell(p,state,time);themePainter.bursts(p,rawTime);
    if(time<lastActive)lastActive=-Infinity;
    if(Object.entries(state).some(([key,v])=>key!=='axes'&&(v===true||typeof v==='number'&&v>0)))lastActive=time;

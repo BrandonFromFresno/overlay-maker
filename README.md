@@ -84,3 +84,17 @@ Choose strength, blend, inversion, monochrome, scale and rotation. The collectio
 license prohibits redistributing its images, so those photographs are imported
 locally rather than bundled. See [TEXTURES.md](TEXTURES.md) for the source analysis,
 license, import limits and offline export behavior.
+
+## Expanded patterns, effects and holographic finishes (0.8)
+
+Shell has 20 polished patterns with grouped selection, searchable previews and
+strength/scale/angle/ink controls. Effects has 18 choices with previews, improved
+motion, density/direction/softness controls and per-section reset. None is available
+in both pickers.
+
+The new **Holographic** tab adds eight original offline liquid/iridescent finishes,
+inspired by [fffuel hhholographic](https://www.fffuel.co/hhholographic/). Adjust zoom,
+complexity, washout, white mix, hue, blend and motion. It has a software fallback,
+works in exports, and preserves controls. Textures and patterns layer over the finish.
+See [SURFACES.md](SURFACES.md) for the reference analysis, complete option lists,
+layer order and compatibility details.

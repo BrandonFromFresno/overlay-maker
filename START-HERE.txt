@@ -1,4 +1,4 @@
-OVERLAY STUDIO — EARLY WINDOWS BUILD (0.7.0)
+OVERLAY STUDIO — EARLY WINDOWS BUILD (0.8.0)
 
 1. Extract the ENTIRE ZIP into a folder on your Windows x64 computer.
 2. Open Overlay Studio.exe. Keep all of the adjacent files and folders.
@@ -128,3 +128,15 @@ Adjust blend, invert light/dark, strength, scale and rotation. PNG alpha is kept
 Textures stay off controls and survive preset changes. Save your project to keep
 its selected image embedded; republish and refresh OBS after editing the design.
 The fffuel source images are not bundled because its license bars redistribution.
+
+PATTERNS, EFFECTS AND HOLOGRAPHIC FINISHES (0.8)
+Shell has 20 patterns plus None. Browse grouped choices, step Previous/Next or
+search the preview gallery. Adjust strength, scale, angle and accent/custom ink.
+Effects has 18 choices plus None, with improved fades and continuous lightning,
+new rain/snow/fireflies/comets/vortex/prism/silk effects and detail controls.
+Holographic adds eight offline liquid and iridescent finishes. Choose a finish,
+then adjust zoom, complexity, color washout, white mix, hue and blend. Toggle motion
+for this layer or use global Still mode. Textures and patterns layer above it.
+Every surface stays clear of controls and transparency. Projects and exports carry
+the finish without needing the reference website. Old projects keep it disabled.
+Republish the local OBS URL and refresh the Browser Source after editing a design.

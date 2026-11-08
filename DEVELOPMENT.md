@@ -1,4 +1,4 @@
-# Overlay Studio 0.7.0
+# Overlay Studio 0.8.0
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -174,3 +174,32 @@ Run textures-presets-test.cjs with STUDIO_URL pointed at the local server. Optio
 FFFUEL_REFERENCE points to a private downloaded JPEG to exercise a real collection
 image without distributing it as a test fixture. tools/capture-anime-textures.cjs
 produces the public preview figures exclusively from bundled procedural artwork.
+
+## Surface painters (0.8)
+
+surfaces.js holds pattern/effect metadata and createSurfacePainter. Patterns cache
+transformed, masked paths independently from opacity. Effects reuse a full-size
+scratch layer and deterministic particle paths. surface-ui.js validates new fields,
+populates grouped selectors and lazy preview galleries, and manages resets and
+quick actions. It is UI-only and is not included in exported HTML.
+
+holographic.js defines eight presets and createHolographicPainter. WebGL is created
+lazily only for an enabled finish. Compilation/context failures switch to the CPU
+path, as does context loss. CPU and shader palettes share the same formulas. The
+factory contains all its shader and render code and is serialized with the surface,
+texture and theme painters. There is no dependency on external metadata at export
+runtime. Higher-resolution static scene exports use the controller's standard
+1672×1241 canvas, with the finish interpolated from its cached render target.
+
+Version-1 projects gain validated pattern, effect-detail and holographic fields.
+Legacy checker opacity/ink is retained; holoEnabled defaults false. Applying anime
+presets resets their pattern/effect-detail defaults but preserves the finish and
+texture. Fixed external-link IPC supports the supplied holographic reference only.
+
+surfaces-holographic-test.cjs covers every pattern and shell effect, all finish
+presets, controls/transparency protection, motion/freeze, CPU fallback, transforms,
+custom ink, migration/validation, grouped selectors, gallery search, stepping,
+reset/Undo, preserved finishes across anime presets, save/reopen and offline export.
+Set STUDIO_URL to the local app server. tools/capture-surface-review.cjs produces
+preview figures from the actual renderer. Physical controller/OBS and a range of
+Windows graphics-driver configurations still require hardware validation.

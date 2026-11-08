@@ -386,7 +386,7 @@ function buildPresetProject(base,preset,{wordmark=true,keepColors=false}={}){
   fontSource:wordmark?'library':base.fontSource,fontWeight:wordmark?700:base.fontWeight,
   fontItalic:wordmark?false:base.fontItalic,fontFamily:wordmark?preset.fontFamily:base.fontFamily,
   mode:wordmark?'text':base.mode,text:wordmark?preset.text:base.text,logo:wordmark?'':base.logo,
-  themeIntensity:.65,themeLabels:base.themeLabels,inputBurst:true,animationMode:base.animationMode,
+  patternOpacity:preset.shellPattern==='checker'?.65:.24,patternScale:1,patternRotation:0,patternWeight:3,patternUseAccent:preset.shellPattern!=='checker',patternColor:preset.shellPattern==='checker'?'#10131a':preset.accent,effectDensity:1,effectDirection:0,effectSoftness:.5,themeIntensity:.65,themeLabels:base.themeLabels,inputBurst:true,animationMode:base.animationMode,
   effectIntensity:.4,effectSpeed:6,breathing:true,speed:6,glow:8};
  if(!wordmark)for(const key of ['size','angle','x','y'])result[key]=base[key];
  if(keepColors)for(const key of ['baseColor','buttonBaseColor','accent','pressed'])result[key]=base[key];
