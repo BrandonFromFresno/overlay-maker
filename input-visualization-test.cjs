@@ -26,10 +26,10 @@ for(const vertical of ['DPad_Up','DPad_Down'])for(const horizontal of ['DPad_Lef
  for(let i=0;i<a.length;i+=4){const ca=[0,1,2].some(n=>a[i+n]!==neutral[i+n]),cb=[0,1,2].some(n=>b[i+n]!==neutral[i+n]);if(ca&&!cb){aa++;if([0,1,2,3].some(n=>a[i+n]!==both[i+n]))throw Error('Lost diagonal vertical');}if(cb&&!ca){bb++;if([0,1,2,3].some(n=>b[i+n]!==both[i+n]))throw Error('Lost diagonal horizontal');}}
  if(aa>100&&bb>100)diagonals++;
 }
-// Full cardinal/diagonal sweeps, both clicks and sticks together. Fixed rims may never change.
+// Full sweeps and clicks: uncovered rim pixels stay fixed while caps overlap them.
 let rimLeaks=0;
 for(let step=0;step<16;step++){const angle=step*Math.PI/8,axes=[Math.cos(angle),Math.sin(angle),-Math.cos(angle),-Math.sin(angle)];const a=draw({axes,LSB:true,RSB:true});
- for(const [cx,cy] of [[456,590],[1033,823]])for(let y=cy-128;y<=cy+128;y++)for(let x=cx-128;x<=cx+128;x++){const d=Math.hypot(x-cx,y-cy);if(d>=107&&d<=126&&changed(a,neutral,x,y))rimLeaks++;}
+ for(const [cx,cy,offset] of [[456,590,0],[1033,823,2]])for(let y=cy-128;y<=cy+128;y++)for(let x=cx-128;x<=cx+128;x++){const d=Math.hypot(x-cx,y-cy);if(d>=107&&d<=126&&Math.hypot(x-cx-axes[offset]*38,y-cy-axes[offset+1]*38)>=89&&changed(a,neutral,x,y))rimLeaks++;}
 }
 const diagonal=draw({axes:[1,1,-1,-1]}),unit=draw({axes:[Math.SQRT1_2,Math.SQRT1_2,-Math.SQRT1_2,-Math.SQRT1_2]});const radial=diagonal.every((v,i)=>v===unit[i]);
 const invalid=draw({axes:[NaN,Infinity,'1',null],A:'false',LT:NaN,RT:-1});const invalidNeutral=invalid.every((v,i)=>v===neutral[i]);

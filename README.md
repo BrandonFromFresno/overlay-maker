@@ -1,10 +1,10 @@
 # Overlay Studio
 
-Internal Windows production tool for creating, testing and delivering GameSir G7 8K customer overlays. Version 0.8.1 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
+Internal Windows production tool for creating, testing and delivering GameSir G7 8K customer overlays. Version 0.8.2 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
 
 ## Run the Windows app
 
-Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.8.1/Overlay-Studio-Windows-x64.zip) from the [0.8.1 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.8.1). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
+Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.8.2/Overlay-Studio-Windows-x64.zip) from the [0.8.2 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.8.2). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
 
 The extracted app needs no account, Node.js, internet connection or GameSir server. Connect the G7 in PC / XInput mode, focus the app and press a button. Live preview starts automatically. Connection feedback and the input-device picker are beside the preview.
 

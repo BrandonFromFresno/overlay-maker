@@ -1,4 +1,4 @@
-# Overlay Studio 0.8.1 Windows prerelease
+# Overlay Studio 0.8.2 Windows prerelease
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -270,3 +270,12 @@ stored, a repository path and no customer URL. Adding hosting later assigns URLs
 to pending records without GitHub PUTs and permits reusing the saved token only
 for the same repository. Existing hosted records retain their URLs. Deployment
 checks reject text/plain downloads even when their bytes match the export.
+
+## Stick-layering hotfix (0.8.2)
+
+The shared stick pass no longer clips the moving cap to a stationary 105 px socket.
+The isolated rubber cap renders above the fixed rim at full travel. Artwork,
+centers, dimensions, travel distance and standard input mapping are preserved.
+The rim remains stationary; cap occlusion is expected. stick-layering-test.cjs
+checks both sticks at 16 angles with rest/pressed colors and exact neutral return.
+See REVIEW-STICK-LAYERING.md for reproduction and validation.

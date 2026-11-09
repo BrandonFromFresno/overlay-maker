@@ -1,4 +1,4 @@
-OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.8.1 WINDOWS PRERELEASE
+OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.8.2 WINDOWS PRERELEASE
 
 This application is for the producer. Customers receive a hosted overlay URL.
 

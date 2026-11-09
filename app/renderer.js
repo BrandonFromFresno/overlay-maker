@@ -182,7 +182,9 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    themePainter.controls(p,state,time);
    [[456,290,'leftStick','LSB',0],[1033,523,'rightStick','RSB',2]].forEach(([x,y,key,button,i])=>{
     const axes=state.axes;
-    ctx.save();ctx.beginPath();ctx.arc(x,y,105,0,Math.PI*2);ctx.clip();
+    // The base owns the fixed socket/rim. The isolated cap sits above it,
+    // including the overlap at full travel; clipping to the socket cuts the cap.
+    ctx.save();
     x+=axes[i]*38;y+=axes[i+1]*38;
     const pressed=state[button],ink=color(button,pressed?'pressed':'rest');
     ctx.drawImage(cap(key,ink),x-90,y-90,180,180);

@@ -1,3 +1,11 @@
+# Current release: 0.8.2 stick-layering prerelease
+
+Publication authorized November 9, 2026 (America/Los_Angeles). This hotfix keeps
+the cap above the stationary rim during full travel and stick clicks. Both sticks
+use the same corrected rendering pass. The 0.8.1 release remains available.
+See REVIEW-STICK-LAYERING.md; the release checksum asset identifies the current
+Windows ZIP. Earlier hashes below describe historical local candidate builds.
+
 # Release readiness — 0.8.1 Windows prerelease
 
 Reviewed November 8, 2026 (America/Los_Angeles). **Windows prerelease for producer acceptance testing. The user authorized publication on November 8, 2026 (America/Los_Angeles).** The separate customer farm was initialized with README, landing page and ignore rules. This record covers prerelease preparation; customer artwork has not been uploaded.
