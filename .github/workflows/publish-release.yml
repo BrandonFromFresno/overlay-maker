@@ -1,0 +1,73 @@
+name: Publish verified Windows prerelease
+on:
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: Successful Build Windows app run ID
+        required: true
+        type: string
+      source_sha:
+        description: Full application source SHA from that build
+        required: true
+        type: string
+      tag:
+        description: Existing draft prerelease tag
+        required: true
+        type: string
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      BUILD_RUN_ID: ${{ inputs.build_run_id }}
+      SOURCE_SHA: ${{ inputs.source_sha }}
+      RELEASE_TAG: ${{ inputs.tag }}
+    steps:
+      - name: Verify successful build and draft target
+        run: |
+          python3 - <<'PY'
+          import json,os,re,subprocess
+          def gh(*args):
+              return json.loads(subprocess.check_output(['gh',*args],text=True))
+          repo=os.environ['GH_REPO']; run=os.environ['BUILD_RUN_ID']; source=os.environ['SOURCE_SHA']; tag=os.environ['RELEASE_TAG']
+          assert re.fullmatch(r'[0-9]+',run),'Invalid run ID'
+          assert re.fullmatch(r'[a-f0-9]{40}',source),'Invalid source SHA'
+          assert re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+(?:[-.][a-zA-Z0-9]+)*',tag),'Invalid version tag'
+          build=gh('api',f'repos/{repo}/actions/runs/{run}')
+          assert build['conclusion']=='success' and build['head_sha']==source,'Build must pass for this exact source'
+          assert build['name']=='Build Windows app','Unexpected build workflow'
+          release=gh('release','view',tag,'--repo',repo,'--json','isDraft,isPrerelease,targetCommitish')
+          assert release['isDraft'] and release['isPrerelease'],'Only draft prereleases can be published here'
+          assert release['targetCommitish']==source,'Draft must target the verified source'
+          print('Verified passing Windows build and matching draft prerelease')
+          PY
+      - name: Download verified Windows ZIP
+        uses: actions/download-artifact@v4
+        with:
+          name: Overlay-Studio-Windows-x64
+          run-id: ${{ inputs.build_run_id }}
+          github-token: ${{ github.token }}
+          path: artifact
+      - name: Verify archive and generate checksum
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,zipfile
+          package=Path('artifact/Overlay-Studio-Windows-x64.zip')
+          with zipfile.ZipFile(package) as archive:
+              assert archive.testzip() is None,'Invalid Windows ZIP'
+              for name in ['Overlay Studio.exe','START-HERE.txt','resources/app.asar','LICENSE.electron.txt','LICENSES.chromium.html']:
+                  assert name in archive.namelist(),f'Missing {name}'
+          digest=hashlib.file_digest(package.open('rb'),'sha256').hexdigest()
+          Path('artifact/SHA256.txt').write_text(digest+'  '+package.name+'\n')
+          print('Verified Windows ZIP; SHA-256:',digest)
+          PY
+      - name: Attach Windows ZIP and checksum to draft
+        run: gh release upload "$RELEASE_TAG" artifact/Overlay-Studio-Windows-x64.zip artifact/SHA256.txt --repo "$GH_REPO" --clobber
+      - name: Publish prerelease
+        run: gh release edit "$RELEASE_TAG" --repo "$GH_REPO" --draft=false --prerelease
