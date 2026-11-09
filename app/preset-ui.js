@@ -29,8 +29,8 @@ function initializePresetUI(){
  }
  $('presetSearch').oninput=filterPresets;
  $('presetFavoritesOnly').onclick=()=>{const button=$('presetFavoritesOnly');button.setAttribute('aria-pressed',button.getAttribute('aria-pressed')!=='true');filterPresets();};
- $('editButtonArt').onclick=$('editTheme').onclick=()=>selectInspector('effects',true);
- $('previewThemeInputs').onclick=()=>{input={};setMode(mode==='demo'?'rest':'demo');};
+ $('editButtonArt').onclick=$('editTheme').onclick=openThemeEditor;
+ $('previewThemeInputs').onclick=()=>{const next=mode==='demo'?'rest':'demo';clearInputPreview();setMode(next);};
  $('restoreTheme').onclick=()=>{const preset=PRESET_DATA.find(p=>p.id===(project.presetOrigin||project.presetId));if(!preset)return;checkpoint();project=validate(buildPresetProject(project,preset,{wordmark:false}));clearInputPreview();sync();persist();status(preset.name+' look restored. Your artwork, texture and controller position are preserved.');};
  $('removeTheme').onclick=()=>{checkpoint();Object.assign(project,{themeStyle:'none',buttonStyle:'none',homeStyle:'none',presetId:'',presetOrigin:''});sync();persist();status('Theme artwork removed. Your colors, texture, layout and effects are preserved.');};
 }

@@ -1,4 +1,4 @@
-# Overlay Studio 0.8.0
+# Overlay Studio 0.8.1 Windows prerelease
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -20,9 +20,9 @@ establish redistribution rights for a public template marketplace.
 
 Install Node.js 22 or later. Run `npm ci`, then `npm start` (internet needed only
 for developer dependency/runtime installation). `npm run build:win` invokes
-electron-builder for a ZIP Windows x64 target. The distributed ZIP was
-assembled using the official Electron 39.8.10 Windows x64 release, preserving
-its runtime licenses and required DLLs, and adding resources/app.
+electron-builder for a ZIP Windows x64 target. The candidate ZIP is built with electron-builder and Electron 39.8.10 Windows
+x64, preserving runtime notices and required DLLs. A cached official Electron ZIP
+can be supplied with the electronDist build option for an offline runtime build.
 
 App structure: main.cjs owns native file dialogs and loopback service;
 app/preload.cjs exposes narrowly scoped IPC; studio.js owns editor state;
@@ -32,13 +32,16 @@ bounds are validated. Logos are limited to PNG/JPEG under 8 MB.
 
 ## Checks
 
-`node --check main.cjs`, `node --check app/studio.js`, `node --check app/renderer.js`.
+Run `npm run check` for every app/tool/test JavaScript file and `npm test` for
+all native and browser suites. The runner starts an ephemeral-port app server,
+sets STUDIO_URL, selects Chromium using CHROMIUM_PATH or Playwright's browser,
+and stores artifacts under OVERLAY_TEST_OUTPUT (a temporary folder by default).
+Native suites sharing port 18777 run sequentially. Browser suites use at most
+two workers. Pass test filenames after `npm test --` to select checks.
 
-For browser checks, serve app/ at http://127.0.0.1:8765, then run `node smoke.cjs`.
-It uses Chromium at /usr/bin/chromium (adjust executablePath on other systems).
-`node bridge-test.cjs` exercises main.cjs with a mocked Electron shell and real
-loopback HTTP/SSE. Windows executable launch, hardware mapping, background
-sampling and OBS capture remain unverified.
+`npm run build:win -- --publish never` packages the Windows x64 ZIP, including
+START-HERE.txt beside the executable. Packaging is separate from release approval.
+See RELEASE-READINESS.md for the current record and Windows/hardware gates.
 
 ## Next integration milestone
 
@@ -66,7 +69,7 @@ Serve app/ at port 8766 and run `node colors-effects-test.cjs`. It verifies
 rest/pressed color independence, inheritance, backward compatibility, invalid
 project rejection, Home clipping, effect animation/decay, transparency,
 autosave/undo and exported HTML. Colors live in optional buttonColors entries
-with rest/pressed hex values. Missing entries inherit baseColor and pressed.
+with rest/pressed hex values. Missing entries inherit buttonBaseColor and pressed.
 Older version-1 projects default to an empty map and effect=none.
 
 Button clip paths and symbols are parsed once from the supplied SVGs, then
@@ -203,3 +206,67 @@ reset/Undo, preserved finishes across anime presets, save/reopen and offline exp
 Set STUDIO_URL to the local app server. tools/capture-surface-review.cjs produces
 preview figures from the actual renderer. Physical controller/OBS and a range of
 Windows graphics-driver configurations still require hardware validation.
+
+## Held local editor polish (0.8.1 candidate)
+
+See REVIEW-QOL.md for the review and validation record. editor-ux.js owns editor
+history sessions, action readiness/busy states, panel scrolling, preview feedback,
+autosave scheduling and OBS publication status. It is UI-only and is excluded from
+the standalone HTML runtime. Renderer/texture image replacement keeps the last
+valid image and commits only the latest decoded request. The later input/lifecycle passes are recorded in REVIEW-INPUTS.md and
+REVIEW-LIFECYCLE.md. It has not been pushed or released.
+
+## Held local setup flow
+
+See REVIEW-SETUP.md. setup.js owns saved input-source selection, first-use help
+preferences and desktop bridge status polling. main.cjs/preload.cjs expose readonly
+getSetupState and fixed-port retryBridge methods. No arbitrary URL/port is accepted.
+The bridge preserves its existing URL and saved HTML path; publication checks
+readiness before writing. Polling reports an overlay-page connection rather than
+asserting client identity. setup-flow-test.cjs and setup-bridge-test.cjs cover the
+complete setup and recovery paths. No release was triggered for this work.
+
+## Release-candidate completion
+
+lifecycle.js samples/forwards input, handles page/device interruptions and owns
+renderer loading/retry. Editor-only setup and history helpers are not serialized
+into standalone HTML. Artwork decoding follows the active artwork/texture mode;
+unused embedded source images remain in project data without blocking exports.
+
+main.cjs writes OBS HTML and native exports to a temporary file in the destination
+folder, then renames it. Failed writes/replacements preserve the prior file and
+live overlay. A failed saved-overlay read reports a recoverable setup warning.
+New SSE clients receive the current sampled state immediately, with a one-second
+freshness check before replay. Existing source geometry and standard mapping are
+unchanged. Application/package identity remains stable to retain user data.
+
+release-flow-test.cjs covers artwork switching, inactive damaged assets, HTML/PNG,
+script-safe Unicode round trips and setup warnings. release-native-test.cjs covers
+write/rename/read failures, cleanup, saved/live consistency and fresh SSE replay.
+
+## Internal production and customer delivery
+
+production.js owns job metadata, live-signal observations, handoff gates and the
+native delivery UI. input-audit.js records physical signals only. customer-runtime.js
+is serialized only for customer exports; existing studio exports keep the SSE
+path. overlayHTML(true) selects direct customer input. The project name is now
+validated/restored and used for filenames; existing version-1 projects retain
+appearance and legacy font selection. Fresh jobs use the included Rajdhani font.
+
+main.cjs/preload expose fixed delivery methods backed by github-delivery.cjs.
+The backend uploads versioned HTML to Controlverlay-Farm, saves editable backups
+only under userData, encrypts the GitHub token with protected OS storage and never
+forwards it to public hosting. The connected HTTPS host is independent of GitHub
+Pages; Cloudflare Pages Free with Git integration is the documented business route.
+Only Contents read/write access is required. Native tests fake external requests;
+no real token, customer upload or Cloudflare deployment was used during checks.
+The farm repository itself was initialized through the user's GitHub connection.
+
+Read PRODUCTION-WORKFLOW.md for the operator workflow and remaining acceptance
+gates. Public customer URLs require the owner's one-time hosting/account setup.
+
+Repository-first delivery permits an empty hostBase. Stored records have status
+stored, a repository path and no customer URL. Adding hosting later assigns URLs
+to pending records without GitHub PUTs and permits reusing the saved token only
+for the same repository. Existing hosted records retain their URLs. Deployment
+checks reject text/plain downloads even when their bytes match the export.

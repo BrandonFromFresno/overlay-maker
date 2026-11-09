@@ -13,7 +13,7 @@ const TEXTURE_DATA=[
 function createTexturePainter(ctx,shellMask){
  const tile=document.createElement('canvas');tile.width=512;tile.height=512;const t=tile.getContext('2d');
  const layer=document.createElement('canvas');layer.width=1672;layer.height=941;const g=layer.getContext('2d');
- let tileKey='',layerKey='',source='',image=null,generation=0;
+ let tileKey='',layerKey='',source='',image=null,generation=0,loadingSrc=null,loading=null;
  function generate(kind,seed=1){
   const key=kind+'|'+seed;if(key===tileKey)return tile;tileKey=key;
   let n=seed>>>0;const random=()=>{n=(Math.imul(n,1664525)+1013904223)>>>0;return n/4294967296;};
@@ -36,8 +36,11 @@ function createTexturePainter(ctx,shellMask){
  }
  return {
   async setImage(src){
-   if(src===source){if(this.pending)await this.pending;return;}source=src;image=null;layerKey='';const token=++generation;
-   this.pending=src?(async()=>{const next=new Image();next.src=src;await next.decode();if(token===generation)image=next;})():Promise.resolve();await this.pending;
+   if(src===source){if(loadingSrc!==null){generation++;loadingSrc=null;loading=null;}return;}
+   if(src===loadingSrc)return loading;
+   const token=++generation;if(!src){source='';image=null;layerKey='';loadingSrc=null;loading=null;return;}
+   loadingSrc=src;loading=(async()=>{const next=new Image();next.src=src;await next.decode();if(token===generation){image=next;source=src;layerKey='';}})();
+   try{await loading;}finally{if(token===generation){loadingSrc=null;loading=null;}}
   },
   thumbnail(kind,seed){return generate(kind,seed);},
   draw(p){

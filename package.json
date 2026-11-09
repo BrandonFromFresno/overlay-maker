@@ -1,12 +1,14 @@
 {
   "name": "cudi-overlay-studio",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Offline GameSir G7 8K overlay editor",
   "main": "main.cjs",
   "private": true,
   "scripts": {
     "start": "electron .",
-    "build:win": "electron-builder --win zip --x64"
+    "build:win": "electron-builder --win zip --x64",
+    "check": "node tools/check.cjs",
+    "test": "node tools/test.cjs"
   },
   "devDependencies": {
     "electron": "^39.0.0",
@@ -18,6 +20,7 @@
     "productName": "Overlay Studio",
     "files": [
       "main.cjs",
+      "github-delivery.cjs",
       "app/**/*"
     ],
     "win": {
@@ -27,6 +30,12 @@
     "directories": {
       "output": "release"
     },
-    "artifactName": "Overlay-Studio-Windows-x64.${ext}"
+    "artifactName": "Overlay-Studio-Windows-x64.${ext}",
+    "extraFiles": [
+      {
+        "from": "START-HERE.txt",
+        "to": "START-HERE.txt"
+      }
+    ]
   }
 }

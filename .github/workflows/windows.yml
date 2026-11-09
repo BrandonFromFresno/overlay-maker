@@ -8,7 +8,7 @@ permissions:
 jobs:
   windows:
     runs-on: windows-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
       CSC_IDENTITY_AUTO_DISCOVERY: 'false'
     steps:
@@ -20,23 +20,15 @@ jobs:
       - name: Install build dependencies
         run: npm ci --no-audit --no-fund
       - name: Check JavaScript syntax
-        run: |
-          node --check main.cjs
-          node --check app/studio.js
-          node --check app/renderer.js
-          node --check app/fonts.js
-          node --check app/presets.js
-          node --check app/themes.js
-          node --check app/surfaces.js
-          node --check app/holographic.js
-          node --check app/surface-ui.js
-          node --check app/textures.js
-          node --check app/texture-ui.js
-          node --check app/preset-ui.js
-      - name: Test local OBS bridge
-        run: node bridge-test.cjs
+        run: npm run check
+      - name: Install browser for verification
+        run: npx playwright install chromium
+      - name: Test editor, exports and local OBS bridge
+        run: npm test
+        env:
+          OVERLAY_TEST_OUTPUT: ${{ runner.temp }}/overlay-checks
       - name: Build Windows x64 ZIP
-        run: npm run build:win
+        run: npm run build:win -- --publish never
       - name: Upload downloadable app
         uses: actions/upload-artifact@v4
         with:

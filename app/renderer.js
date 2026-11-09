@@ -2,7 +2,8 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  await Promise.all(Object.entries(fontAssets).map(async([family,record])=>{
   const alias='OSL '+family;
   const existing=Array.from(document.fonts).find(face=>face.family.replaceAll('"','')===alias);
-  if(existing){await existing.loaded;return;}
+  if(existing&&existing.status!=='error'){await existing.loaded;return;}
+  if(existing)document.fonts.delete(existing);
   const face=new FontFace(alias,`url("${record.source}")`,{weight:record.weight});
   document.fonts.add(face);await face.load();
  }));
@@ -48,6 +49,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   path.closePath();faces[key].path=path;
  }
  let logo = null, logoSrc = '', tintColor = '', lastActive = -Infinity;
+ let logoRequest=0,logoLoadingSrc=null,logoLoading=null;
  const tinted = {}, capCache = new Map(), shoulderCache = new Map();
  function tint(image, color, width, height) {
   const c = document.createElement('canvas'); c.width = width; c.height = height;
@@ -76,7 +78,9 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  }
  function cap(key, color) {
   const id = key + color;
-  if (!capCache.has(id)) { if (capCache.size >= 32) capCache.clear(); capCache.set(id, tint(images[key], color, 180, 180)); }
+  if (!capCache.has(id)) { if (capCache.size >= 32) capCache.clear(); const c=tint(images[key],color,180,180),g=c.getContext('2d');
+   // The supplied crop includes socket/rim pixels. Only the rubber cap moves.
+   g.globalCompositeOperation='destination-in';g.beginPath();g.arc(90,90,86,0,Math.PI*2);g.fill();g.globalCompositeOperation='source-over';capCache.set(id,c); }
   return capCache.get(id);
  }
  function mix(a, b, t) {
@@ -84,6 +88,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   const av = rgb(a), bv = rgb(b);
   return '#' + av.map((v,i) => Math.round(v+(bv[i]-v)*t).toString(16).padStart(2,'0')).join('');
  }
+ function contrast(color){return (parseInt(color.slice(1,3),16)*.2126+parseInt(color.slice(3,5),16)*.7152+parseInt(color.slice(5,7),16)*.0722)>145?'#142126':'#ffffff';}
  function rainbow(time, seconds) {
   const h = ((time / (seconds * 1000)) % 1 + 1) % 1;
   return '#' + [0,8,4].map(n => {const k=(n+h*12)%12;return Math.round(255*(.5-.5*Math.max(-1,Math.min(k-3,9-k,1)))).toString(16).padStart(2,'0');}).join('');
@@ -101,11 +106,13 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   const gradient=ctx.createLinearGradient(x,y-55,x,y+65);
   gradient.addColorStop(0,mix(color,'#ffffff',pressed?.24:.08)); gradient.addColorStop(1,mix(color,'#000000',.12));
   if(key==='LB'||key==='RB'){if(!shoulderCache.has(color)){if(shoulderCache.size>=4)shoulderCache.clear();shoulderCache.set(color,tint(images.base,color,1672,941));}ctx.drawImage(shoulderCache.get(color),0,0);}else{ctx.fillStyle=gradient;ctx.fill(f.path);}
-  ctx.strokeStyle=mix(color,'#000000',.5); ctx.lineWidth=2; ctx.stroke(f.path);
+  // The shoulder artwork already carries its seam. An extra vector stroke can paint
+  // transparent edge pixels outside the photographed bumper.
+  if(key!=='LB'&&key!=='RB'){ctx.strokeStyle=mix(color,'#000000',.5);ctx.lineWidth=2;ctx.stroke(f.path);}
   if (pressed) {
    ctx.translate(x,y);
    // One circular emblem and a single X silhouette, safely inside the chrome rim.
-   const ink=(parseInt(color.slice(1,3),16)*.2126+parseInt(color.slice(3,5),16)*.7152+parseInt(color.slice(5,7),16)*.0722)>145?'#142126':'#ffffff';
+   const ink=contrast(color);
    if (key==='Home') {
     ctx.save(); ctx.beginPath(); ctx.arc(0,0,25,0,Math.PI*2); ctx.clip();
     ctx.fillStyle=ink; ctx.fillRect(-25,-25,50,50);
@@ -124,15 +131,23 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   if(pressure){ctx.strokeStyle=pressed;ctx.beginPath();ctx.arc(x,y,109,right?-1.5:2.4,(right?-1.5:2.4)+2.24*pressure);ctx.stroke();}
   label(Math.round(pressure*100)+'%',x,y,30,pressed);
   lc.clearRect(0,0,1672,941);lc.drawImage(images[right?'rt':'lt'],0,0,185,200);
-  lc.globalCompositeOperation='source-in';lc.fillStyle=pressure?mix(mix(pressed,'#ffffff',.6),pressed,pressure):rest;lc.fillRect(0,0,185,200);lc.globalCompositeOperation='source-over';
+  lc.globalCompositeOperation='source-in';lc.fillStyle=mix(rest,pressed,pressure);lc.fillRect(0,0,185,200);lc.globalCompositeOperation='source-over';
+  // Keep trigger lettering inside the original silhouette, including its slanted edge.
+  if(pressure){lc.globalCompositeOperation='source-atop';lc.font='700 29px Segoe UI, Arial, sans-serif';lc.textAlign='center';lc.textBaseline='middle';lc.fillStyle=contrast(mix(rest,pressed,pressure));lc.fillText(right?'RT':'LT',right?90:92,124);lc.globalCompositeOperation='source-over';}
   ctx.drawImage(layer,0,0,185,200,right?1090:365,38,185,200);
-  if(pressure)label(right?'RT':'LT',right?1180:457,162,29,mix(pressed,'#000000',.7));
  }
  return {
   hitTest(x,y){for(const key of faceKeys)if(ctx.isPointInPath(faces[key].path,x,y))return key;if(Math.hypot(x-456,y-290)<90)return 'LSB';if(Math.hypot(x-1033,y-523)<90)return 'RSB';if(y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
   async setTexture(src){await texturePainter.setImage(src||'');},
-  async setLogo(src) {if(src===logoSrc)return;logoSrc=src;logo=null;if(src){const image=new Image();image.src=src;await image.decode();if(logoSrc===src)logo=image;}},
+  async setLogo(src) {
+   if(src===logoSrc){if(logoLoadingSrc!==null){logoRequest++;logoLoadingSrc=null;logoLoading=null;}return;}
+   if(src===logoLoadingSrc)return logoLoading;
+   const token=++logoRequest;if(!src){logo=null;logoSrc='';logoLoadingSrc=null;logoLoading=null;return;}
+   logoLoadingSrc=src;logoLoading=(async()=>{const next=new Image();next.src=src;await next.decode();if(token===logoRequest){logo=next;logoSrc=src;}})();
+   try{await logoLoading;}finally{if(token===logoRequest){logoLoadingSrc=null;logoLoading=null;}}
+  },
   draw(p,state={},time=0,peak=false) {
+   state=normalizeOverlayInput(state);
    const rawTime=time;themePainter.update(p,state,rawTime);time=p.animationMode==='still'?1200:p.animationMode==='reduced'?time*.35:time;
    const colors=p.buttonColors||{}, color=(key,which)=>colors[key]?.[which]||(which==='rest'?(p.buttonBaseColor||'#ffffff'):p.pressed);
    const effect=p.effect||'none', amount=(p.effectIntensity??.6)*(p.animationMode==='reduced'?.45:1), seconds=p.effectSpeed||5;
@@ -166,11 +181,28 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    for(const key of faceKeys)if(state[key])face(key,color(key,'pressed'),true);
    themePainter.controls(p,state,time);
    [[456,290,'leftStick','LSB',0],[1033,523,'rightStick','RSB',2]].forEach(([x,y,key,button,i])=>{
-    const axes=state.axes||[];x+=(axes[i]||0)*38;y+=(axes[i+1]||0)*38;ctx.drawImage(cap(key,color(button,'rest')),x-90,y-90,180,180);
-    if(state[button]){ctx.fillStyle=color(button,'pressed');ctx.globalAlpha=.85;ctx.beginPath();ctx.arc(x,y,68,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;label(button==='LSB'?'L3':'R3',x,y,33,mix(color(button,'pressed'),'#000000',.8));}
+    const axes=state.axes;
+    ctx.save();ctx.beginPath();ctx.arc(x,y,105,0,Math.PI*2);ctx.clip();
+    x+=axes[i]*38;y+=axes[i+1]*38;
+    const pressed=state[button],ink=color(button,pressed?'pressed':'rest');
+    ctx.drawImage(cap(key,ink),x-90,y-90,180,180);
+    if(pressed){ctx.save();ctx.beginPath();ctx.arc(x,y,86,0,Math.PI*2);ctx.clip();label(button==='LSB'?'L3':'R3',x,y,33,contrast(ink));ctx.restore();}
+    ctx.restore();
    });
    ctx.restore();trigger(242,state.LT||0,false,color('LT','rest'),color('LT','pressed'));trigger(1430,state.RT||0,true,color('RT','rest'),color('RT','pressed'));ctx.restore();
   }
  };
 }
-function readStandardGamepad(pad){const keys=['A','B','X','Y','LB','RB','LT','RT','Share','Options','LSB','RSB','DPad_Up','DPad_Down','DPad_Left','DPad_Right','Home'];const out={axes:Array.from(pad.axes||[])};keys.forEach((k,i)=>{out[k]=i===6||i===7?(pad.buttons[i]?.value||0):!!pad.buttons[i]?.pressed;});return out;}
+// Shared by live input, previews and exported overlays. No dead zone or easing delays presses.
+function normalizeOverlayInput(state={}){
+ const number=(v,min,max)=>typeof v==='number'&&Number.isFinite(v)?Math.max(min,Math.min(max,v)):0;
+ const out={axes:Array.from({length:4},(_,i)=>number(state?.axes?.[i],-1,1))};
+ for(const i of [0,2]){const length=Math.hypot(out.axes[i],out.axes[i+1]);if(length>1){out.axes[i]/=length;out.axes[i+1]/=length;}}
+ for(const key of ['A','B','X','Y','LB','RB','Home','Share','Options','Capture','M','DPad_Up','DPad_Down','DPad_Left','DPad_Right','LSB','RSB'])out[key]=state?.[key]===true||number(state?.[key],0,1)>.5;
+ out.LT=number(state?.LT,0,1);out.RT=number(state?.RT,0,1);return out;
+}
+function readStandardGamepad(pad){
+ const keys=['A','B','X','Y','LB','RB','LT','RT','Share','Options','LSB','RSB','DPad_Up','DPad_Down','DPad_Left','DPad_Right','Home'];
+ if(!pad||pad.connected===false)return normalizeOverlayInput();
+ const out={axes:pad.axes};keys.forEach((k,i)=>{out[k]=i===6||i===7?pad.buttons?.[i]?.value:pad.buttons?.[i]?.pressed;});return normalizeOverlayInput(out);
+}

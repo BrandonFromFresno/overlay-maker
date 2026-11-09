@@ -1,0 +1,63 @@
+// Keep device lifecycle and page interruptions separate from the saved design.
+const disconnectedDeviceKeys=new Set();
+let inputFrameId=null,inputPaused=false,rendererLoading=false,lastInputTime=0;
+function controllerPads(){
+ try{const pads=navigator.getGamepads?Array.from(navigator.getGamepads()):[];deviceReadError=navigator.getGamepads?'':'Controller input is unavailable in this browser. Use the Windows app.';return pads;}
+ catch{deviceReadError='Controller access is unavailable. Allow controller access in this browser, or reopen the Windows app.';return [];}
+}
+function forwardControllerInput(actual,time,force=false){
+ if(!window.desktop?.input)return;
+ const signature=JSON.stringify(actual);
+ if(force||signature!==lastBridgeState||time-lastBridge>=250){
+  try{window.desktop.input(actual);lastBridgeState=signature;}catch{/* A closing desktop bridge must not stop the preview. */}
+  lastBridge=time;
+ }
+}
+function renderInputFrame(time){
+ if(inputPaused)return;
+ const pad=updateControllerSetup(controllerPads()),actual=pad?readStandardGamepad(pad):{};
+ const feedback=controllerFeedback(pad);if($('controllerStatus').textContent!==feedback)$('controllerStatus').textContent=feedback;
+ forwardControllerInput(actual,time);observeProductionInput(pad,actual);lastInputTime=time;
+ if(!rendererReady)return;
+ let visible=mode==='live'?actual:input;
+ if(mode==='demo'){visible={axes:[Math.sin(time/700)*.6,Math.cos(time/700)*.6,0,0],LT:(1+Math.sin(time/700))/2,RT:(1+Math.cos(time/900))/2};visible[keys[Math.floor(time/500)%keys.length]]=true;}
+ renderer.draw(project,visible,time,mode==='peak');
+}
+function scheduleInputFrame(){
+ if(inputPaused||!rendererReady||inputFrameId!==null)return;
+ inputFrameId=requestAnimationFrame(time=>{inputFrameId=null;renderInputFrame(time);scheduleInputFrame();});
+}
+async function loadOverlayRenderer(){
+ if(rendererLoading)return;rendererLoading=true;rendererReady=false;
+ $('retryLoad').hidden=true;$('retryLoad').disabled=true;$('previewLoading').hidden=false;$('previewLoading').textContent='Loading controller artwork…';
+ document.querySelector('main').setAttribute('aria-busy','true');syncProjectActions();status('Loading controller template…');
+ try{
+  renderer=await createOverlayRenderer($('canvas'),ASSET_DATA,FONT_DATA);sync();
+  let warning=startupNotice;
+  try{await logoPending;}catch{warning='Saved artwork or texture could not load. Replace the image or open a valid project.';}
+  rendererReady=true;$('previewLoading').hidden=true;
+  status('Ready. '+(warning||'Choose your shell color, add artwork, and drag to position.'),warning?'warning':'info');
+  renderInputFrame(performance.now());scheduleInputFrame();
+ }catch(error){
+  $('previewLoading').textContent='Controller artwork could not load. Choose Retry loading.';$('retryLoad').hidden=false;
+  status('Controller artwork could not load. Retry loading to keep working with your current design.','error');
+ }finally{rendererLoading=false;$('retryLoad').disabled=false;document.querySelector('main').setAttribute('aria-busy','false');syncProjectActions();}
+}
+function initializeInputLifecycle(){
+ // Release the old page's state before waiting for assets or restored images.
+ forwardControllerInput({},performance.now(),true);
+ window.addEventListener('gamepaddisconnected',event=>{
+  if(!event.gamepad)return;disconnectedDeviceKeys.add(gamepadKey(event.gamepad));renderInputFrame(performance.now());
+ });
+ window.addEventListener('gamepadconnected',event=>{
+  if(!event.gamepad)return;disconnectedDeviceKeys.delete(gamepadKey(event.gamepad));renderInputFrame(performance.now());
+ });
+ window.addEventListener('pagehide',()=>{
+  inputPaused=true;if(inputFrameId!==null)cancelAnimationFrame(inputFrameId);inputFrameId=null;
+  forwardControllerInput({},performance.now(),true);
+  if(rendererReady&&mode==='live')renderer.draw(project,{},lastInputTime);
+ });
+ window.addEventListener('pageshow',()=>{
+  inputPaused=false;renderInputFrame(performance.now());scheduleInputFrame();
+ });
+}

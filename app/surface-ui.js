@@ -6,7 +6,7 @@ function validateSurfaceSettings(value,p){
  p.holoStyle=value.holoStyle??defaults.holoStyle;if(!HOLO_DATA.some(h=>h.id===p.holoStyle))throw Error('Unknown holographic finish');p.holoBlend=value.holoBlend??defaults.holoBlend;if(!['source-over','overlay','screen','multiply','soft-light'].includes(p.holoBlend))throw Error('Invalid holographic blend');
 }
 function holoStyleValues(id){const h=HOLO_DATA.find(h=>h.id===id);return {holoStyle:h.id,holoZoom:h.zoom,holoComplexity:h.complexity,holoWashout:h.washout,holoWhiteMix:h.whiteMix};}
-function surfaceEdit(values,message){checkpoint();Object.assign(project,values,{presetId:''});sync();persist();if(message)status(message);}
+function surfaceEdit(values,message){if(Object.entries(values).every(([key,value])=>project[key]===value)){if(message)status(message);return;}checkpoint();Object.assign(project,values,{presetId:''});sync();persist();if(message)status(message);}
 function syncSurfaceControls(){
  const p=PATTERN_DATA.find(x=>x.id===project.shellPattern),e=EFFECT_DATA.find(x=>x.id===project.effect),h=HOLO_DATA.find(x=>x.id===project.holoStyle),outlined=!['none','checker','slashes','stars','halftone','split','carbon','camo','sunburst'].includes(project.shellPattern);
  $('patternDescription').textContent=p?.description||'';$('effectDescription').textContent=e?.description||'';$('holoDescription').textContent=h?.description||'';

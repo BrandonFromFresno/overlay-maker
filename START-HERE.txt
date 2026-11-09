@@ -1,142 +1,106 @@
-OVERLAY STUDIO — EARLY WINDOWS BUILD (0.8.0)
+OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.8.1 WINDOWS PRERELEASE
 
-1. Extract the ENTIRE ZIP into a folder on your Windows x64 computer.
-2. Open Overlay Studio.exe. Keep all of the adjacent files and folders.
-3. Start with PLAYER text, type your own wordmark, or Import PNG / JPEG logo.
-   The original Cudi example is optional under Reference presets.
-   New neutral design resets the editor; Undo restores your previous work.
-4. Choose Gamepad base color, accent colors, glow and breathing speed.
-   Move controller is selected by default: grab the preview and drag.
-   Choose Move artwork to drag custom text or a logo separately.
-   Center controller restores its position. Arrow keys nudge the selected
-   target; hold Shift for 10 pixels. Content outside the canvas is cropped.
-5. Use Peak glow and the input preview buttons to check legibility.
-6. Save project to keep an editable .overlay file with its artwork embedded.
+This application is for the producer. Customers receive a hosted overlay URL.
 
-OBS
-Choose Export & OBS, then Create / update OBS URL. Add a Browser Source with this URL:
-http://127.0.0.1:18777/overlay
-Set Width 1672 and Height 1241. Keep Overlay Studio running.
-After updating the design, create/update the URL again, then refresh the source
-in OBS. Turn off "Shutdown source when not visible" if you want the connection
-to stay open between scenes.
+START
+1. Extract the entire Windows ZIP. Open Overlay Studio.exe and keep the
+   adjacent files and folders together. Run one copy at a time.
+2. Connect your GameSir G7 8K in PC / XInput mode. Focus the app and press a
+   button. The preview starts in Live controller mode automatically.
+3. Check Controller input for connection feedback. Auto keeps the active
+   compatible device; choose Input device to use a specific controller.
+   If a selected device reconnects in another browser slot, select it again.
+4. Use Shell, Buttons, Artwork, Effects, Layout, Holographic, Textures and
+   Presets to customize the existing G7 artwork. Drag the preview to move the
+   controller, or choose Move artwork to position your text/logo separately.
+   Arrow keys nudge; hold Shift for 10 pixels. Content outside the canvas crops.
+5. Artwork lets you choose Text artwork, import a PNG/JPEG logo, and return
+   to Use imported logo after trying text. The Cudi reference is optional.
+6. Save project creates an editable .overlay backup with its images embedded.
+   Autosave restores the last design on this computer when storage is available.
+   Ctrl+S saves; Ctrl+O opens; Ctrl+Z undoes; Ctrl+Shift+Z redoes.
 
-LIVE CONTROLLER INPUT
-Connect the controller, focus the editor, and press a button. The connection
-label shows detection. Live controller lets you inspect standard buttons,
-sticks and trigger pressure. The OBS bridge always sends physical controller
-input; preview simulations are never sent to OBS.
-Only devices reported with standard browser gamepad mapping are supported.
-GameSir M and vendor-specific controls have no live mapping in this build.
-Home/Capture availability depends on what Windows/browser exposes.
-Keep the editor open and visible for the initial physical-controller check.
-The local bridge uses port 18777; run one copy of Overlay Studio at a time.
+CUSTOMER DELIVERY — REPOSITORY FIRST
+Use BrandonFromFresno/Controlverlay-Farm as the single upload repository.
+In Export & OBS > Customer delivery > GitHub connection, enter a fine-grained
+GitHub token scoped to that repository, Contents read/write only. Leave Free
+hosting URL empty for now. Windows protects the token; never send it to
+customers or paste it into chat.
+Uploads are marked Saved in the repository and show their file path. They
+are not yet live browser-source URLs. Customer handoff remains disabled.
 
-EXPORTS
-Export overlay HTML creates a self-contained visual with embedded artwork.
-Its live input still comes from the running desktop app on this computer.
-Export PNG still creates a transparent image at peak glow; it has no motion.
-Save project creates an editable JSON-based .overlay project.
-Autosave is a convenience; use Save project for backups, especially large logos.
+HOSTING LATER (OPTIONAL)
+Connect the repository to Cloudflare Pages Free: main branch, framework None,
+no build command, output directory /. Save its HTTPS pages.dev URL in the app.
+Leave the token empty to reuse this repository's protected connection. Stored
+overlays get URLs without another upload. No paid hosting plan, purchased
+domain or Cloudflare API token is required within free limits.
 
-OFFLINE
-After downloading and extracting this build, no installation, account, internet,
-Node.js or separate GameSir server is needed to run it. The OBS bridge is local.
+CUSTOMER DELIVERY — EACH JOB
+Name the job before saving; filenames use that name. Customize a reusable
+configuration, then run Verify customer inputs with the physical controller.
+The check observes press/release, trigger depth, full stick travel and diagonals.
+Home is optional where exposed; vendor-only buttons remain preview-only.
+Use included fonts for delivery text so customers need no font installation.
+Upload customer overlay saves a private editable backup and sends one finished
+page to the repository. Earlier customer versions are preserved. Wait for the
+live-URL check, test that URL in OBS/Streamlabs with the game focused and after
+reconnect, then confirm and copy the handoff. Reopen earlier deliveries from
+private backups without changing their existing customer URLs.
+Customers only add the supplied Browser Source URL at 1672 x 1241. They do
+not install this application, assemble assets or edit code. The customer page
+reads their own controller directly; it does not need your local bridge.
 
-EARLY BUILD LIMITS
-The original Cudi appearance is reused from your supplied CSS. This is a
-raster/vector template, not an editable 3D controller model. Base color is a tint of the existing shell and controls, retaining their
-texture and seams; the original neutral base contains faint baked artwork.
-New logos do not recreate a physical printed finish automatically. Rotation and
-position controls affect custom text/logos; Original Cudi placement stays fixed.
-The native GameSir frontend is not included and this app does not patch it.
+STUDIO OBS TESTING (NOT A CUSTOMER URL)
+1. Open Export & OBS, then choose Send design to OBS.
+2. In OBS: Sources > + > Browser > Create new. Leave Local file OFF.
+3. Paste http://127.0.0.1:18777/overlay
+4. Set Width to 1672 and Height to 1241. Keep Overlay Studio running.
+5. After editing, choose Update OBS overlay, then refresh the Browser Source.
+   Older exported HTML files do not update themselves.
 
-Verified here: Chromium editing, save/open, undo/redo, autosave, invalid project
-handling, responsive layouts and independently rendered exported HTML. Local
-publish/SSE bridge and native save handlers were tested with a mocked Electron
-shell. The packaged Windows application, physical G7 8K and actual OBS capture
-still require testing on Windows. This is an unsigned early build.
+Overlay page connected means a browser source/page has connected to the local
+bridge; confirm the picture in OBS. If the connection is unavailable, close
+other copies of Overlay Studio and use Retry local connection.
 
-INDIVIDUAL COLORS AND EFFECTS
-In Individual button colors, choose a button. Uncheck Use default button color
-or Use global pressed color to set a custom color. Resting and pressed colors
-are independent. Preview selected press shows that input; Clear input preview
-releases all simulated inputs. Reset all button colors restores inheritance.
-All 19 controls have color settings, including each D-pad direction, L3/R3,
-LT/RT and Home. Vendor-only inputs can still only be previewed until a host
-adapter provides them.
+INPUT AND PREVIEWS
+Only standard browser gamepad mapping is supported. Home depends on what
+Windows exposes. Capture, M and vendor-only inputs remain preview-only.
+Preview & test options contains Rest, Peak glow, demo and simulated presses.
+Those simulations are not forwarded to OBS: OBS receives physical input.
+Disconnecting releases physical input. Page interruptions release it too;
+unclean interruptions use a one-second stale-input timeout in the overlay.
 
-Special effects has None, Rainbow accents, Neon pulse and Reactive input flash.
-Intensity changes the strength. Cycle controls rainbow/neon animation timing.
-Reactive flash is clipped to the shell and fades over 600 ms after release.
-Effects are applied by the same renderer in preview, OBS, HTML and PNG exports.
-PNG exports remain still images. Re-send to OBS and refresh the source after
-changing your design. Old projects inherit the global colors with effects off.
+EXPORTS AND FONTS
+Export overlay HTML embeds the selected visual assets and included font.
+Live input still requires this computer's running desktop app/local bridge.
+Export PNG still saves a transparent 1672 x 1241 image at peak glow.
+Included fonts work offline. Fonts on this computer uses installed families;
+install the same system font on another computer that displays the overlay.
+Font source/license notices are included inside resources/app.asar.
 
-NEW MENU AND FONT LIBRARY
-Shell: main base/accent/input colors.
-Buttons: individual colors; click a button on the preview to select it.
-Artwork: text/logo, font library or installed fonts, weight, italic, size/angle.
-Effects: rainbow/neon/reactive, with ambient settings under the disclosure.
-Layout: grab-to-move controls, centering, and optional precise coordinates.
-Project options holds the New neutral design button.
-Export & OBS opens the OBS setup, HTML export and PNG export dialog.
+RECOVERY
+Retry loading retries controller artwork/font loading without resetting your
+current design. Invalid saved artwork can be replaced, or select Text artwork.
+If autosave is unavailable, save a project file. Refresh/reopen restores the
+saved design and selected device; simulated presses are temporary.
+New neutral design resets the appearance; Undo restores your work.
 
-Included offline fonts: Rajdhani, Orbitron, Oxanium, Teko, Bebas Neue,
-Barlow Condensed, Montserrat and Inter. Their SIL Open Font Licenses are
-included under resources/app.asar (app/fonts/licenses in the source).
-The selected included font is embedded with its license in exported HTML.
-Windows installed-font discovery reads family names using System.Drawing.
-System fonts are used locally and are not copied into the export: install the
-same font on other computers before displaying that overlay there.
+KNOWN LIMITS
+This prerelease is unsigned and intended for producer acceptance testing. Windows executable
+launch, physical G7 input, focus/minimize behavior and OBS capture need final
+hardware validation. Nothing in browser tests measures 8 kHz polling/latency.
+The provided base has faint baked reference artwork. The controller is an
+existing 2D raster/vector template; this editor does not create a 3D model.
+Hard crashes/power loss may lose edits inside the autosave debounce window.
 
-SHELL SEPARATION AND ANIME PRESETS (0.5)
-Shell color no longer recolors buttons, sticks, bumpers or triggers. Use
-Buttons > All-button defaults for a separate resting/pressed palette. Individual
-button overrides remain independent. Older projects keep their previous default
-button color when opened; future shell edits leave it alone.
+No account, Node.js, internet or GameSir server is required to run the extracted
+app. Reference websites are optional. Imported textures and projects stay local.
 
-Presets contains 16 anime-inspired palettes with original procedural patterns,
-fonts and effects. Applying a preset preserves positions, angles and artwork size.
-Uncheck Include preset wordmark to preserve your own text/logo and font choices.
-Undo restores the entire previous design in one step. All settings remain editable.
-
-Seven additional effects: Energy aura, Aura waves, Lightning, Manga speed lines,
-Drifting embers, Halftone pulse and Energy sweep. Shell patterns/effects avoid
-physical controls. Included preset artwork is procedural motifs and wordmarks,
-rather than character illustrations. All presets and effects work offline.
-
-ANIME THEME ARTWORK (0.6)
-18 themes now have button artwork, Home emblems, shell details and animation.
-Try Limit Break for 1-to-4-star Dragon Balls, Ninja Way for a Rasengan Home,
-or Scarlet Eye for a rotating Sharingan. Flame Heart adds another Slayer variant.
-Presets has actual controller previews and search by anime/theme/effect.
-Effects > Signature artwork lets you mix ABXY, Home and shell treatments.
-Themed faces use their own material; individual pressed colors light the rim.
-Keep ABXY labels, remove theme artwork, or choose reduced/still motion as needed.
-Energy rings fire once per press. Still mode retains live input feedback.
-Uncheck Include preset wordmark to preserve all of your own artwork placement.
-Republish the OBS URL and refresh the Browser Source to use the updated design.
-
-ANIME POLISH AND TEXTURES (0.7)
-Preset motifs now include straw hats, spirit butterflies, hunter badges, ladybugs,
-kaiju masks and round glasses. Favorite themes, play a demo, keep your custom
-palette, and restore a customized theme without replacing artwork or texture.
-Textures has eight original offline finishes plus a personal JPG/PNG library.
-Browse tttexture to download photographic textures, then import them locally.
-Adjust blend, invert light/dark, strength, scale and rotation. PNG alpha is kept.
-Textures stay off controls and survive preset changes. Save your project to keep
-its selected image embedded; republish and refresh OBS after editing the design.
-The fffuel source images are not bundled because its license bars redistribution.
-
-PATTERNS, EFFECTS AND HOLOGRAPHIC FINISHES (0.8)
-Shell has 20 patterns plus None. Browse grouped choices, step Previous/Next or
-search the preview gallery. Adjust strength, scale, angle and accent/custom ink.
-Effects has 18 choices plus None, with improved fades and continuous lightning,
-new rain/snow/fireflies/comets/vortex/prism/silk effects and detail controls.
-Holographic adds eight offline liquid and iridescent finishes. Choose a finish,
-then adjust zoom, complexity, color washout, white mix, hue and blend. Toggle motion
-for this layer or use global Still mode. Textures and patterns layer above it.
-Every surface stays clear of controls and transparency. Projects and exports carry
-the finish without needing the reference website. Old projects keep it disabled.
-Republish the local OBS URL and refresh the Browser Source after editing a design.
+FREE HOSTING CAPACITY AND TARGET-APP CHECK
+Cloudflare Pages Free currently allows 500 builds/month, 20,000 files/site
+and 25 MiB/file. The app rejects customer files exceeding the file limit.
+Each retained version counts separately; review repository growth as it grows.
+Browser-host background-input regressions exist, including OBS 33.0.1 on
+Windows. Test the exact supported OBS/Streamlabs version before handoff.
+Hosting alone cannot make an unsupported Gamepad API work.
