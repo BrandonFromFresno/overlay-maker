@@ -1,4 +1,16 @@
-# Current candidate: 0.10.0 original VFX and button-material prerelease
+# Current candidate: 0.11.0 default overlay and abstract waves prerelease
+
+Prepared November 10, 2026 (America/Los_Angeles). Publication follows the user's
+standing instruction to publish after successful checks. The editor now provides
+an explicit template escape and an original offline abstract shell layer; see
+[ABSTRACT.md](ABSTRACT.md). Existing jobs migrate with the new layer disabled.
+Controller source artwork, geometry and mapping are unchanged.
+
+Windows publication requires syntax checks and all 24 suites on the exact source
+SHA, followed by archive integrity, required-file and SHA-256 checks. Physical
+Windows controller and OBS/Streamlabs acceptance remain manual; this is a prerelease.
+
+# Historical release: 0.10.0 original VFX and button-material prerelease
 
 Publication authorized after successful checks on November 9, 2026
 (America/Los_Angeles). Original time-based effects, rebuilt button materials,

@@ -80,7 +80,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  for(const [x,y,r] of [[833.28,209.7,65],[634.34,529.42,124],[456,290,125],[1033,523,125]]){cm.beginPath();cm.arc(x,y,r,0,Math.PI*2);cm.fill();}
  const shellMask=document.createElement('canvas');shellMask.width=1672;shellMask.height=941;
  const sm=shellMask.getContext('2d');sm.drawImage(images.base,0,0,1672,941);sm.globalCompositeOperation='destination-out';sm.drawImage(controlMask,0,0);sm.globalCompositeOperation='source-over';
- const themePainter=createThemePainter(ctx,faces,shellMask),texturePainter=createTexturePainter(ctx,shellMask),surfacePainter=createSurfacePainter(ctx,shellMask),holoPainter=createHolographicPainter(ctx,shellMask);
+ const themePainter=createThemePainter(ctx,faces,shellMask),texturePainter=createTexturePainter(ctx,shellMask),surfacePainter=createSurfacePainter(ctx,shellMask),holoPainter=createHolographicPainter(ctx,shellMask),abstractPainter=createAbstractPainter(ctx,shellMask);
 
  // Native skin art is fitted uniformly into the existing body layer. The supplied
  // SVG control paths and placement data use GameSir's 1000×720 reference space.
@@ -196,6 +196,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  }
  return {
   hitTest(x,y){for(const key of faceKeys)if(ctx.isPointInPath(faces[key].path,x,y))return key;for(const[sx,sy,,key,,radius]of stickLayout)if(Math.hypot(x-sx,y-sy)<radius*90/86)return key;if(y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
+  abstractPhase:()=>abstractPainter.phase(),
   async setTexture(src){await texturePainter.setImage(src||'');},
   async setLogo(src) {
    if(src===logoSrc){if(logoLoadingSrc!==null){logoRequest++;logoLoadingSrc=null;logoLoading=null;}return;}
@@ -215,7 +216,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    const strength=peak?1:effect==='neon'?(.42+.58*pulse):(.08+.92*breathe);
    const glow=p.glow+(effect==='neon'?16*amount:0);
    prepareBase(p.baseColor||'#ffffff',p.buttonBaseColor||'#ffffff');ctx.clearRect(0,0,1672,1241);ctx.save();ctx.translate(p.offsetX||0,p.offsetY||0);
-   ctx.save();ctx.translate(0,300);ctx.drawImage(tinted.base,0,0,1672,941);holoPainter.draw(p,time);texturePainter.draw(p);
+   ctx.save();ctx.translate(0,300);ctx.drawImage(tinted.base,0,0,1672,941);holoPainter.draw(p,time);abstractPainter.draw(p,time);texturePainter.draw(p);
    surfacePainter.pattern(p);
    if(!['none','rainbow','neon','reactive'].includes(effect)&&amount>0)surfacePainter.effect(effect,accent,time,seconds,amount,p);
    themePainter.shell(p,state,time);themePainter.bursts(p,rawTime);

@@ -33,6 +33,7 @@ app.whenReady().then(()=>{
  ipcMain.on('input-state',(_,state)=>{lastInput=state;lastInputAt=Date.now();const msg='data: '+JSON.stringify(state)+'\n\n';for(const client of clients)if(!client.destroyed&&!client.writableEnded)client.write(msg);});
  ipcMain.handle('get-setup-state',()=>setupState());
  ipcMain.handle('retry-bridge',()=>retryBridge());
+ ipcMain.handle('open-abstract-source',()=>shell.openExternal('https://www.fffuel.co/aaabstract/'));
  ipcMain.handle('open-holo-source',()=>shell.openExternal('https://www.fffuel.co/hhholographic/'));
  ipcMain.handle('open-texture-source',()=>shell.openExternal('https://www.fffuel.co/tttexture/'));
  ipcMain.handle('list-fonts',async()=>{

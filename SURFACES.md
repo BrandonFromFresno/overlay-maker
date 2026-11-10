@@ -1,4 +1,4 @@
-# Patterns, effects and holographic finishes (0.10)
+# Patterns, effects and holographic finishes (0.11)
 
 ## Pattern picker
 
@@ -71,7 +71,7 @@ this is not a standalone general-purpose background exporter.
 
 ## Layering and offline use
 
-Order: shell base → holographic finish → texture → pattern → shell effects/theme
+Order: shell base → holographic finish → abstract waves → texture → pattern → shell effects/theme
 engraving → artwork → control faces/stick caps. Surface layers all use the same
 protected shell mask. They cannot recolor buttons, sticks, bumpers or triggers,
 and do not fill transparent background. Artwork and per-control colors remain

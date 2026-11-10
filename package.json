@@ -1,6 +1,6 @@
 {
   "name": "cudi-overlay-studio",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Offline GameSir G7 Pro 8K overlay production studio",
   "main": "main.cjs",
   "private": true,

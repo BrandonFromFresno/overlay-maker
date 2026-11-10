@@ -1,4 +1,4 @@
-# Overlay Studio 0.10.0 Windows prerelease
+# Overlay Studio 0.11.0 Windows prerelease
 
 Offline Windows-first editor using Electron, Canvas 2D, embedded SVG/PNG assets,
 standard Gamepad API input and a loopback HTTP/SSE bridge.
@@ -281,6 +281,6 @@ checks both sticks at 16 angles with rest/pressed colors and exact neutral retur
 See REVIEW-STICK-LAYERING.md for reproduction and validation.
 
 
-## GameSir gallery and production UI (0.10.0)
+## GameSir gallery and production UI (0.11.0)
 
-The launch gallery includes 13 native G7 Pro 8K skins, filtering and saved-job resume. The editor uses a central preview, right-hand inspector and persistent job header. Movement controls were moved from Layout to the preview; their original state and handlers are preserved. Setup help is collapsed by default while saved help preferences still restore. Customer delivery and studio utilities share a two-column dialog. UI-only behavior lives in app/workspace-ui.js; studio.css contains shared tokens and responsive component styles. Saved project version, application identity, input mapping and customer delivery contracts remain unchanged. See REVIEW-UI-0.10.0.md and REVIEW-START-SCREEN.md.
+The launch gallery includes 13 native G7 Pro 8K skins, filtering and saved-job resume. The editor uses a central preview, right-hand inspector and persistent job header. Movement controls were moved from Layout to the preview; their original state and handlers are preserved. Setup help is collapsed by default while saved help preferences still restore. Customer delivery and studio utilities share a two-column dialog. UI-only behavior lives in app/workspace-ui.js; studio.css contains shared tokens and responsive component styles. Saved project version, application identity, input mapping and customer delivery contracts remain unchanged. See REVIEW-UI-0.11.0.md and REVIEW-START-SCREEN.md.

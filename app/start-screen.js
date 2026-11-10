@@ -1,20 +1,21 @@
 // UI-only starting overlays. Real editor artwork and input behavior are shared with the preview.
 const STARTER_TEMPLATES=Object.entries(GAME_SIR_SKINS).map(([nativeSkin,record])=>({id:nativeSkin,name:record.name,description:'GameSir G7 Pro 8K · '+record.name+' skin. Ready to customize.',nativeSkin,baseColor:'#ffffff',buttonBaseColor:'#ffffff',accent:'#df1d34'}));
 let startScreenOpen=true,startScreenInitialized=false,selectedStarter='Gold',starterPreview=null,startThumbnailsReady=false;
+function defaultOverlayProject(){return {...defaults,buttonColors:{},text:'',breathing:false,glow:0};}
 function starterProject(id){const preset=STARTER_TEMPLATES.find(item=>item.id===id);if(!preset)throw Error('Unknown starting overlay');return {...defaults,...{baseColor:preset.baseColor,buttonBaseColor:preset.buttonBaseColor,accent:preset.accent,pressed:GAME_SIR_SKINS[preset.nativeSkin].testing.HighlightColor||'#e84950',nativeSkin:preset.nativeSkin},buttonColors:{},text:'',breathing:false,glow:0};}
 function previewProject(){return startScreenOpen&&starterPreview?starterPreview:project;}
 function chooseStarter(id){
- if(!STARTER_TEMPLATES.some(item=>item.id===id))return;selectedStarter=id;starterPreview=starterProject(id);syncStartScreen();
+ if(id!=='default'&&!STARTER_TEMPLATES.some(item=>item.id===id))return;selectedStarter=id;starterPreview=id==='default'?defaultOverlayProject():starterProject(id);syncStartScreen();
  if(rendererReady)renderInputFrame(performance.now());
 }
 function syncStartScreen(){
  if(!startScreenInitialized)return;
  const busy=!rendererReady||!!projectAction;
- $('startEditing').disabled=busy;$('continueEditing').disabled=busy;$('openStartProject').disabled=busy;
+ $('defaultStarter').disabled=busy;$('defaultStarter').setAttribute('aria-pressed',String(selectedStarter==='default'));$('startEditing').disabled=busy;$('continueEditing').disabled=busy;$('openStartProject').disabled=busy;
  document.querySelectorAll('[data-starter]').forEach(button=>{button.disabled=busy;button.setAttribute('aria-pressed',button.dataset.starter===selectedStarter);});
  $('startLoading').hidden=rendererReady;$('startPreview').setAttribute('aria-busy',String(!rendererReady));
  $('startLoading').textContent=rendererLoading?'Loading controller artwork…':'Preview unavailable. Use Retry loading above.';
- const choice=STARTER_TEMPLATES.find(item=>item.id===selectedStarter);
+ const choice=selectedStarter==='default'?{id:'default',name:'Default overlay',description:'A neutral G7 overlay without a template, wordmark or effects. Ready to customize.'}:STARTER_TEMPLATES.find(item=>item.id===selectedStarter);
  $('startTitle').textContent=choice?.name||project.name||'Current job';
  $('startDescription').textContent=choice?.description||'Your current design is ready to continue. Choosing another starting overlay leaves it untouched until you start editing.';
  $('startEditing').textContent=choice?'Use '+choice.name:'Continue current job';
@@ -41,8 +42,8 @@ function createStartThumbnails(){
 function initializeStartScreen(){
  startScreenInitialized=true;document.body.dataset.view='start';selectedStarter=restoredProject?'current':'Gold';starterPreview=restoredProject?null:starterProject('Gold');
  for(const preset of STARTER_TEMPLATES){const card=document.createElement('button');card.className='starter-card';card.dataset.starter=preset.id;card.setAttribute('aria-pressed','false');const image=document.createElement('img');image.alt='';image.hidden=true;const text=document.createElement('span');text.textContent=preset.name;card.append(image,text);card.onclick=()=>chooseStarter(preset.id);$('starterChoices').append(card);}
- $('startEditing').onclick=()=>{if(!rendererReady||projectAction)return;const choice=STARTER_TEMPLATES.find(item=>item.id===selectedStarter);if(choice){checkpoint();project=validate(starterProject(choice.id));moveTarget='controller';clearInputPreview();setMode('live');sync();persist();}openEditorFromStart();if(choice)status(choice.name+' loaded. Name your customer job and customize it.');};
- $('continueEditing').onclick=openEditorFromStart;
+ $('startEditing').onclick=()=>{if(!rendererReady||projectAction)return;const choice=selectedStarter==='default'?{id:'default',name:'Default overlay',description:'A neutral G7 overlay without a template, wordmark or effects. Ready to customize.'}:STARTER_TEMPLATES.find(item=>item.id===selectedStarter);if(choice){checkpoint();project=validate(choice.id==='default'?defaultOverlayProject():starterProject(choice.id));moveTarget='controller';clearInputPreview();setMode('live');sync();persist();}openEditorFromStart();if(choice)status(choice.name+' loaded. Name your customer job and customize it.');};
+ $('continueEditing').onclick=openEditorFromStart;$('defaultStarter').onclick=()=>chooseStarter('default');
  $('openStartProject').onclick=()=>$('open').click();$('returnToEditor').onclick=showStartScreen;
  $('skinSearch').oninput=filterStarterSkins;$('clearSkinSearch').onclick=()=>{$('skinSearch').value='';filterStarterSkins();$('skinSearch').focus();};$('skinSearch').onkeydown=event=>{if(event.key==='Escape'&&event.target.value){event.preventDefault();event.stopPropagation();$('clearSkinSearch').click();}};
  document.querySelector('main').hidden=true;$('startPreview').prepend($('canvas'));$('canvas').tabIndex=-1;$('canvas').setAttribute('aria-label','Selected starting overlay preview');syncStartScreen();
