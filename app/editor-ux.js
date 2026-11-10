@@ -37,9 +37,11 @@ function navigateHistory(redo=false){
  try{sync();persist();}finally{historyNavigation=false;}status(redo?'Change restored.':'Last change undone.');
 }
 function syncProjectActions(){
- const unavailable=!rendererReady||!!projectAction;document.querySelector('main').inert=unavailable;
+ const unavailable=!rendererReady||!!projectAction;document.querySelector('main').inert=unavailable;$('name').disabled=unavailable||startScreenOpen;
  for(const id of ['open','save','exportMenu','html','png','upload','importTextures','customerExport','uploadCustomer','connectGitHub','openDelivery'])$(id).disabled=unavailable;
- $('publish').disabled=unavailable||!bridgeUsable();
+ if(startScreenOpen)for(const id of ['save','exportMenu','html','png','upload','importTextures'])$(id).disabled=true;
+ $('returnToEditor').disabled=unavailable;syncStartScreen();
+ $('publish').disabled=unavailable||startScreenOpen||!bridgeUsable();
  $('copy').disabled=!!projectAction||!bridgeUsable()||!$('obsUrl').value.startsWith('http');
  $('publicationStatus').dataset.kind=bridgeSetup.phase==='error'||publishedState&&!sameState(publishedState,projectState(project))?'warning':'info';
  syncProduction();const publicationMessage=setupPublicationMessage();if($('publicationStatus').textContent!==publicationMessage)$('publicationStatus').textContent=publicationMessage;syncSetupState();
@@ -78,7 +80,7 @@ function initializeEditorUX(){
   if(!(event.ctrlKey||event.metaKey)||event.altKey||document.querySelector('dialog[open]'))return;
   const key=event.key.toLowerCase(),field=event.target.closest('input,textarea,[contenteditable=true]'),editing=field&&(field.tagName==='TEXTAREA'||field.isContentEditable||['text','search','number','email','url','password','tel'].includes(field.type));
   if(key==='s'||key==='o'){event.preventDefault();if(!projectAction)$(key==='s'?'save':'open').click();}
-  else if(!editing&&(key==='z'||key==='y')){event.preventDefault();navigateHistory(key==='y'||event.shiftKey);}
+  else if(!startScreenOpen&&!editing&&(key==='z'||key==='y')){event.preventDefault();navigateHistory(key==='y'||event.shiftKey);}
  });
  for(const key of fields){$(key).addEventListener('blur',()=>{editElement=null;if($(key).type==='number'&&(!$(key).value||$(key).validity.badInput))$(key).value=project[key];});}
  const flushEdits=()=>{if(drag)finishDrag();if(autosaveTimer)persist();};

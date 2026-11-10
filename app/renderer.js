@@ -8,9 +8,11 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   document.fonts.add(face);await face.load();
  }));
  const images = {};
- await Promise.all(Object.entries(assets).map(async ([key, src]) => {
+ await Promise.all(Object.entries(assets).filter(([,src])=>typeof src==='string').map(async ([key, src]) => {
   const image = new Image(); image.src = src; await image.decode(); images[key] = image;
  }));
+ const legacyImages={...images},skinRecords=assets.skins||{},skinImages={};
+ await Promise.all(Object.entries(skinRecords).map(async([id,record])=>{const image=new Image();image.src=record.cover;await image.decode();skinImages[id]=image;}));
  const ctx = canvas.getContext('2d');
  const layer = document.createElement('canvas'); layer.width = 1672; layer.height = 941;
  const lc = layer.getContext('2d');
@@ -48,6 +50,8 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   else{path.lineTo(1362,121);path.quadraticCurveTo(1232,45,1032,49);}
   path.closePath();faces[key].path=path;
  }
+ const legacyFaces={...faces};let activeSkinId='',activeSkin=null;
+ let stickLayout=[[456,290,'leftStick','LSB',0,86,125],[1033,523,'rightStick','RSB',2,86,125]],dpadCircle=[634.34,529.42,124];
  let logo = null, logoSrc = '', tintColor = '', lastActive = -Infinity;
  let logoRequest=0,logoLoadingSrc=null,logoLoading=null;
  const tinted = {}, capCache = new Map(), shoulderCache = new Map();
@@ -68,6 +72,44 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  const shellMask=document.createElement('canvas');shellMask.width=1672;shellMask.height=941;
  const sm=shellMask.getContext('2d');sm.drawImage(images.base,0,0,1672,941);sm.globalCompositeOperation='destination-out';sm.drawImage(controlMask,0,0);sm.globalCompositeOperation='source-over';
  const themePainter=createThemePainter(ctx,faces,shellMask),texturePainter=createTexturePainter(ctx,shellMask),surfacePainter=createSurfacePainter(ctx,shellMask),holoPainter=createHolographicPainter(ctx,shellMask);
+
+ // Native skin art is fitted uniformly into the existing body layer. The supplied
+ // SVG control paths and placement data use GameSir's 1000×720 reference space.
+ function shapePath(shape){const a=shape.attrs,p=new Path2D();if(shape.tag==='path')return new Path2D(a.d);if(shape.tag==='circle')p.arc(+a.cx,+a.cy,+a.r,0,Math.PI*2);else if(shape.tag==='ellipse')p.ellipse(+a.cx,+a.cy,+a.rx,+a.ry,0,0,Math.PI*2);else if(shape.tag==='rect')p.rect(+a.x||0,+a.y||0,+a.width,+a.height);else{const points=a.points.trim().split(/[ ,]+/).map(Number);for(let i=0;i<points.length;i+=2)i?p.lineTo(points[i],points[i+1]):p.moveTo(points[i],points[i+1]);if(shape.tag==='polygon')p.closePath();}return p;}
+ function rebuildMasks(){
+  shellMask.dataset.skin=activeSkinId;
+  cm.clearRect(0,0,1672,941);for(const key of faceKeys){cm.fill(faces[key].path);cm.stroke(faces[key].path);}
+  const circles=activeSkin?[...stickLayout.map(([x,y,,,,,r])=>[x,y,r]),dpadCircle,[...faces.Home.center,faces.Home.radius+3]]:[[833.28,209.7,65],[634.34,529.42,124],[456,290,125],[1033,523,125]];
+  for(const[x,y,r]of circles){cm.beginPath();cm.arc(x,y,r,0,Math.PI*2);cm.fill();}
+  sm.clearRect(0,0,1672,941);sm.drawImage(images.base,0,0,1672,941);sm.globalCompositeOperation='destination-out';sm.drawImage(controlMask,0,0);sm.globalCompositeOperation='source-over';
+ }
+ function activateSkin(id){
+  if(id===activeSkinId)return;if(id&&!skinRecords[id])throw Error('Controller skin is unavailable');
+  activeSkinId=id;activeSkin=skinRecords[id]||null;Object.assign(images,legacyImages);for(const key of Object.keys(faces))delete faces[key];Object.assign(faces,legacyFaces);
+  stickLayout=[[456,290,'leftStick','LSB',0,86,125],[1033,523,'rightStick','RSB',2,86,125]];dpadCircle=[634.34,529.42,124];
+  if(activeSkin){
+   const image=skinImages[id],height=480*(activeSkin.height||image.height)/(activeSkin.width||image.width),scale=941/height,left=(1672-480*scale)/2,top=100+(480-height)/2;
+   const bodyMatrix=new DOMMatrix([scale,0,0,scale,left-260*scale,-top*scale]),point=(x,y)=>[left+(x-260)*scale,(y-top)*scale];
+   const base=document.createElement('canvas');base.width=1672;base.height=941;const bg=base.getContext('2d',{willReadFrequently:true});bg.drawImage(image,left,0,480*scale,941);
+   stickLayout=['L3','R3'].map((name,i)=>{const config=activeSkin.testing[name],[x,y]=point(config.X+35,config.Y+35),r=31*scale,cap=document.createElement('canvas');cap.width=cap.height=180;cap.getContext('2d').drawImage(base,x-r,y-r,r*2,r*2,0,0,180,180);images[i?'rightStick':'leftStick']=cap;
+    const pixel=bg.getImageData(Math.round(x+33*scale),Math.round(y),1,1).data;bg.fillStyle=`rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;bg.beginPath();bg.arc(x,y,30.5*scale,0,Math.PI*2);bg.fill();return[x,y,i?'rightStick':'leftStick',i?'RSB':'LSB',i*2,r,35*scale];});images.base=base;
+   const records=activeSkin.controls.map(record=>{const path=new Path2D();path.addPath(shapePath(record),bodyMatrix.multiply(new DOMMatrix(record.matrix)));const[x,y,w,h]=record.bounds,[bx,by]=point(x,y);return{...record,path,bounds:[bx,by,w*scale,h*scale]};});
+   for(const key of faceKeys.filter(key=>!key.startsWith('DPad_'))){const source=records.filter(record=>record.kind==='face'&&(record.key==='Screenshot'?'Capture':record.key)===key),path=new Path2D();source.forEach(record=>path.addPath(record.path));const x=Math.min(...source.map(r=>r.bounds[0])),y=Math.min(...source.map(r=>r.bounds[1])),right=Math.max(...source.map(r=>r.bounds[0]+r.bounds[2])),bottom=Math.max(...source.map(r=>r.bounds[1]+r.bounds[3]));
+    if(!source.length)throw Error('Skin is missing '+key);faces[key]={path,center:[(x+right)/2,(y+bottom)/2],radius:Math.min(right-x,bottom-y)/2,symbols:[]};
+    // Derive the original printed emblem from the supplied cover. This retains
+    // each edition's own symbols when its button is recolored or pressed.
+    const ix=Math.floor(x),iy=Math.floor(y),width=Math.ceil(right)-ix,height=Math.ceil(bottom)-iy,data=bg.getImageData(ix,iy,width,height),histogram=new Uint32Array(32),luma=i=>data.data[i]*.2126+data.data[i+1]*.7152+data.data[i+2]*.0722;
+    for(let py=0;py<height;py+=2)for(let px=0;px<width;px+=2){const nx=(px-width/2)/(width/2),ny=(py-height/2)/(height/2);if(nx*nx+ny*ny<.55)histogram[Math.min(31,Math.floor(luma((py*width+px)*4)/8))]++;}
+    let dominant=0;for(let i=1;i<32;i++)if(histogram[i]>histogram[dominant])dominant=i;const backdrop=dominant*8+4;
+    for(let i=0;i<data.data.length;i+=4){const difference=backdrop>=128?backdrop-luma(i):luma(i)-backdrop,alpha=Math.max(0,Math.min(255,(difference-22)*5));data.data[i]=data.data[i+1]=data.data[i+2]=255;data.data[i+3]=alpha;}
+    const mask=document.createElement('canvas');mask.width=width;mask.height=height;mask.getContext('2d').putImageData(data,0,0);const inkTint=document.createElement('canvas');inkTint.width=width;inkTint.height=height;Object.assign(faces[key],{nativeInk:mask,inkTint,inkX:ix,inkY:iy,inkColor:''});
+   }
+   const d=activeSkin.testing.DPad,width=d.Width,center=point(d.X+width/2,d.Y+360),outer=30*width/66.61*scale,inner=9*width/66.61*scale;dpadCircle=[...center,width/2*scale];
+   for(const[key,start,end]of [['Up',226,314],['Right',316,404],['Down',46,134],['Left',136,224]]){const path=new Path2D(),a=start*Math.PI/180,b=end*Math.PI/180;path.arc(...center,outer,a,b);path.arc(...center,inner,b,a,true);path.closePath();faces['DPad_'+key]={path,center,radius:outer,symbols:[]};}
+  }
+  for(const[x,y,,key]of stickLayout)faces[key]={center:[x,y]};
+  tintColor='';capCache.clear();shoulderCache.clear();rebuildMasks();
+ }
  function prepareBase(color,buttonColor) {
   const key=color+'|'+buttonColor;if(key===tintColor)return;tintColor=key;
   if(tinted.base)tinted.base.width=0;
@@ -78,7 +120,8 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  }
  function cap(key, color) {
   const id = key + color;
-  if (!capCache.has(id)) { if (capCache.size >= 32) capCache.clear(); const c=tint(images[key],color,180,180),g=c.getContext('2d');
+  if (!capCache.has(id)) { if (capCache.size >= 32) capCache.clear(); const c=tint(images[key],activeSkin?'#ffffff':color,180,180),g=c.getContext('2d');
+   if(activeSkin&&color!=='#ffffff'){const pixels=g.getImageData(0,0,180,180),rgb=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16));for(let i=0;i<pixels.data.length;i+=4){const shade=.65+.35*(pixels.data[i]*.2126+pixels.data[i+1]*.7152+pixels.data[i+2]*.0722)/255;for(let k=0;k<3;k++)pixels.data[i+k]=rgb[k]*shade;}g.putImageData(pixels,0,0);}
    // The supplied crop includes socket/rim pixels. Only the rubber cap moves.
    g.globalCompositeOperation='destination-in';g.beginPath();g.arc(90,90,86,0,Math.PI*2);g.fill();g.globalCompositeOperation='source-over';capCache.set(id,c); }
   return capCache.get(id);
@@ -102,6 +145,9 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  }
  function face(key, color, pressed) {
   const f=faces[key], [x,y]=f.center;
+  if(activeSkin){ctx.save();ctx.clip(f.path);ctx.globalCompositeOperation='source-atop';ctx.fillStyle=color;ctx.fill(f.path);
+   if(f.nativeInk){const ink=contrast(color);if(f.inkColor!==ink){f.inkColor=ink;const g=f.inkTint.getContext('2d');g.clearRect(0,0,f.inkTint.width,f.inkTint.height);g.drawImage(f.nativeInk,0,0);g.globalCompositeOperation='source-in';g.fillStyle=ink;g.fillRect(0,0,f.inkTint.width,f.inkTint.height);g.globalCompositeOperation='source-over';}ctx.drawImage(f.inkTint,f.inkX,f.inkY);}
+   ctx.restore();return;}
   ctx.save(); ctx.clip(f.path);
   const gradient=ctx.createLinearGradient(x,y-55,x,y+65);
   gradient.addColorStop(0,mix(color,'#ffffff',pressed?.24:.08)); gradient.addColorStop(1,mix(color,'#000000',.12));
@@ -137,7 +183,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   ctx.drawImage(layer,0,0,185,200,right?1090:365,38,185,200);
  }
  return {
-  hitTest(x,y){for(const key of faceKeys)if(ctx.isPointInPath(faces[key].path,x,y))return key;if(Math.hypot(x-456,y-290)<90)return 'LSB';if(Math.hypot(x-1033,y-523)<90)return 'RSB';if(y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
+  hitTest(x,y){for(const key of faceKeys)if(ctx.isPointInPath(faces[key].path,x,y))return key;for(const[sx,sy,,key,,radius]of stickLayout)if(Math.hypot(x-sx,y-sy)<radius*90/86)return key;if(y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
   async setTexture(src){await texturePainter.setImage(src||'');},
   async setLogo(src) {
    if(src===logoSrc){if(logoLoadingSrc!==null){logoRequest++;logoLoadingSrc=null;logoLoading=null;}return;}
@@ -147,9 +193,9 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    try{await logoLoading;}finally{if(token===logoRequest){logoLoadingSrc=null;logoLoading=null;}}
   },
   draw(p,state={},time=0,peak=false) {
-   state=normalizeOverlayInput(state);
+   activateSkin(p.nativeSkin||'');state=normalizeOverlayInput(state);
    const rawTime=time;themePainter.update(p,state,rawTime);time=p.animationMode==='still'?1200:p.animationMode==='reduced'?time*.35:time;
-   const colors=p.buttonColors||{}, color=(key,which)=>colors[key]?.[which]||(which==='rest'?(p.buttonBaseColor||'#ffffff'):p.pressed);
+   const colors=p.buttonColors||{}, color=(key,which)=>colors[key]?.[which]||(which==='rest'?(activeSkin&&['LT','RT'].includes(key)&&p.buttonBaseColor==='#ffffff'?activeSkin.testing.L2R2.Normal:(p.buttonBaseColor||'#ffffff')):p.pressed);
    const effect=p.effect||'none', amount=(p.effectIntensity??.6)*(p.animationMode==='reduced'?.45:1), seconds=p.effectSpeed||5;
    const accent=effect==='rainbow'?mix(p.accent,rainbow(time,seconds),amount):p.accent;
    const pulse=(1-Math.cos(time*2*Math.PI/(seconds*1000)))/2;
@@ -168,27 +214,27 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
     const power=(p.animationMode==='still'?(active?1:0):Math.max(0,1-(time-lastActive)/600))*amount;
     if(power){recolor(shellMask,accent);ctx.save();ctx.globalAlpha=.38*power;ctx.drawImage(layer,0,0);ctx.restore();}
    }
-   for(const key of faceKeys)if(colors[key]?.rest)face(key,colors[key].rest,false);
-   recolor(images[p.mode==='original'?'ambient':'trim'],accent);
-   ctx.save();ctx.globalAlpha=strength;ctx.shadowColor=accent;ctx.shadowBlur=glow*strength;ctx.drawImage(layer,0,0);ctx.restore();
+   for(const key of faceKeys)if(colors[key]?.rest||activeSkin&&p.buttonBaseColor!=='#ffffff')face(key,colors[key]?.rest||p.buttonBaseColor,false);
+   if(!activeSkin){recolor(images[p.mode==='original'?'ambient':'trim'],accent);
+   ctx.save();ctx.globalAlpha=strength;ctx.shadowColor=accent;ctx.shadowBlur=glow*strength;ctx.drawImage(layer,0,0);ctx.restore();}
    if(p.mode!=='original') {
     lc.clearRect(0,0,1672,941);lc.save();lc.translate(p.x,p.y);lc.rotate(p.angle*Math.PI/180);
     if(p.mode==='logo'&&logo){const h=p.size*logo.height/logo.width;lc.drawImage(logo,-p.size/2,-h/2,p.size,h);}
     else{lc.fillStyle=accent;lc.font=`${(p.fontItalic??true)?"italic ":""}${p.fontWeight||900} ${Math.round(p.size/3.5)}px ${JSON.stringify((p.fontSource==='library'?'OSL ':'')+(p.fontFamily||'Segoe UI'))}, Arial, sans-serif`;lc.textAlign='center';lc.textBaseline='middle';lc.fillText(p.text,0,0,p.size);}
-    lc.restore();lc.globalCompositeOperation='destination-in';lc.drawImage(images.base,0,0,1672,941);lc.drawImage(images.clearance,0,0,1672,941);lc.globalCompositeOperation='source-over';
+    lc.restore();lc.globalCompositeOperation='destination-in';lc.drawImage(activeSkin?shellMask:images.base,0,0,1672,941);if(!activeSkin)lc.drawImage(images.clearance,0,0,1672,941);lc.globalCompositeOperation='source-over';
     ctx.save();ctx.globalAlpha=strength;ctx.shadowColor=accent;ctx.shadowBlur=glow*strength;ctx.drawImage(layer,0,0);ctx.restore();
    }
    for(const key of faceKeys)if(state[key])face(key,color(key,'pressed'),true);
    themePainter.controls(p,state,time);
-   [[456,290,'leftStick','LSB',0],[1033,523,'rightStick','RSB',2]].forEach(([x,y,key,button,i])=>{
+   stickLayout.forEach(([x,y,key,button,i,radius])=>{
     const axes=state.axes;
     // The base owns the fixed socket/rim. The isolated cap sits above it,
     // including the overlap at full travel; clipping to the socket cuts the cap.
     ctx.save();
     x+=axes[i]*38;y+=axes[i+1]*38;
     const pressed=state[button],ink=color(button,pressed?'pressed':'rest');
-    ctx.drawImage(cap(key,ink),x-90,y-90,180,180);
-    if(pressed){ctx.save();ctx.beginPath();ctx.arc(x,y,86,0,Math.PI*2);ctx.clip();label(button==='LSB'?'L3':'R3',x,y,33,contrast(ink));ctx.restore();}
+    const size=180*radius/86;ctx.drawImage(cap(key,ink),x-size/2,y-size/2,size,size);
+    if(pressed){ctx.save();ctx.beginPath();ctx.arc(x,y,radius,0,Math.PI*2);ctx.clip();label(button==='LSB'?'L3':'R3',x,y,33,contrast(ink));ctx.restore();}
     ctx.restore();
    });
    ctx.restore();trigger(242,state.LT||0,false,color('LT','rest'),color('LT','pressed'));trigger(1430,state.RT||0,true,color('RT','rest'),color('RT','pressed'));ctx.restore();

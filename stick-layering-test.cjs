@@ -1,6 +1,7 @@
+const {enterStudio}=require('./test-helpers.cjs');
 const {chromium}=require('@playwright/test'),assert=require('node:assert/strict');
 (async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{
- const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(process.env.STUDIO_URL||'http://127.0.0.1:8773');await page.waitForFunction(()=>rendererReady);
+ const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(process.env.STUDIO_URL||'http://127.0.0.1:8773');await page.waitForFunction(()=>rendererReady);await enterStudio(page);
  const result=await page.evaluate(async()=>{
   const canvas=document.createElement('canvas');canvas.width=1672;canvas.height=1241;const painter=await createOverlayRenderer(canvas,ASSET_DATA),g=canvas.getContext('2d',{willReadFrequently:true});
   const p={...defaults,text:'',breathing:false,glow:0,effect:'none',animationMode:'still',buttonColors:{LSB:{rest:'#4695d8',pressed:'#e93380'},RSB:{rest:'#59b673',pressed:'#cf459a'}}};

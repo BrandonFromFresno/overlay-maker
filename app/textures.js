@@ -45,7 +45,7 @@ function createTexturePainter(ctx,shellMask){
   thumbnail(kind,seed){return generate(kind,seed);},
   draw(p){
    const kind=p.textureId||'none',opacity=p.textureOpacity??.3;if(kind==='none'||opacity===0||kind==='custom'&&(!image||source!==p.textureImage))return;
-   const key=[kind,p.textureSeed,p.textureScale,p.textureRotation,p.textureMonochrome,p.textureInvert,generation].join('|');
+   const key=[p.nativeSkin,kind,p.textureSeed,p.textureScale,p.textureRotation,p.textureMonochrome,p.textureInvert,generation].join('|');
    if(key!==layerKey){
     layerKey=key;g.clearRect(0,0,1672,941);g.save();
     g.filter=[p.textureMonochrome===false?'':'grayscale(1)',p.textureInvert?'invert(1)':''].filter(Boolean).join(' ')||'none';const pattern=g.createPattern(kind==='custom'?image:generate(kind,p.textureSeed||1),'repeat');pattern.setTransform(new DOMMatrix().translate(836,470).rotate(p.textureRotation||0).scale(p.textureScale||1));g.fillStyle=pattern;g.fillRect(0,0,1672,941);g.restore();

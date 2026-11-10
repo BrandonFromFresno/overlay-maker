@@ -1,9 +1,10 @@
+const {enterStudio}=require('./test-helpers.cjs');
 const {chromium}=require('@playwright/test');
 const assert=require('node:assert/strict');
 (async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',headless:true,args:['--no-sandbox']});try{
 const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
 await page.addInitScript(()=>{window.requestAnimationFrame=fn=>{window.nextFrame=fn;return 1;};window.sent=[];window.desktop={input:s=>sent.push(s),onError:()=>{}};window.pads=[];navigator.getGamepads=()=>pads;});
-const url=process.env.STUDIO_URL||'http://127.0.0.1:8773';await page.goto(url);await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('Ready.'),null,{polling:100});
+const url=process.env.STUDIO_URL||'http://127.0.0.1:8773';await page.goto(url);await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('Ready.'),null,{polling:100});await enterStudio(page);
 const result=await page.evaluate(async()=>{
 const c=document.createElement('canvas');c.width=1672;c.height=1241;const g=c.getContext('2d',{willReadFrequently:true});const r=await createOverlayRenderer(c,ASSET_DATA);
 const p={...defaults,text:'',breathing:false,glow:0,effect:'none',themeStyle:'none',buttonStyle:'none',homeStyle:'none',shellPattern:'none',textureId:'none',animationMode:'still',pressed:'#ee2299'};

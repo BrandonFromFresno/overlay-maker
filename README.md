@@ -1,12 +1,16 @@
 # Overlay Studio
 
-Internal Windows production tool for creating, testing and delivering GameSir G7 8K customer overlays. Version 0.8.2 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
+Internal Windows production tool for creating, testing and delivering GameSir G7 8K customer overlays. Version 0.9.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
 
 ## Run the Windows app
 
-Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.8.2/Overlay-Studio-Windows-x64.zip) from the [0.8.2 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.8.2). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
+Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.9.0/Overlay-Studio-Windows-x64.zip) from the [0.9.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.9.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
 
-The extracted app needs no account, Node.js, internet connection or GameSir server. Connect the G7 in PC / XInput mode, focus the app and press a button. Live preview starts automatically. Connection feedback and the input-device picker are beside the preview.
+The extracted app needs no account, Node.js, internet connection or GameSir server. Connect the G7 in PC / XInput mode, focus the app and press a button. Live preview starts automatically. Connection feedback, the input-device picker and setup help are below the preview.
+
+## Production workspace and GameSir skin gallery
+
+The app opens with 13 original GameSir G7 Pro 8K skins, live previews and safe saved-job resume. Selected skins persist in projects and are embedded in finished customer overlays. SVG artwork is used where supplied; existing Studio projects retain their artwork. See [opening-gallery review](REVIEW-START-SCREEN.md). The preview is centered between a compact tool rail and a contextual inspector. Job naming stays in the header; movement and verification controls are above the canvas. Customer delivery and studio testing have distinct areas.
 
 ## Make an overlay
 

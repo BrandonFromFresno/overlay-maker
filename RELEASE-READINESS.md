@@ -1,4 +1,10 @@
-# Current release: 0.8.2 stick-layering prerelease
+# Current release: 0.9.0 production UI and GameSir skin gallery prerelease
+
+Publication authorized November 9, 2026 (America/Los_Angeles). This release combines the 13 supplied G7 Pro 8K skins with the redesigned production workspace. See REVIEW-UI-0.9.0.md and REVIEW-START-SCREEN.md for scope and verification. Existing saved projects and the 0.8.2 stick-layering correction remain supported. Earlier releases remain available.
+
+The Windows workflow runs syntax checks and all 22 suites before packaging. Publication uses the verified-artifact workflow, which matches the build to the exact source SHA and attaches an archive checksum. Actual Windows controller and OBS/Streamlabs acceptance checks remain required; this is a prerelease.
+
+# Historical release: 0.8.2 stick-layering prerelease
 
 Publication authorized November 9, 2026 (America/Los_Angeles). This hotfix keeps
 the cap above the stationary rim during full travel and stick clicks. Both sticks

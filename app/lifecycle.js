@@ -17,11 +17,11 @@ function renderInputFrame(time){
  if(inputPaused)return;
  const pad=updateControllerSetup(controllerPads()),actual=pad?readStandardGamepad(pad):{};
  const feedback=controllerFeedback(pad);if($('controllerStatus').textContent!==feedback)$('controllerStatus').textContent=feedback;
- forwardControllerInput(actual,time);observeProductionInput(pad,actual);lastInputTime=time;
+ forwardControllerInput(actual,time);syncStartConnection(pad);if(!startScreenOpen)observeProductionInput(pad,actual);lastInputTime=time;
  if(!rendererReady)return;
  let visible=mode==='live'?actual:input;
  if(mode==='demo'){visible={axes:[Math.sin(time/700)*.6,Math.cos(time/700)*.6,0,0],LT:(1+Math.sin(time/700))/2,RT:(1+Math.cos(time/900))/2};visible[keys[Math.floor(time/500)%keys.length]]=true;}
- renderer.draw(project,visible,time,mode==='peak');
+ renderer.draw(previewProject(),visible,time,mode==='peak');
 }
 function scheduleInputFrame(){
  if(inputPaused||!rendererReady||inputFrameId!==null)return;
@@ -32,11 +32,11 @@ async function loadOverlayRenderer(){
  $('retryLoad').hidden=true;$('retryLoad').disabled=true;$('previewLoading').hidden=false;$('previewLoading').textContent='Loading controller artwork…';
  document.querySelector('main').setAttribute('aria-busy','true');syncProjectActions();status('Loading controller template…');
  try{
-  renderer=await createOverlayRenderer($('canvas'),ASSET_DATA,FONT_DATA);sync();
+  renderer=await createOverlayRenderer($('canvas'),{...ASSET_DATA,skins:GAME_SIR_SKINS},FONT_DATA);sync();
   let warning=startupNotice;
   try{await logoPending;}catch{warning='Saved artwork or texture could not load. Replace the image or open a valid project.';}
-  rendererReady=true;$('previewLoading').hidden=true;
-  status('Ready. '+(warning||'Choose your shell color, add artwork, and drag to position.'),warning?'warning':'info');
+  rendererReady=true;createStartThumbnails();$('previewLoading').hidden=true;
+  status('Ready. '+(warning||(startScreenOpen?'Choose a starting skin or continue your current job.':'Choose your shell color, add artwork, and drag to position.')),warning?'warning':'info');
   renderInputFrame(performance.now());scheduleInputFrame();
  }catch(error){
   $('previewLoading').textContent='Controller artwork could not load. Choose Retry loading.';$('retryLoad').hidden=false;

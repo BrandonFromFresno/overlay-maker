@@ -64,7 +64,7 @@ function createHolographicPainter(ctx,mask,forceCPU=false){
   draw(p,time=0){
    if(!p.holoEnabled||(p.holoOpacity??.75)===0)return;init();
    const phase=p.holoAnimate===false?0:time/(1000*(p.holoSpeed||8))*TAU,settings=[p.holoStyle,p.holoZoom,p.holoComplexity,p.holoWashout,p.holoWhiteMix,p.holoHue,p.holoSeed].join('|');
-   const animated=p.holoAnimate!==false&&p.animationMode!=='still',stamp=animated?Math.floor(phase*30):phase,nextKey=settings+'|'+stamp;
+   const animated=p.holoAnimate!==false&&p.animationMode!=='still',stamp=animated?Math.floor(phase*30):phase,nextKey=settings+'|'+stamp+'|'+(p.nativeSkin||'');
    if(nextKey!==key&&(settings!==key.split('|').slice(0,7).join('|')||!animated||time<lastFrame||time-lastFrame>=80)){
     key=nextKey;lastFrame=time;let image;
     if(gl&&!failed){

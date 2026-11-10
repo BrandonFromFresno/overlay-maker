@@ -36,7 +36,7 @@ function createSurfacePainter(ctx,mask){
  return {
   pattern(p){
    const style=p.shellPattern||'none';if(style==='none'||p.patternOpacity===0)return;
-   const color=p.patternUseAccent===false?p.patternColor:p.accent,key=[style,color,p.patternScale,p.patternRotation,p.patternWeight,p.patternSeed].join('|');
+   const color=p.patternUseAccent===false?p.patternColor:p.accent,key=[p.nativeSkin,style,color,p.patternScale,p.patternRotation,p.patternWeight,p.patternSeed].join('|');
    if(key!==patternKey){patternKey=key;a.clearRect(0,0,1672,941);a.save();a.translate(836,470);a.rotate((p.patternRotation||0)*Math.PI/180);a.scale(p.patternScale||1,p.patternScale||1);stamp(a,style,color,p.patternWeight||3,p.patternSeed||1);a.restore();protect(a);}
    ctx.save();ctx.globalAlpha=p.patternOpacity??(style==='checker'?.65:.24);ctx.drawImage(pattern,0,0);ctx.restore();
   },

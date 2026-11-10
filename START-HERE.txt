@@ -1,19 +1,25 @@
-OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.8.2 WINDOWS PRERELEASE
+OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.9.0 WINDOWS PRERELEASE
 
 This application is for the producer. Customers receive a hosted overlay URL.
 
 START
 1. Extract the entire Windows ZIP. Open Overlay Studio.exe and keep the
    adjacent files and folders together. Run one copy at a time.
-2. Connect your GameSir G7 8K in PC / XInput mode. Focus the app and press a
-   button. The preview starts in Live controller mode automatically.
-3. Check Controller input for connection feedback. Auto keeps the active
+2. Choose an opening G7 Pro 8K skin and select Use, or continue/open a saved
+   job. Previewing a skin leaves your current job untouched until you apply it.
+   Connect your G7 in PC / XInput mode, focus the app and press a button.
+   The preview starts in Live controller mode automatically.
+3. Use the searchable skin gallery to choose your base. Your job name is in
+   the header, tools on the left, and appearance settings on the right.
+   Check Controller input below the preview for connection feedback. Auto keeps the active
    compatible device; choose Input device to use a specific controller.
    If a selected device reconnects in another browser slot, select it again.
 4. Use Shell, Buttons, Artwork, Effects, Layout, Holographic, Textures and
    Presets to customize the existing G7 artwork. Drag the preview to move the
    controller, or choose Move artwork to position your text/logo separately.
-   Arrow keys nudge; hold Shift for 10 pixels. Content outside the canvas crops.
+   Movement controls sit above the preview. Arrow keys nudge; hold Shift for
+   10 pixels. Content outside the canvas crops. Verify inputs opens the physical
+   check without starting it. Quick setup help is available below the preview.
 5. Artwork lets you choose Text artwork, import a PNG/JPEG logo, and return
    to Use imported logo after trying text. The Cudi reference is optional.
 6. Save project creates an editable .overlay backup with its images embedded.

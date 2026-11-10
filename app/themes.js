@@ -80,7 +80,7 @@ function createThemePainter(ctx, faces, shellMask) {
   else {ring(c,0,0,r*.76);ring(c,0,0,r*.35);for(let i=0;i<4;i++){c.save();c.rotate(i*TAU/4+phase*.1);line(c,[[0,-r*.55],[0,-r]]);c.restore();}}
  }
  function shell(style,accent){
-  const key=style+'|'+accent;if(key===cacheKey)return;cacheKey=key;
+  const key=style+'|'+accent+'|'+shellMask.dataset.skin;if(key===cacheKey)return;cacheKey=key;
   g.clearRect(0,0,1672,941);g.save();g.strokeStyle=accent;g.fillStyle=accent;g.lineWidth=4;g.lineCap='round';
   if(['ninja','uchiha'].includes(style)){
    for(const [x,y] of [[240,550],[1450,530]]){g.save();g.translate(x,y);g.rotate(-.3);sigil(g,style==='uchiha'?'sharingan':'rasengan',125);g.restore();}

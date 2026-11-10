@@ -42,7 +42,7 @@ function syncSetupState(){
 }
 function openExport(guide=false){$('obsSetup').open=guide;$('exportDialog').showModal();const target=guide?($('publish').disabled?$('closeExport'):$('publish')):!$('uploadCustomer').disabled?$('uploadCustomer'):!$('customerExport').disabled?$('customerExport'):$('chooseDeliveryFont');target.focus();}
 function initializeSetup(){
- try{const preference=localStorage.getItem('overlay-setup-guide');$('setupGuide').open=['open','closed'].includes(preference)?preference==='open':!restoredProject;}catch{$('setupGuide').open=!restoredProject;}
+ try{const preference=localStorage.getItem('overlay-setup-guide');$('setupGuide').open=['open','closed'].includes(preference)?preference==='open':false;}catch{$('setupGuide').open=false;}
  $('setupGuide').addEventListener('toggle',()=>{try{localStorage.setItem('overlay-setup-guide',$('setupGuide').open?'open':'closed');}catch{}});
  $('dismissSetup').onclick=()=>$('setupGuide').open=false;
  const openOBS=()=>openExport(true);

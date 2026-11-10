@@ -1,3 +1,4 @@
+const {enterStudio}=require('./test-helpers.cjs');
 const {chromium}=require('@playwright/test');
 const assert=require('node:assert/strict');
 (async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{
@@ -10,7 +11,7 @@ const assert=require('node:assert/strict');
   window.pad=(index,id,key)=>({index,id,mapping:'standard',connected:true,axes:[0,0,0,0],buttons:Array.from({length:17},(_,i)=>({pressed:i===key,value:i===key?1:0}))});
   window.deviceEvent=(type,gamepad)=>{const event=new Event(type);Object.defineProperty(event,'gamepad',{value:gamepad});dispatchEvent(event);};
  });
- const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));const url=process.env.STUDIO_URL||'http://127.0.0.1:8773';const ready=p=>p.waitForFunction(()=>rendererReady&&!rendererLoading,null,{polling:100});
+ const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));const url=process.env.STUDIO_URL||'http://127.0.0.1:8773';const ready=async p=>{await p.waitForFunction(()=>rendererReady&&!rendererLoading,null,{polling:100});await enterStudio(p);};
  await page.goto(url);await ready(page);assert(await page.locator('#retryLoad').isHidden());assert.equal(await page.locator('main').getAttribute('aria-busy'),'false');
  assert((await page.locator('#connectionHint').textContent()).includes('Connect'));assert.deepEqual(await page.evaluate(()=>sent.at(-1)),{});
  // Stable status text must not generate a stream of duplicate live-region mutations.
