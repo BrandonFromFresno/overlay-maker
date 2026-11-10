@@ -239,7 +239,7 @@ const PRESET_DATA=[
     "accent": "#f2be65",
     "pressed": "#ff84bc",
     "shellPattern": "halftone",
-    "effect": "halftone",
+    "effect": "sweep",
     "text": "GOLDEN WIND",
     "fontFamily": "Montserrat",
     "themeStyle": "gold",

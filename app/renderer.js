@@ -9,13 +9,22 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  }));
  const images = {};
  await Promise.all(Object.entries(assets).filter(([,src])=>typeof src==='string').map(async ([key, src]) => {
-  const image = new Image(); image.src = src; await image.decode(); images[key] = image;
+  const image = new Image(); image.src = src; await image.decode();
+  // Rasterize hot SVG layers once at their native export resolution. Repeated
+  // SVG filters and embedded-image decoding must not sit on the input frame path.
+  if(src.startsWith('data:image/svg+xml')&&['base','trim','ambient','clearance','leftStick','rightStick','lt','rt'].includes(key)){
+   const svg=new DOMParser().parseFromString(atob(src.split(',')[1]),'image/svg+xml').documentElement,box=(svg.getAttribute('viewBox')||'0 0 '+image.width+' '+image.height).trim().split(/[ ,]+/).map(Number),raster=document.createElement('canvas');raster.width=Math.round(box[2]);raster.height=Math.round(box[3]);raster.getContext('2d').drawImage(image,0,0,raster.width,raster.height);images[key]=raster;
+  }else images[key]=image;
  }));
  const legacyImages={...images},skinRecords=assets.skins||{},skinImages={};
  await Promise.all(Object.entries(skinRecords).map(async([id,record])=>{const image=new Image();image.src=record.cover;await image.decode();skinImages[id]=image;}));
  const ctx = canvas.getContext('2d');
  const layer = document.createElement('canvas'); layer.width = 1672; layer.height = 941;
  const lc = layer.getContext('2d');
+ const emission=document.createElement('canvas'),artwork=document.createElement('canvas'),artEmission=document.createElement('canvas');
+ for(const c of [emission,artwork,artEmission]){c.width=1672;c.height=941;}
+ const ec=emission.getContext('2d'),ac=artwork.getContext('2d'),ae=artEmission.getContext('2d');let emissionKey='',artworkKey='',artEmissionKey='';
+ const triggerLayer=document.createElement('canvas');triggerLayer.width=185;triggerLayer.height=200;const tc=triggerLayer.getContext('2d');
  const faceKeys = ['A','B','X','Y','Home','Share','Options','Capture','M','LB','RB','DPad_Up','DPad_Down','DPad_Left','DPad_Right'];
  const faces = {};
  // Draw faces and symbols synchronously: color changes never race image decoding.
@@ -79,7 +88,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  function rebuildMasks(){
   shellMask.dataset.skin=activeSkinId;
   cm.clearRect(0,0,1672,941);for(const key of faceKeys){cm.fill(faces[key].path);cm.stroke(faces[key].path);}
-  const circles=activeSkin?[...stickLayout.map(([x,y,,,,,r])=>[x,y,r]),dpadCircle,[...faces.Home.center,faces.Home.radius+3]]:[[833.28,209.7,65],[634.34,529.42,124],[456,290,125],[1033,523,125]];
+  const circles=activeSkin?[...stickLayout.map(([x,y,,,,,r])=>[x,y,r]),dpadCircle,[...faces.Home.center,Math.max(faces.Home.radius+3,faces.Home.protectedRadius||0)]]:[[833.28,209.7,65],[634.34,529.42,124],[456,290,125],[1033,523,125]];
   for(const[x,y,r]of circles){cm.beginPath();cm.arc(x,y,r,0,Math.PI*2);cm.fill();}
   sm.clearRect(0,0,1672,941);sm.drawImage(images.base,0,0,1672,941);sm.globalCompositeOperation='destination-out';sm.drawImage(controlMask,0,0);sm.globalCompositeOperation='source-over';
  }
@@ -104,11 +113,14 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
     for(let i=0;i<data.data.length;i+=4){const difference=backdrop>=128?backdrop-luma(i):luma(i)-backdrop,alpha=Math.max(0,Math.min(255,(difference-22)*5));data.data[i]=data.data[i+1]=data.data[i+2]=255;data.data[i+3]=alpha;}
     const mask=document.createElement('canvas');mask.width=width;mask.height=height;mask.getContext('2d').putImageData(data,0,0);const inkTint=document.createElement('canvas');inkTint.width=width;inkTint.height=height;Object.assign(faces[key],{nativeInk:mask,inkTint,inkX:ix,inkY:iy,inkColor:''});
    }
+   faces.Home.protectedRadius=19*scale;
    const d=activeSkin.testing.DPad,width=d.Width,center=point(d.X+width/2,d.Y+360),outer=30*width/66.61*scale,inner=9*width/66.61*scale;dpadCircle=[...center,width/2*scale];
    for(const[key,start,end]of [['Up',226,314],['Right',316,404],['Down',46,134],['Left',136,224]]){const path=new Path2D(),a=start*Math.PI/180,b=end*Math.PI/180;path.arc(...center,outer,a,b);path.arc(...center,inner,b,a,true);path.closePath();faces['DPad_'+key]={path,center,radius:outer,symbols:[]};}
   }
-  for(const[x,y,,key]of stickLayout)faces[key]={center:[x,y]};
+  for(const[x,y,,key,,,radius]of stickLayout)faces[key]={center:[x,y],radius};
   tintColor='';capCache.clear();shoulderCache.clear();rebuildMasks();
+  if(activeSkin){const trim=document.createElement('canvas');trim.width=1672;trim.height=941;const g=trim.getContext('2d');g.strokeStyle='#ffffff';g.lineWidth=3;for(const[x,y,,,,,radius]of stickLayout){g.beginPath();g.arc(x,y,radius+5,0,Math.PI*2);g.stroke();}for(const[x,y,radius]of [[...faces.Home.center,Math.max(faces.Home.radius+3,faces.Home.protectedRadius||0)],dpadCircle]){g.beginPath();g.arc(x,y,radius+5,0,Math.PI*2);g.stroke();}g.globalCompositeOperation='destination-in';g.drawImage(shellMask,0,0);g.globalCompositeOperation='source-over';images.nativeTrim=trim;}
+
  }
  function prepareBase(color,buttonColor) {
   const key=color+'|'+buttonColor;if(key===tintColor)return;tintColor=key;
@@ -134,7 +146,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  function contrast(color){return (parseInt(color.slice(1,3),16)*.2126+parseInt(color.slice(3,5),16)*.7152+parseInt(color.slice(5,7),16)*.0722)>145?'#142126':'#ffffff';}
  function rainbow(time, seconds) {
   const h = ((time / (seconds * 1000)) % 1 + 1) % 1;
-  return '#' + [0,8,4].map(n => {const k=(n+h*12)%12;return Math.round(255*(.5-.5*Math.max(-1,Math.min(k-3,9-k,1)))).toString(16).padStart(2,'0');}).join('');
+  return '#' + [0,2/3,1/3].map(offset=>Math.round(255*(.5+.5*Math.cos(Math.PI*2*(h+offset)))).toString(16).padStart(2,'0')).join('');
  }
  function recolor(image, color) {
   lc.clearRect(0,0,1672,941); lc.globalCompositeOperation='source-over'; lc.drawImage(image,0,0,1672,941);
@@ -176,11 +188,11 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   const y=162; ctx.lineWidth=10; ctx.strokeStyle='#a9bac5'; ctx.beginPath(); ctx.arc(x,y,109,right?-1.5:2.4,right?.74:4.64);ctx.stroke();
   if(pressure){ctx.strokeStyle=pressed;ctx.beginPath();ctx.arc(x,y,109,right?-1.5:2.4,(right?-1.5:2.4)+2.24*pressure);ctx.stroke();}
   label(Math.round(pressure*100)+'%',x,y,30,pressed);
-  lc.clearRect(0,0,1672,941);lc.drawImage(images[right?'rt':'lt'],0,0,185,200);
-  lc.globalCompositeOperation='source-in';lc.fillStyle=mix(rest,pressed,pressure);lc.fillRect(0,0,185,200);lc.globalCompositeOperation='source-over';
+  tc.clearRect(0,0,185,200);tc.drawImage(images[right?'rt':'lt'],0,0,185,200);
+  tc.globalCompositeOperation='source-in';tc.fillStyle=mix(rest,pressed,pressure);tc.fillRect(0,0,185,200);tc.globalCompositeOperation='source-over';
   // Keep trigger lettering inside the original silhouette, including its slanted edge.
-  if(pressure){lc.globalCompositeOperation='source-atop';lc.font='700 29px Segoe UI, Arial, sans-serif';lc.textAlign='center';lc.textBaseline='middle';lc.fillStyle=contrast(mix(rest,pressed,pressure));lc.fillText(right?'RT':'LT',right?90:92,124);lc.globalCompositeOperation='source-over';}
-  ctx.drawImage(layer,0,0,185,200,right?1090:365,38,185,200);
+  if(pressure){tc.globalCompositeOperation='source-atop';tc.font='700 29px Segoe UI, Arial, sans-serif';tc.textAlign='center';tc.textBaseline='middle';tc.fillStyle=contrast(mix(rest,pressed,pressure));tc.fillText(right?'RT':'LT',right?90:92,124);tc.globalCompositeOperation='source-over';}
+  ctx.drawImage(triggerLayer,0,0,185,200,right?1090:365,38,185,200);
  }
  return {
   hitTest(x,y){for(const key of faceKeys)if(ctx.isPointInPath(faces[key].path,x,y))return key;for(const[sx,sy,,key,,radius]of stickLayout)if(Math.hypot(x-sx,y-sy)<radius*90/86)return key;if(y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
@@ -200,8 +212,8 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    const accent=effect==='rainbow'?mix(p.accent,rainbow(time,seconds),amount):p.accent;
    const pulse=(1-Math.cos(time*2*Math.PI/(seconds*1000)))/2;
    const breathe=p.breathing?(1-Math.cos(time*2*Math.PI/(p.speed*1000)))/2:1;
-   const strength=peak?1:effect==='neon'?(.018+.982*breathe)*(1-amount*.7+amount*.7*pulse):.018+.982*breathe;
-   const glow=p.glow+(effect==='neon'?24*amount*(peak?1:pulse):0);
+   const strength=peak?1:effect==='neon'?(.42+.58*pulse):(.08+.92*breathe);
+   const glow=p.glow+(effect==='neon'?16*amount:0);
    prepareBase(p.baseColor||'#ffffff',p.buttonBaseColor||'#ffffff');ctx.clearRect(0,0,1672,1241);ctx.save();ctx.translate(p.offsetX||0,p.offsetY||0);
    ctx.save();ctx.translate(0,300);ctx.drawImage(tinted.base,0,0,1672,941);holoPainter.draw(p,time);texturePainter.draw(p);
    surfacePainter.pattern(p);
@@ -211,18 +223,26 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    if(Object.entries(state).some(([key,v])=>key!=='axes'&&(v===true||typeof v==='number'&&v>0)))lastActive=time;
    if(effect==='reactive') {
     const active=Object.entries(state).some(([key,v])=>key!=='axes'&&(v===true||typeof v==='number'&&v>0));
-    const power=(p.animationMode==='still'?(active?1:0):Math.max(0,1-(time-lastActive)/600))*amount;
+    const power=(p.animationMode==='still'?(active?1:0):Math.pow(Math.max(0,1-(time-lastActive)/600),2))*amount;
     if(power){recolor(shellMask,accent);ctx.save();ctx.globalAlpha=.38*power;ctx.drawImage(layer,0,0);ctx.restore();}
    }
    for(const key of faceKeys)if(colors[key]?.rest||activeSkin&&p.buttonBaseColor!=='#ffffff')face(key,colors[key]?.rest||p.buttonBaseColor,false);
-   if(!activeSkin){recolor(images[p.mode==='original'?'ambient':'trim'],accent);
-   ctx.save();ctx.globalAlpha=strength;ctx.shadowColor=accent;ctx.shadowBlur=glow*strength;ctx.drawImage(layer,0,0);ctx.restore();}
-   if(p.mode!=='original') {
-    lc.clearRect(0,0,1672,941);lc.save();lc.translate(p.x,p.y);lc.rotate(p.angle*Math.PI/180);
-    if(p.mode==='logo'&&logo){const h=p.size*logo.height/logo.width;lc.drawImage(logo,-p.size/2,-h/2,p.size,h);}
-    else{lc.fillStyle=accent;lc.font=`${(p.fontItalic??true)?"italic ":""}${p.fontWeight||900} ${Math.round(p.size/3.5)}px ${JSON.stringify((p.fontSource==='library'?'OSL ':'')+(p.fontFamily||'Segoe UI'))}, Arial, sans-serif`;lc.textAlign='center';lc.textBaseline='middle';lc.fillText(p.text,0,0,p.size);}
-    lc.restore();lc.globalCompositeOperation='destination-in';lc.drawImage(activeSkin?shellMask:images.base,0,0,1672,941);if(!activeSkin)lc.drawImage(images.clearance,0,0,1672,941);lc.globalCompositeOperation='source-over';
-    ctx.save();ctx.globalAlpha=strength;ctx.shadowColor=accent;ctx.shadowBlur=glow*strength;ctx.drawImage(layer,0,0);ctx.restore();
+   if(!activeSkin||['neon','rainbow'].includes(effect)){
+    const nextKey=[activeSkinId,p.mode==='original'?'ambient':'trim',accent,glow].join('|');
+    if(nextKey!==emissionKey){emissionKey=nextKey;recolor(activeSkin?images.nativeTrim:images[p.mode==='original'?'ambient':'trim'],accent);ec.clearRect(0,0,1672,941);ec.save();ec.shadowColor=accent;ec.shadowBlur=glow;ec.drawImage(layer,0,0);ec.restore();if(activeSkin){ec.globalCompositeOperation='destination-in';ec.drawImage(shellMask,0,0);ec.globalCompositeOperation='source-over';}}
+    ctx.save();ctx.globalAlpha=strength;ctx.drawImage(emission,0,0);ctx.restore();
+   }
+   if(p.mode!=='original'&&(p.mode==='logo'?!!logo:!!p.text)){
+    const key=JSON.stringify([activeSkinId,p.mode,p.text,logoSrc,p.x,p.y,p.size,p.angle,p.fontSource,p.fontFamily,p.fontWeight,p.fontItalic]);
+    if(key!==artworkKey){
+     artworkKey=key;artEmissionKey='';ac.clearRect(0,0,1672,941);ac.save();ac.translate(p.x,p.y);ac.rotate(p.angle*Math.PI/180);
+     if(p.mode==='logo'&&logo){const h=p.size*logo.height/logo.width;ac.drawImage(logo,-p.size/2,-h/2,p.size,h);}
+     else{ac.fillStyle='#ffffff';ac.font=`${(p.fontItalic??true)?"italic ":""}${p.fontWeight||900} ${Math.round(p.size/3.5)}px ${JSON.stringify((p.fontSource==='library'?'OSL ':'')+(p.fontFamily||'Segoe UI'))}, Arial, sans-serif`;ac.textAlign='center';ac.textBaseline='middle';ac.fillText(p.text,0,0,p.size);}
+     ac.restore();ac.globalCompositeOperation='destination-in';ac.drawImage(activeSkin?shellMask:images.base,0,0,1672,941);if(!activeSkin)ac.drawImage(images.clearance,0,0,1672,941);ac.globalCompositeOperation='source-over';
+    }
+    const nextKey=accent+'|'+glow;
+    if(nextKey!==artEmissionKey){artEmissionKey=nextKey;lc.clearRect(0,0,1672,941);lc.drawImage(artwork,0,0);if(p.mode==='text'){lc.globalCompositeOperation='source-in';lc.fillStyle=accent;lc.fillRect(0,0,1672,941);lc.globalCompositeOperation='source-over';}ae.clearRect(0,0,1672,941);ae.save();ae.shadowColor=accent;ae.shadowBlur=glow;ae.drawImage(layer,0,0);ae.restore();}
+    ctx.save();ctx.globalAlpha=strength;ctx.drawImage(artEmission,0,0);ctx.restore();
    }
    for(const key of faceKeys)if(state[key])face(key,color(key,'pressed'),true);
    themePainter.controls(p,state,time);

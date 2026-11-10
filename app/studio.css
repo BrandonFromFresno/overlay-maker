@@ -149,3 +149,5 @@ body[data-view=start] header nav:has(#retryLoad:not([hidden])){display:flex}
 body[data-view=start] header nav>button:not(#retryLoad){display:none}
 #retryLoad{border-color:var(--accent)}
 .header-job #name{height:28px;padding:3px 8px;font-size:13px;line-height:20px}
+.surface-card[data-effect] canvas{aspect-ratio:4/3}
+#effectRetirement{padding:10px;border-left:2px solid var(--warning);color:var(--warning);background:var(--raised)}

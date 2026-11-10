@@ -1,4 +1,4 @@
-# Patterns, effects and holographic finishes (0.8)
+# Patterns, effects and holographic finishes (0.10)
 
 ## Pattern picker
 
@@ -21,17 +21,22 @@ texture. The Water Breath checker remains dark over its green base.
 
 ## Effects picker
 
-18 effects plus None. The effect picker now appears before anime signature parts.
-The dropdown groups Accents, Input, Energy, Manga, Particles, Light and Technical.
-Previous/Next, searchable still previews, descriptions and Reset are available.
-Intensity and motion pace remain editable; shell animations gain Density, Direction
-and Glow softness. Controls that do not apply to a selection are disabled.
+18 current effects plus None. Previous/Next and the searchable gallery use the same
+catalog, with actual controller still previews. Groups include Accents, Input,
+Energy, Manga, Particles, Light and Atmosphere. Intensity and motion pace remain
+editable; applicable shell effects support Density, Direction and Glow softness.
+Controls that do not apply are disabled. Reset supports Undo.
 
-Lightning follows continuous curves, waves fade with distance, speed lines and
-particles fade at travel boundaries, and aura has layered ribbons. The additions
-are Fireflies, Neon rain, Snowfall, Comet trails, Scanner lines, Spiral vortex,
-Prism rays and Silk flow. Rainbow accents, Neon pulse and Reactive input flash keep
-their existing roles. Full/Reduced/Still motion applies to the expanded set.
+Original stylized fire and curling smoke replace Halftone Pulse and Scanner Lines
+in new choices. Saved jobs keep either retired effect, with an inline notice;
+import, Undo and export retain their appearance until the producer chooses a
+replacement. Static halftone shell patterns are unaffected.
+
+Particle lifetimes have eased entry/exit, independent speeds and directional trails.
+Branching lightning interpolates between coherent poses. Aura/silk ribbons, spiral
+arms, waves and sweeps use controlled tapered shapes. Rainbow, Neon pulse and
+Reactive flash retain immediate input behavior, including plain native skins.
+Full/Reduced/Still motion applies to effects. See [VFX-QUALITY.md](VFX-QUALITY.md).
 
 ## hhholographic analysis and implementation
 
@@ -57,8 +62,9 @@ stopping the other effects. Still mode freezes all motion while inputs still wor
 
 Graphics acceleration uses an original WebGL shader at 768×432, composited into the
 1672×941 shell. Systems without WebGL or after context loss use a deterministic
-288×162 CPU fallback. The render cache refreshes moving fields at most every 80ms,
-while opacity/blend and live controls continue rendering normally. Both paths use
+288×162 CPU fallback. The GPU evaluates presentation timestamps; the CPU fallback interpolates between
+20 Hz field samples on every presentation frame. Still mode and Animate off freeze
+the field. Context loss falls back to CPU; restoration retries WebGL. Both paths use
 the same liquid-field and palette formulas. Fine numerical/interpolation differences
 between graphics backends are expected. The fixed output aspect fits the controller;
 this is not a standalone general-purpose background exporter.

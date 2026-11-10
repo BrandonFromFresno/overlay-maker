@@ -1,4 +1,18 @@
-# Current release: 0.9.0 production UI and GameSir skin gallery prerelease
+# Current candidate: 0.10.0 original VFX and button-material prerelease
+
+Publication authorized after successful checks on November 9, 2026
+(America/Los_Angeles). Original time-based effects, rebuilt button materials,
+retired-effect compatibility, native-skin lighting, smoother holographic fallback
+and renderer caches are documented in [VFX-QUALITY.md](VFX-QUALITY.md).
+
+The Windows workflow must pass syntax checks and all 23 suites before packaging.
+Publication matches the exact successful build SHA and validates archive contents
+and checksum. Source controller artwork, geometry and input mappings are preserved.
+Physical Windows controller and OBS/Streamlabs acceptance remain outstanding; this
+is a prerelease. Earlier immutable customer URLs remain unchanged. Re-export an old
+delivery to use the new rendering; the app requires this before reusing its handoff.
+
+# Historical release: 0.9.0 production UI and GameSir skin gallery prerelease
 
 Publication authorized November 9, 2026 (America/Los_Angeles). This release combines the 13 supplied G7 Pro 8K skins with the redesigned production workspace. See REVIEW-UI-0.9.0.md and REVIEW-START-SCREEN.md for scope and verification. Existing saved projects and the 0.8.2 stick-layering correction remain supported. Earlier releases remain available.
 

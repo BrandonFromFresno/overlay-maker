@@ -1,6 +1,7 @@
 // Procedural theme artwork: no network, image downloads or external runtime dependencies.
 // Kept as a factory so the same painter is embedded verbatim in exported overlays.
 function createThemePainter(ctx, faces, shellMask) {
+ const artwork=createButtonArtworkPainter();
  const TAU=Math.PI*2, layer=document.createElement('canvas');layer.width=1672;layer.height=941;
  const g=layer.getContext('2d');let cacheKey='',previous={},impacts=new Map(),lastTime=-1;
  const ring=(c,x,y,r)=>{c.beginPath();c.arc(x,y,r,0,TAU);c.stroke();};
@@ -8,77 +9,7 @@ function createThemePainter(ctx, faces, shellMask) {
  const star=(c,x,y,r,n=5)=>{c.beginPath();for(let i=0;i<n*2;i++){const a=i*Math.PI/n-Math.PI/2,d=i%2?r*.42:r;c.lineTo(x+Math.cos(a)*d,y+Math.sin(a)*d);}c.closePath();c.fill();};
  function spiral(c,x,y,r,turns=3,phase=0){c.beginPath();for(let i=0;i<=120;i++){const t=i/120,a=t*TAU*turns+phase,d=r*t;c.lineTo(x+Math.cos(a)*d,y+Math.sin(a)*d);}c.stroke();}
  function leaf(c,x,y,r){c.beginPath();c.moveTo(x,y+r);c.bezierCurveTo(x-r*1.6,y,x-r,y-r*1.2,x,y-r);c.bezierCurveTo(x+r,y-r*1.2,x+r*1.6,y,x,y+r);c.fill();}
- function sigil(c,kind,r,phase=0){
-  c.lineWidth=Math.max(1.5,r*.055);c.lineCap='round';c.lineJoin='round';
-  if(kind==='straw-hat'){
-   c.beginPath();c.ellipse(0,r*.2,r,r*.22,0,0,TAU);c.stroke();
-   c.beginPath();c.moveTo(-r*.63,r*.08);c.bezierCurveTo(-r*.6,-r*.85,r*.6,-r*.85,r*.63,r*.08);c.stroke();line(c,[[-r*.6,-r*.08],[r*.6,-r*.08]]);
-  }else if(kind==='pirate-skull'){
-   for(const sign of [-1,1])line(c,[[-r*.85,sign*r*.8],[r*.85,-sign*r*.8]]);
-   c.beginPath();c.ellipse(0,-r*.17,r*.57,r*.52,0,0,TAU);c.stroke();
-   for(const sign of [-1,1]){c.beginPath();c.arc(sign*r*.22,-r*.2,r*.1,0,TAU);c.fill();}c.strokeRect(-r*.3,r*.25,r*.6,r*.3);
-  }else if(kind==='anchor'){
-   ring(c,0,-r*.72,r*.17);line(c,[[0,-r*.53],[0,r*.85]]);line(c,[[-r*.4,-r*.25],[r*.4,-r*.25]]);
-   c.beginPath();c.moveTo(-r*.8,r*.1);c.quadraticCurveTo(-r*.75,r*.75,0,r*.85);c.quadraticCurveTo(r*.75,r*.75,r*.8,r*.1);c.stroke();
-  }else if(kind==='kunai'){
-   line(c,[[0,-r],[-r*.32,r*.12],[0,r*.35],[r*.32,r*.12],[0,-r]]);line(c,[[0,r*.35],[0,r*.7]]);ring(c,0,r*.85,r*.12);
-  }else if(kind==='leaf-seal'){
-   spiral(c,-r*.1,0,r*.55,1.5);line(c,[[r*.2,-r*.45],[r*.85,-r*.85],[r*.62,-r*.2]]);line(c,[[-r*.55,r*.3],[-r*.8,r*.65]]);
-  }else if(kind==='shuriken'){
-   c.save();c.rotate(phase*.2);c.beginPath();for(let i=0;i<8;i++){const a=i*TAU/8,d=i%2?r*.24:r;c.lineTo(Math.cos(a)*d,Math.sin(a)*d);}c.closePath();c.stroke();ring(c,0,0,r*.15);c.restore();
-  }else if(kind==='hell-butterfly'){
-   for(const sign of [-1,1]){c.save();c.scale(sign,1);c.beginPath();c.moveTo(0,0);c.bezierCurveTo(r*.9,-r*1.2,r*1.3,-r*.75,r*.85,-r*.1);c.bezierCurveTo(r*1.1,r*.6,r*.35,r*1.1,0,0);c.stroke();line(c,[[r*.1,0],[r*.7,-r*.45]]);c.restore();}line(c,[[0,-r*.4],[0,r*.55]]);
-  }else if(kind==='hero-bolt'){
-   line(c,[[r*.2,-r],[-r*.7,r*.14],[0,r*.1],[-r*.25,r],[r*.7,-r*.25],[r*.05,-r*.15],[r*.2,-r]]);
-  }else if(kind==='hunter-mark'){
-   for(const x of [-r*.45,r*.45]){line(c,[[x-r*.28,-r*.8],[x+r*.28,r*.8]]);line(c,[[x+r*.28,-r*.8],[x-r*.28,r*.8]]);}line(c,[[-r*.8,0],[r*.8,0]]);
-  }else if(kind==='anti-magic'){
-   c.save();c.rotate(-.45);line(c,[[-r*.22,-r*.9],[r*.3,-r*.75],[r*.2,r*.35],[-r*.15,r*.35],[-r*.22,-r*.9]]);line(c,[[-r*.55,r*.35],[r*.55,r*.35]]);line(c,[[0,r*.35],[0,r]]);c.restore();
-  }else if(kind==='ladybug'){
-   c.beginPath();c.ellipse(0,r*.1,r*.63,r*.78,0,0,TAU);c.stroke();ring(c,0,-r*.73,r*.22);line(c,[[0,-r*.48],[0,r*.87]]);
-   for(const sign of [-1,1])for(const y of [-.12,.4]){c.beginPath();c.arc(sign*r*.3,y*r,r*.1,0,TAU);c.fill();}
-  }else if(kind==='chimera'){
-   c.beginPath();c.moveTo(-r*.65,-r*.35);c.lineTo(-r*.8,-r*.95);c.lineTo(-r*.25,-r*.64);c.quadraticCurveTo(0,-r*.8,r*.25,-r*.64);c.lineTo(r*.8,-r*.95);c.lineTo(r*.65,-r*.35);c.bezierCurveTo(r,r*.7,-r,r*.7,-r*.65,-r*.35);c.stroke();
-   for(const sign of [-1,1])ring(c,sign*r*.3,-r*.08,r*.1);line(c,[[-r*.13,r*.22],[0,r*.32],[r*.13,r*.22]]);
-  }else if(kind==='kaiju-mask'){
-   line(c,[[-r*.8,-r*.9],[-r*.5,-r*.45],[-r*.65,r*.15],[-r*.35,r*.85],[r*.35,r*.85],[r*.65,r*.15],[r*.5,-r*.45],[r*.8,-r*.9]]);
-   line(c,[[-r*.45,-r*.05],[-r*.13,r*.05]]);line(c,[[r*.45,-r*.05],[r*.13,r*.05]]);line(c,[[-r*.35,r*.4],[r*.35,r*.4]]);for(let i=-1;i<=1;i++)line(c,[[i*r*.2,r*.35],[i*r*.2,r*.62]]);
-  }else if(kind==='round-glasses'){
-   ring(c,-r*.43,-r*.1,r*.34);ring(c,r*.43,-r*.1,r*.34);line(c,[[-r*.1,-r*.15],[r*.1,-r*.15]]);line(c,[[-r*.33,r*.63],[0,r*.49],[r*.33,r*.63]]);
-  }else if(kind==='pull-cord'){
-   c.strokeRect(-r*.7,-r*.8,r*1.4,r*.4);line(c,[[0,-r*.4],[0,r*.4]]);c.beginPath();c.roundRect(-r*.42,r*.4,r*.84,r*.5,r*.12);c.stroke();
-  }else if(kind==='rasengan'){
-   for(let j=0;j<3;j++){c.save();c.rotate(-phase+j*TAU/3);c.globalAlpha*=.55;spiral(c,0,0,r*.96,1.6,j);c.restore();}
-   for(let i=0;i<5;i++){c.save();c.rotate(phase+i*TAU/5);c.scale(1,.48);ring(c,0,0,r*(.48+i*.08));c.restore();}
-   spiral(c,0,0,r*.8,2,-phase);c.beginPath();c.arc(0,0,r*.13,0,TAU);c.fill();
-  }else if(kind==='sharingan'){
-   ring(c,0,0,r*.64);c.beginPath();c.arc(0,0,r*.15,0,TAU);c.fill();
-   for(let i=0;i<3;i++){c.save();c.rotate(phase+i*TAU/3);c.beginPath();c.arc(0,-r*.64,r*.16,0,TAU);c.fill();c.beginPath();c.moveTo(r*.12,-r*.72);c.quadraticCurveTo(r*.35,-r*.38,-r*.06,-r*.34);c.quadraticCurveTo(r*.1,-r*.48,r*.12,-r*.72);c.fill();c.restore();}
-  }else if(kind==='ki-core'){
-   for(let i=0;i<8;i++){c.save();c.rotate(i*TAU/8+phase*.2);line(c,[[0,-r*.58],[r*.1,-r*.76],[0,-r]]);c.restore();}ring(c,0,0,r*.42);star(c,0,0,r*.25);
-  }else if(kind==='compass'){
-   ring(c,0,0,r*.84);for(let i=0;i<8;i++){c.save();c.rotate(i*TAU/8);c.beginPath();c.moveTo(0,-r);c.lineTo(r*.13,0);c.lineTo(0,r*.28);c.lineTo(-r*.13,0);c.closePath();c.fill();c.restore();}
-  }else if(kind==='water-crest'){
-   for(let i=0;i<3;i++){c.beginPath();for(let j=0;j<=30;j++){const x=-r+j*r/15,y=Math.sin(x/r*3+phase+i)*r*.2+(i-1)*r*.45;c.lineTo(x,y);}c.stroke();}
-  }else if(kind==='soul-flame'||kind==='flame'){
-   c.beginPath();c.moveTo(0,r);c.bezierCurveTo(-r*1.2,r*.3,-r*.55,-r*.3,-r*.3,-r*.5);c.quadraticCurveTo(-r*.2,0,0,-r);c.bezierCurveTo(r*.1,-r*.1,r*1.2,r*.25,0,r);c.fill();
-   c.save();c.globalCompositeOperation='destination-out';c.beginPath();c.ellipse(0,r*.42,r*.16,r*.3,0,0,TAU);c.fill();c.restore();
-  }else if(kind==='void'){
-   for(let i=0;i<3;i++){c.save();c.rotate(i*TAU/3+phase*.2);c.scale(1,.37);ring(c,0,0,r*.9);c.restore();}c.beginPath();c.arc(0,0,r*.24,0,TAU);c.fill();
-  }else if(kind==='clover'){
-   for(let i=0;i<5;i++){c.save();c.rotate(i*TAU/5);leaf(c,0,-r*.45,r*.34);c.restore();}
-  }else if(kind==='saw'){
-   c.beginPath();for(let i=0;i<32;i++){const a=i*TAU/32,d=r*(i%2?.78:1);c.lineTo(Math.cos(a)*d,Math.sin(a)*d);}c.closePath();c.stroke();ring(c,0,0,r*.36);
-  }else if(kind==='millennium'){
-   line(c,[[0,-r],[-r,r*.72],[r,r*.72],[0,-r]]);c.beginPath();c.ellipse(0,r*.12,r*.5,r*.22,0,0,TAU);c.stroke();ring(c,0,r*.12,r*.12);
-  }else if(kind==='rose'){
-   for(let i=0;i<5;i++){c.save();c.rotate(i*TAU/5+phase*.08);c.beginPath();c.ellipse(0,-r*.36,r*.35,r*.55,0,0,TAU);c.stroke();c.restore();}ring(c,0,0,r*.18);
-  }else if(kind==='alien'){
-   c.beginPath();c.ellipse(0,0,r*.76,r,0,0,TAU);c.stroke();for(const sign of [-1,1]){c.beginPath();c.ellipse(sign*r*.35,-r*.1,r*.17,r*.34,-sign*.5,0,TAU);c.fill();}
-  }else if(kind==='star')star(c,0,0,r);
-  else if(kind==='card'){c.strokeRect(-r*.65,-r,r*1.3,r*2);star(c,0,0,r*.42);}
-  else {ring(c,0,0,r*.76);ring(c,0,0,r*.35);for(let i=0;i<4;i++){c.save();c.rotate(i*TAU/4+phase*.1);line(c,[[0,-r*.55],[0,-r]]);c.restore();}}
- }
+ function sigil(c,kind,r,phase=0){artwork.symbol(c,kind,r,phase);}
  function shell(style,accent){
   const key=style+'|'+accent+'|'+shellMask.dataset.skin;if(key===cacheKey)return;cacheKey=key;
   g.clearRect(0,0,1672,941);g.save();g.strokeStyle=accent;g.fillStyle=accent;g.lineWidth=4;g.lineCap='round';
@@ -132,36 +63,8 @@ function createThemePainter(ctx, faces, shellMask) {
   }
   g.restore();g.globalCompositeOperation='destination-in';g.drawImage(shellMask,0,0);g.globalCompositeOperation='source-over';
  }
- const emblemCanvas=document.createElement('canvas');emblemCanvas.width=128;emblemCanvas.height=128;
- const e=emblemCanvas.getContext('2d'),pulse=document.createElement('canvas');pulse.width=1672;pulse.height=941;const pc=pulse.getContext('2d');
- function button(key,style,p,state,time){
-  const f=faces[key];if(!f||style==='none'||!style)return;
-  const home=key==='Home',active=!!state[key],r=(f.radius||50)-5;
-  ctx.save();ctx.clip(f.path);ctx.translate(...f.center);ctx.scale(r/56,r/56);
-  const phase=time/(p.effectSpeed*1000)*TAU,boost=active?1:.92;
-  let bg=p.buttonColors?.[key]?.[active?'pressed':'rest']||(active?p.pressed:p.buttonBaseColor),ink=p.accent;
-  // Theme materials deliberately replace the face; its pressed color becomes the rim.
-  const orb=style==='dragon-balls',eye=style==='sharingan';
-  if(orb)bg='#f28b18';if(eye)bg='#b5102a';if(style==='rasengan')bg='#064a80';if(style==='straw-hat')bg='#825221';if(style==='flame')bg='#7e1925';
-  const luminance=color=>{const v=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16)/255).map(c=>c<=.04045?c/12.92:((c+.055)/1.055)**2.4);return v[0]*.2126+v[1]*.7152+v[2]*.0722;};
-  const bgL=luminance(bg),inkL=luminance(ink);
-  if((Math.max(bgL,inkL)+.05)/(Math.min(bgL,inkL)+.05)<3)ink=(bgL+.05)/(.01+.05)>(.9+.05)/(bgL+.05)?'#19131d':'#fff1d6';
-  const grad=ctx.createRadialGradient(-18,-22,2,0,0,65);grad.addColorStop(0,orb?'#fff1a5':eye?'#f84454':style==='rasengan'?'#b0f5ff':bg);grad.addColorStop(.6,bg);grad.addColorStop(1,orb?'#9c3d03':eye?'#540512':style==='rasengan'?'#032547':'#10131e');
-  ctx.fillStyle=grad;ctx.beginPath();ctx.arc(0,0,56,0,TAU);ctx.fill();
-  ctx.lineWidth=active?5:2;ctx.strokeStyle=active?(p.buttonColors?.[key]?.pressed||p.pressed):orb?'#ffcc5e':eye?'#2d0610':p.accent;ring(ctx,0,0,52);
-  if(orb){
-   const count={A:1,B:2,X:3,Y:4}[key]||4;ctx.fillStyle='#bc2818';
-   if(count===1)star(ctx,0,0,13);else for(let i=0;i<count;i++){const a=i*TAU/count-Math.PI/2;star(ctx,Math.cos(a)*20,Math.sin(a)*20,9);}
-  }else{
-   const motifs={'ninja-seals':'rasengan','pirate-coins':'compass','slayer-crests':'water-crest','soul-marks':'soul-flame','cursed-seals':'void','hero-tech':'crosshair','saw-teeth':'saw','hunter-cards':'card','clover-runes':'clover','duel-gems':'millennium','gold-stars':'star','spy-tech':'rose','occult-eyes':'alien','kaiju-cores':'ki-core','crosshairs':'crosshair'};
-   const variants={'ninja-seals':['leaf-seal','kunai','shuriken','rasengan'],'pirate-coins':['straw-hat','anchor','pirate-skull','compass'],'soul-marks':['hell-butterfly','anti-magic','soul-flame','hell-butterfly'],'gold-stars':['ladybug','star','rose','ladybug'],'hero-tech':['hero-bolt','crosshair','hero-bolt','crosshair']};
-   const motif=variants[style]?.[['A','B','X','Y'].indexOf(key)]||motifs[style]||style;
-   e.clearRect(0,0,128,128);e.save();e.translate(64,64);e.strokeStyle=e.fillStyle=eye?'#180710':style==='rasengan'?'#d6ffff':style==='straw-hat'?'#ffe1a4':ink;e.globalAlpha=boost;sigil(e,motif,home?38:29,phase*(eye?.22:1));e.restore();ctx.drawImage(emblemCanvas,-64,-64);
-  }
-  // Labels stay legible on stylized ABXY buttons; Home is always reserved for its emblem.
-  if(!home&&(p.themeLabels??true)){ctx.fillStyle='#101018d9';ctx.beginPath();ctx.arc(34,33,11,0,TAU);ctx.fill();ctx.fillStyle='#ffffff';ctx.shadowColor='#000';ctx.shadowBlur=4;ctx.font='700 16px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(key,34,33);ctx.shadowBlur=0;}
-  ctx.restore();
- }
+ const pulse=document.createElement('canvas');pulse.width=1672;pulse.height=941;const pc=pulse.getContext('2d'),motion=createVFXPainter(pc);
+ function button(key,style,p,state,time){artwork.draw(ctx,faces[key],key,style,p,state,time);}
  return {
   update(p,state,time){
    if(time<lastTime){impacts.clear();previous={};}lastTime=time;
@@ -172,27 +75,22 @@ function createThemePainter(ctx, faces, shellMask) {
    const style=p.themeStyle||'none',amount=p.themeIntensity??.7;if(style==='none'||amount===0)return;
    shell(style,p.accent);ctx.save();ctx.globalAlpha=amount*.4;ctx.drawImage(layer,0,0);ctx.restore();
    const c=pc,phase=time/(p.effectSpeed*1000)*TAU;
-   c.globalCompositeOperation='source-over';c.clearRect(0,0,1672,941);c.strokeStyle=p.accent;c.fillStyle=p.accent;c.lineWidth=5;
-   if(['water','pirate'].includes(style)){
-    for(let j=0;j<3;j++){c.beginPath();for(let x=40;x<1640;x+=12)c.lineTo(x,420+j*100+Math.sin(x/170+phase+j)*55);c.stroke();}
-   }else if(['saiyan','hero','kaiju'].includes(style)){
-    for(let i=0;i<16;i++){const x=100+i*100,y=940-((time/(p.effectSpeed*1000)+i*.137)%1)*1000;line(c,[[x,y],[x+22,y-85],[x+12,y-65]]);}
-   }else if(['ninja','uchiha','curse','occult'].includes(style)){
-    for(const x of [240,1440])for(let i=0;i<3;i++){c.beginPath();c.arc(x,570,90+i*32,phase+i,phase+i+1.5);c.stroke();}
-   }else if(['soul','flame','chainsaw'].includes(style)){
-    for(let i=0;i<18;i++){const y=900-((time/(p.effectSpeed*1000)+i*.17)%1)*800,x=100+(i*211)%1480;c.beginPath();c.ellipse(x,y,3,12+i%4*2,.3,0,TAU);c.fill();}
-   }else{
-    // A restrained scanning accent follows the remaining engraved treatments.
-    const x=(phase/TAU%1)*1900-120;c.beginPath();c.moveTo(x,940);c.lineTo(x+330,0);c.stroke();
-   }
+   c.globalCompositeOperation='source-over';c.clearRect(0,0,1672,941);c.strokeStyle=p.accent;c.fillStyle=p.accent;c.lineWidth=3;
+   const density=(p.animationMode==='reduced'?.45:.8)*(p.effectDensity||1),seconds=p.effectSpeed||5;
+   if(['flame','soul'].includes(style)){motion.fire(time,seconds,density,p.accent,style==='soul');motion.particles('embers',time,seconds,density*.4,p.accent,.3);}
+   else if(['saiyan','hero','kaiju'].includes(style))motion.ribbons('aura',time,seconds,density,p.accent,.4);
+   else if(['water','pirate'].includes(style))motion.ribbons('flow',time,seconds,density,p.accent,.3);
+   else if(['ninja','uchiha','curse','occult'].includes(style))motion.vortex(time,seconds,density*.7,p.accent);
+   else if(style==='chainsaw'){motion.particles('embers',time,seconds,density*.5,p.accent,.25);motion.light('sweep',time,seconds,.5,p.accent);}
+   else motion.light('sweep',time,seconds,.7,p.accent);
    c.globalCompositeOperation='destination-in';c.drawImage(shellMask,0,0);c.globalCompositeOperation='source-over';
    ctx.save();ctx.globalAlpha=amount*(p.animationMode==='reduced'?.16:.38);ctx.drawImage(pulse,0,0);ctx.restore();
   },
   bursts(p,time){
    if(!p.inputBurst||p.animationMode==='still'||!impacts.size)return;
    // Reuse a small transient canvas; pulses are confined to shell, never button faces.
-   const c=pc;c.globalCompositeOperation='source-over';c.clearRect(0,0,1672,941);c.strokeStyle=p.accent;c.lineWidth=4;
-   for(const [key,start] of impacts){const progress=(time-start)/700,pos=faces[key]?.center||({LSB:[456,290],RSB:[1033,523],LT:[456,25],RT:[1180,25]})[key];if(!pos)continue;c.globalAlpha=(1-progress)*.6*(p.animationMode==='reduced'?.35:1);for(let i=0;i<2;i++)ring(c,...pos,52+progress*130+i*12);}
+   const c=pc;c.globalCompositeOperation='source-over';c.clearRect(0,0,1672,941);
+   for(const [key,start]of impacts){const progress=(time-start)/700,f=faces[key],pos=f?.center||({LT:[456,25],RT:[1180,25]})[key];if(!pos)continue;motion.burst(pos[0],pos[1],f?.radius||42,progress,p.accent,key.charCodeAt(0));}
    c.globalAlpha=1;c.globalCompositeOperation='destination-in';c.drawImage(shellMask,0,0);ctx.drawImage(pulse,0,0);c.globalCompositeOperation='source-over';
   },
   controls(p,state,time){for(const key of ['A','B','X','Y'])button(key,p.buttonStyle,p,state,time);button('Home',p.homeStyle,p,state,time);},

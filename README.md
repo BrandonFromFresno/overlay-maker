@@ -1,10 +1,10 @@
 # Overlay Studio
 
-Internal Windows production tool for creating, testing and delivering GameSir G7 8K customer overlays. Version 0.9.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
+Internal Windows production tool for creating, testing and delivering GameSir G7 8K customer overlays. Version 0.10.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
 
 ## Run the Windows app
 
-Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.9.0/Overlay-Studio-Windows-x64.zip) from the [0.9.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.9.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
+Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.10.0/Overlay-Studio-Windows-x64.zip) from the [0.10.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.10.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
 
 The extracted app needs no account, Node.js, internet connection or GameSir server. Connect the G7 in PC / XInput mode, focus the app and press a button. Live preview starts automatically. Connection feedback, the input-device picker and setup help are below the preview.
 
@@ -16,7 +16,7 @@ The app opens with 13 original GameSir G7 Pro 8K skins, live previews and safe s
 
 - **Shell** controls housing color, accents and 20 patterns. **Buttons** has independent default and individual resting/pressed colors; click a control on the preview to select it.
 - **Artwork** supports text, PNG/JPEG logos, eight included fonts and installed Windows font families. After trying text, **Use imported logo** restores the existing image without importing it again. The Cudi reference is optional.
-- **Effects** contains 18 effects and independent theme treatments. **Presets** has 18 searchable anime-inspired designs, favorites, demos and artwork/color preservation options. See [PRESETS.md](PRESETS.md).
+- **Effects** contains 18 current effects plus None and independent theme treatments. Original fire/smoke, smoother particles and energy, and rebuilt button materials share the new rendering standard. Two retired effects remain compatible with saved jobs. See [VFX quality review](VFX-QUALITY.md). **Presets** has 18 searchable anime-inspired designs, favorites, demos and artwork/color preservation options. See [PRESETS.md](PRESETS.md).
 - **Textures** includes eight offline finishes and a private image library. **Holographic** adds eight original finishes with software fallback. See [TEXTURES.md](TEXTURES.md) and [SURFACES.md](SURFACES.md).
 - Drag the preview to move the controller. Choose **Move artwork** to position text/logos separately. Arrow keys nudge; Shift moves 10 pixels. **Layout** provides precise placement and centering.
 - Save an editable `.overlay` backup with embedded images. Autosave restores the design on this computer when storage is available. Undo/redo supports grouped edits. Ctrl+S saves; Ctrl+O opens; Ctrl+Z undoes; Ctrl+Shift+Z redoes.
