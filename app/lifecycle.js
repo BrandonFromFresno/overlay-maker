@@ -24,28 +24,36 @@ function renderInputFrame(time){
  renderer.draw(previewProject(),visible,time,mode==='peak');
 }
 function scheduleInputFrame(){
- if(inputPaused||!rendererReady||inputFrameId!==null)return;
+ if(inputPaused||inputFrameId!==null)return;
  inputFrameId=requestAnimationFrame(time=>{inputFrameId=null;renderInputFrame(time);scheduleInputFrame();});
 }
+let rendererAssetKey='';
+function requestControllerRenderer(){
+ if(!rendererLoading&&controllerRendererKey(previewProject())!==rendererAssetKey)loadOverlayRenderer();
+}
 async function loadOverlayRenderer(){
- if(rendererLoading)return;rendererLoading=true;rendererReady=false;
+ if(rendererLoading)return;const snapshot={...previewProject()},requestedKey=controllerRendererKey(snapshot);
+ rendererLoading=true;rendererReady=false;
  $('retryLoad').hidden=true;$('retryLoad').disabled=true;$('previewLoading').hidden=false;$('previewLoading').textContent='Loading controller artwork…';
+ $('canvas').getContext('2d').clearRect(0,0,1672,1241);
  document.querySelector('main').setAttribute('aria-busy','true');syncProjectActions();status('Loading controller template…');
  try{
-  renderer=await createOverlayRenderer($('canvas'),{...ASSET_DATA,skins:GAME_SIR_SKINS},FONT_DATA);sync();
+  const assets=await controllerAssetsFor(snapshot),next=await createOverlayRenderer($('canvas'),assets,FONT_DATA);
+  if(controllerRendererKey(previewProject())!==requestedKey)return;
+  renderer=next;rendererAssetKey=requestedKey;sync();
   let warning=startupNotice;
   try{await logoPending;}catch{warning='Saved artwork or texture could not load. Replace the image or open a valid project.';}
   rendererReady=true;createStartThumbnails();$('previewLoading').hidden=true;
-  status('Ready. '+(warning||(startScreenOpen?'Choose a starting skin or continue your current job.':'Choose your shell color, add artwork, and drag to position.')),warning?'warning':'info');
+  status('Ready. '+(warning||(startScreenOpen?'Choose a starting skin or continue your current job.':'Customize your job, then verify inputs and export.')),warning?'warning':'info');
   renderInputFrame(performance.now());scheduleInputFrame();
  }catch(error){
-  $('previewLoading').textContent='Controller artwork could not load. Choose Retry loading.';$('retryLoad').hidden=false;
-  status('Controller artwork could not load. Retry loading to keep working with your current design.','error');
- }finally{rendererLoading=false;$('retryLoad').disabled=false;document.querySelector('main').setAttribute('aria-busy','false');syncProjectActions();}
+  rendererAssetKey='';$('previewLoading').textContent='Controller artwork could not load. Choose Retry loading.';$('retryLoad').hidden=false;
+  status('Controller artwork could not load. Retry or choose another visual model.','error');
+ }finally{rendererLoading=false;$('retryLoad').disabled=false;document.querySelector('main').setAttribute('aria-busy','false');syncProjectActions();if(controllerRendererKey(previewProject())!==requestedKey)requestControllerRenderer();}
 }
 function initializeInputLifecycle(){
  // Release the old page's state before waiting for assets or restored images.
- forwardControllerInput({},performance.now(),true);
+ forwardControllerInput({},performance.now(),true);scheduleInputFrame();
  window.addEventListener('gamepaddisconnected',event=>{
   if(!event.gamepad)return;disconnectedDeviceKeys.add(gamepadKey(event.gamepad));renderInputFrame(performance.now());
  });

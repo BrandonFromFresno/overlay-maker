@@ -1,31 +1,34 @@
-OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.11.0 WINDOWS PRERELEASE
+OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.12.0 WINDOWS PRERELEASE
 
 This application is for the producer. Customers receive a hosted overlay URL.
 
 START
 1. Extract the entire Windows ZIP. Open Overlay Studio.exe and keep the
    adjacent files and folders together. Run one copy at a time.
-2. Choose an opening G7 Pro 8K skin and select Use, or continue/open a saved
+2. Choose a visual model and skin and select Use, or continue/open a saved
    job. Start without a template previews the neutral overlay.
    Previewing a skin leaves your current job untouched until you apply it.
-   Connect your G7 in PC / XInput mode, focus the app and press a button.
+   Connect any browser-standard gamepad, focus the app and press a button.
+   The visual layout and physical input device are independent. Face inputs
+   follow bottom/right/left/top positions, regardless of printed letters.
+   Keep current customization carries your design into another model.
    The preview starts in Live controller mode automatically.
 3. Use the searchable skin gallery to choose your base. Your job name is in
    the header, tools on the left, and appearance settings on the right.
    Check Controller input below the preview for connection feedback. Auto keeps the active
    compatible device; choose Input device to use a specific controller.
    If a selected device reconnects in another browser slot, select it again.
-4. Shell > Use default overlay removes the template and custom styling while
+4. Shell > Use default overlay restores the current model’s default while
    preserving the job name. Undo restores the previous design. Project options >
    Reset to selected skin restores that skin separately.
    Use Shell, Buttons, Artwork, Effects, Layout, Holographic, Abstract, Textures and
-   Presets to customize the existing G7 artwork. Drag the preview to move the
+   Presets to customize the chosen controller artwork. Drag the preview to move the
    controller, or choose Move artwork to position your text/logo separately.
    Movement controls sit above the preview. Arrow keys nudge; hold Shift for
    10 pixels. Content outside the canvas crops. Verify inputs opens the physical
    check without starting it. Quick setup help is available below the preview.
 5. Artwork lets you choose Text artwork, import a PNG/JPEG logo, and return
-   to Use imported logo after trying text. The Cudi reference is optional.
+   to Use imported logo after trying text. Use original template artwork restores the chosen artwork view.
 6. Save project creates an editable .overlay backup with its images embedded.
    Autosave restores the last design on this computer when storage is available.
    Ctrl+S saves; Ctrl+O opens; Ctrl+Z undoes; Ctrl+Shift+Z redoes.
@@ -98,7 +101,7 @@ New neutral design resets the appearance; Undo restores your work.
 
 KNOWN LIMITS
 This prerelease is unsigned and intended for producer acceptance testing. Windows executable
-launch, physical G7 input, focus/minimize behavior and OBS capture need final
+launch, physical controller input, focus/minimize behavior and OBS capture need final
 hardware validation. Nothing in browser tests measures 8 kHz polling/latency.
 The provided base has faint baked reference artwork. The controller is an
 existing 2D raster/vector template; this editor does not create a 3D model.

@@ -1,16 +1,16 @@
 # Overlay Studio
 
-Internal Windows production tool for creating, testing and delivering GameSir G7 8K customer overlays. Version 0.11.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
+Internal Windows production tool for creating, testing and delivering controller customer overlays. Version 0.12.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
 
 ## Run the Windows app
 
-Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.11.0/Overlay-Studio-Windows-x64.zip) from the [0.11.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.11.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
+Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.12.0/Overlay-Studio-Windows-x64.zip) from the [0.12.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.12.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
 
-The extracted app needs no account, Node.js, internet connection or GameSir server. Connect the G7 in PC / XInput mode, focus the app and press a button. Live preview starts automatically. Connection feedback, the input-device picker and setup help are below the preview.
+The extracted app needs no account, Node.js, internet connection or GameSir server. Connect a browser-standard gamepad, focus the app and press a button. Live preview starts automatically. Connection feedback, the input-device picker and setup help are below the preview.
 
 ## Production workspace and GameSir skin gallery
 
-The app opens with 13 original GameSir G7 Pro 8K skins, live previews and safe saved-job resume. Choose **Start without a template** for the neutral overlay. In the editor, **Shell → Use default overlay** removes the template and custom styling while keeping the job name; Undo restores the previous design. **Project options → Reset to selected skin** remains a separate action. Selected skins persist in projects and are embedded in finished customer overlays. SVG artwork is used where supplied; existing Studio projects retain their artwork. See [opening-gallery review](REVIEW-START-SCREEN.md). The preview is centered between a compact tool rail and a contextual inspector. Job naming stays in the header; movement and verification controls are above the canvas. Customer delivery and studio testing have distinct areas.
+The app opens with 22 visual families and 60 supplied skins, including the original 13 G7 Pro 8K designs, live previews and safe saved-job resume. Choose **Start without a template** for the neutral overlay. In the editor, **Shell → Use default overlay** restores the current visual model’s default appearance while keeping the job name; Undo restores the previous design. **Project options → Reset to selected skin** remains a separate action. Selected skins persist in projects and are embedded in finished customer overlays. New layouts retain supplied geometry in data packages with high-resolution transparent artwork; existing Studio projects retain their artwork. See [opening-gallery review](REVIEW-START-SCREEN.md). The preview is centered between a compact tool rail and a contextual inspector. Job naming stays in the header; movement and verification controls are above the canvas. Customer delivery and studio testing have distinct areas.
 
 ## Make an overlay
 
@@ -25,6 +25,10 @@ The app opens with 13 original GameSir G7 Pro 8K skins, live previews and safe s
 Shell tint, patterns and shell effects remain separate from the controls. Stick sockets/rims stay fixed while caps move. Inputs, selected device and design settings have separate lifecycle handling; simulated previews are temporary.
 
 Included fonts: Rajdhani, Orbitron, Oxanium, Teko, Bebas Neue, Barlow Condensed, Montserrat and Inter. Only the selected included family is embedded in HTML, with its license. System fonts must be installed on the displaying computer. Sources/licenses are in [app/fonts/licenses](app/fonts/licenses).
+
+## Visual models
+
+Templates now separates the visual model from the connected gamepad. Choose from 22 source-backed visual families and 60 skins; any browser-standard gamepad can drive any layout. Saved jobs retain their model. See [controller models, audit and limitations](CONTROLLER-MODELS.md).
 
 ## Produce and deliver customer overlays
 

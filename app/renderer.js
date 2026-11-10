@@ -25,7 +25,8 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  for(const c of [emission,artwork,artEmission]){c.width=1672;c.height=941;}
  const ec=emission.getContext('2d'),ac=artwork.getContext('2d'),ae=artEmission.getContext('2d');let emissionKey='',artworkKey='',artEmissionKey='';
  const triggerLayer=document.createElement('canvas');triggerLayer.width=185;triggerLayer.height=200;const tc=triggerLayer.getContext('2d');
- const faceKeys = ['A','B','X','Y','Home','Share','Options','Capture','M','LB','RB','DPad_Up','DPad_Down','DPad_Left','DPad_Right'];
+ let faceKeys = ['A','B','X','Y','Home','Share','Options','Capture','M','LB','RB','DPad_Up','DPad_Down','DPad_Left','DPad_Right'];
+ const legacyFaceKeys=faceKeys.slice();let modelGeometry=null;
  const faces = {};
  // Draw faces and symbols synchronously: color changes never race image decoding.
  for (const key of faceKeys) {
@@ -87,16 +88,18 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  function shapePath(shape){const a=shape.attrs,p=new Path2D();if(shape.tag==='path')return new Path2D(a.d);if(shape.tag==='circle')p.arc(+a.cx,+a.cy,+a.r,0,Math.PI*2);else if(shape.tag==='ellipse')p.ellipse(+a.cx,+a.cy,+a.rx,+a.ry,0,0,Math.PI*2);else if(shape.tag==='rect')p.rect(+a.x||0,+a.y||0,+a.width,+a.height);else{const points=a.points.trim().split(/[ ,]+/).map(Number);for(let i=0;i<points.length;i+=2)i?p.lineTo(points[i],points[i+1]):p.moveTo(points[i],points[i+1]);if(shape.tag==='polygon')p.closePath();}return p;}
  function rebuildMasks(){
   shellMask.dataset.skin=activeSkinId;
-  cm.clearRect(0,0,1672,941);for(const key of faceKeys){cm.fill(faces[key].path);cm.stroke(faces[key].path);}
-  const circles=activeSkin?[...stickLayout.map(([x,y,,,,,r])=>[x,y,r]),dpadCircle,[...faces.Home.center,Math.max(faces.Home.radius+3,faces.Home.protectedRadius||0)]]:[[833.28,209.7,65],[634.34,529.42,124],[456,290,125],[1033,523,125]];
+  cm.clearRect(0,0,1672,941);for(const key of faceKeys){const f=faces[key];if(modelGeometry){for(const part of f.parts){cm.fill(part.path,part.rule);cm.stroke(part.path);}}else{cm.fill(f.path);cm.stroke(f.path);}}if(modelGeometry)cm.drawImage(modelGeometry.staticMask,0,0);
+  const circles=modelGeometry?modelGeometry.rimCircles:activeSkin?[...stickLayout.map(([x,y,,,,,r])=>[x,y,r]),dpadCircle,[...faces.Home.center,Math.max(faces.Home.radius+3,faces.Home.protectedRadius||0)]]:[[833.28,209.7,65],[634.34,529.42,124],[456,290,125],[1033,523,125]];
   for(const[x,y,r]of circles){cm.beginPath();cm.arc(x,y,r,0,Math.PI*2);cm.fill();}
   sm.clearRect(0,0,1672,941);sm.drawImage(images.base,0,0,1672,941);sm.globalCompositeOperation='destination-out';sm.drawImage(controlMask,0,0);sm.globalCompositeOperation='source-over';
  }
  function activateSkin(id){
   if(id===activeSkinId)return;if(id&&!skinRecords[id])throw Error('Controller skin is unavailable');
-  activeSkinId=id;activeSkin=skinRecords[id]||null;Object.assign(images,legacyImages);for(const key of Object.keys(faces))delete faces[key];Object.assign(faces,legacyFaces);
+  activeSkinId=id;activeSkin=skinRecords[id]||null;modelGeometry=null;faceKeys=legacyFaceKeys.slice();Object.assign(images,legacyImages);for(const key of Object.keys(faces))delete faces[key];Object.assign(faces,legacyFaces);
   stickLayout=[[456,290,'leftStick','LSB',0,86,125],[1033,523,'rightStick','RSB',2,86,125]];dpadCircle=[634.34,529.42,124];
-  if(activeSkin){
+  if(activeSkin?.modelGeometry){
+   modelGeometry=buildModelGeometry(activeSkin,skinImages[id]);Object.assign(images,modelGeometry.images);for(const key of Object.keys(faces))delete faces[key];Object.assign(faces,modelGeometry.faces);faceKeys=modelGeometry.faceKeys;stickLayout=modelGeometry.stickLayout;
+  }else if(activeSkin){
    const image=skinImages[id],height=480*(activeSkin.height||image.height)/(activeSkin.width||image.width),scale=941/height,left=(1672-480*scale)/2,top=100+(480-height)/2;
    const bodyMatrix=new DOMMatrix([scale,0,0,scale,left-260*scale,-top*scale]),point=(x,y)=>[left+(x-260)*scale,(y-top)*scale];
    const base=document.createElement('canvas');base.width=1672;base.height=941;const bg=base.getContext('2d',{willReadFrequently:true});bg.drawImage(image,left,0,480*scale,941);
@@ -119,7 +122,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   }
   for(const[x,y,,key,,,radius]of stickLayout)faces[key]={center:[x,y],radius};
   tintColor='';capCache.clear();shoulderCache.clear();rebuildMasks();
-  if(activeSkin){const trim=document.createElement('canvas');trim.width=1672;trim.height=941;const g=trim.getContext('2d');g.strokeStyle='#ffffff';g.lineWidth=3;for(const[x,y,,,,,radius]of stickLayout){g.beginPath();g.arc(x,y,radius+5,0,Math.PI*2);g.stroke();}for(const[x,y,radius]of [[...faces.Home.center,Math.max(faces.Home.radius+3,faces.Home.protectedRadius||0)],dpadCircle]){g.beginPath();g.arc(x,y,radius+5,0,Math.PI*2);g.stroke();}g.globalCompositeOperation='destination-in';g.drawImage(shellMask,0,0);g.globalCompositeOperation='source-over';images.nativeTrim=trim;}
+  if(activeSkin){const trim=document.createElement('canvas');trim.width=1672;trim.height=941;const g=trim.getContext('2d');g.strokeStyle='#ffffff';g.lineWidth=3;for(const[x,y,,,,,radius]of stickLayout){g.beginPath();g.arc(x,y,radius+5,0,Math.PI*2);g.stroke();}for(const[x,y,radius]of modelGeometry?(faces.Home?[[...faces.Home.center,faces.Home.radius+3]]:[]):[[...faces.Home.center,Math.max(faces.Home.radius+3,faces.Home.protectedRadius||0)],dpadCircle]){g.beginPath();g.arc(x,y,radius+5,0,Math.PI*2);g.stroke();}g.globalCompositeOperation='destination-in';g.drawImage(shellMask,0,0);g.globalCompositeOperation='source-over';images.nativeTrim=trim;}
 
  }
  function prepareBase(color,buttonColor) {
@@ -128,7 +131,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   tinted.base=tint(images.base,color,1672,941);
   const controls=tint(images.base,buttonColor,1672,941),g=controls.getContext('2d');
   g.globalCompositeOperation='destination-in';g.drawImage(controlMask,0,0);
-  const body=tinted.base.getContext('2d');body.globalCompositeOperation='destination-out';body.drawImage(controlMask,0,0);body.globalCompositeOperation='lighter';body.drawImage(controls,0,0);body.globalCompositeOperation='source-over';controls.width=0;
+  const body=tinted.base.getContext('2d');body.globalCompositeOperation='destination-out';body.drawImage(controlMask,0,0);body.globalCompositeOperation='lighter';body.drawImage(controls,0,0);body.globalCompositeOperation='source-over';if(modelGeometry?.fixedArtwork)body.drawImage(modelGeometry.fixedArtwork,0,0);controls.width=0;
  }
  function cap(key, color) {
   const id = key + color;
@@ -155,8 +158,10 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  function label(text,x,y,size,color) {
   ctx.font=`700 ${size}px Segoe UI, Arial, sans-serif`; ctx.fillStyle=color; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(text,x,y);
  }
- function face(key, color, pressed) {
-  const f=faces[key], [x,y]=f.center;
+ function face(key, color, pressed,onlyFloat=false) {
+  const f=faces[key];if(!f)return;const [x,y]=f.center;
+  if(f.modelFace){ctx.save();ctx.fillStyle=color;for(const part of f.parts){if(onlyFloat&&!part.floating)continue;ctx.globalCompositeOperation=part.floating?'source-over':'source-atop';ctx.fill(part.path,part.rule);}ctx.globalCompositeOperation='source-over';if(f.nativeInk&&!onlyFloat){ctx.save();ctx.clip(f.path);const ink=contrast(color);if(f.inkColor!==ink){f.inkColor=ink;const g=f.inkTint.getContext('2d');g.clearRect(0,0,f.inkTint.width,f.inkTint.height);g.drawImage(f.nativeInk,0,0);g.globalCompositeOperation='source-in';g.fillStyle=ink;g.fillRect(0,0,f.inkTint.width,f.inkTint.height);g.globalCompositeOperation='source-over';}ctx.drawImage(f.inkTint,f.inkX,f.inkY);ctx.restore();}if(f.floatBounds){const [bx,by,bw,bh]=f.floatBounds;ctx.save();ctx.clip(f.path);label(key,bx+bw/2,by+bh*.68,Math.min(30,bw*.18),contrast(color));ctx.restore();}ctx.restore();return;}
+
   if(activeSkin){ctx.save();ctx.clip(f.path);ctx.globalCompositeOperation='source-atop';ctx.fillStyle=color;ctx.fill(f.path);
    if(f.nativeInk){const ink=contrast(color);if(f.inkColor!==ink){f.inkColor=ink;const g=f.inkTint.getContext('2d');g.clearRect(0,0,f.inkTint.width,f.inkTint.height);g.drawImage(f.nativeInk,0,0);g.globalCompositeOperation='source-in';g.fillStyle=ink;g.fillRect(0,0,f.inkTint.width,f.inkTint.height);g.globalCompositeOperation='source-over';}ctx.drawImage(f.inkTint,f.inkX,f.inkY);}
    ctx.restore();return;}
@@ -195,7 +200,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   ctx.drawImage(triggerLayer,0,0,185,200,right?1090:365,38,185,200);
  }
  return {
-  hitTest(x,y){for(const key of faceKeys)if(ctx.isPointInPath(faces[key].path,x,y))return key;for(const[sx,sy,,key,,radius]of stickLayout)if(Math.hypot(x-sx,y-sy)<radius*90/86)return key;if(y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
+  hitTest(x,y){for(const key of faceKeys)if(modelGeometry?faces[key].parts.some(p=>ctx.isPointInPath(p.path,x,y,p.rule)):ctx.isPointInPath(faces[key].path,x,y))return key;for(const[sx,sy,,key,,radius]of stickLayout)if(Math.hypot(x-sx,y-sy)<radius*90/86)return key;if(!modelGeometry&&y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
   abstractPhase:()=>abstractPainter.phase(),
   async setTexture(src){await texturePainter.setImage(src||'');},
   async setLogo(src) {
@@ -216,7 +221,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    const strength=peak?1:effect==='neon'?(.42+.58*pulse):(.08+.92*breathe);
    const glow=p.glow+(effect==='neon'?16*amount:0);
    prepareBase(p.baseColor||'#ffffff',p.buttonBaseColor||'#ffffff');ctx.clearRect(0,0,1672,1241);ctx.save();ctx.translate(p.offsetX||0,p.offsetY||0);
-   ctx.save();ctx.translate(0,300);ctx.drawImage(tinted.base,0,0,1672,941);holoPainter.draw(p,time);abstractPainter.draw(p,time);texturePainter.draw(p);
+   if(modelGeometry)ctx.drawImage(images.modelFloat,0,0);ctx.save();ctx.translate(0,300);ctx.drawImage(tinted.base,0,0,1672,941);holoPainter.draw(p,time);abstractPainter.draw(p,time);texturePainter.draw(p);
    surfacePainter.pattern(p);
    if(!['none','rainbow','neon','reactive'].includes(effect)&&amount>0)surfacePainter.effect(effect,accent,time,seconds,amount,p);
    themePainter.shell(p,state,time);themePainter.bursts(p,rawTime);
@@ -227,7 +232,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
     const power=(p.animationMode==='still'?(active?1:0):Math.pow(Math.max(0,1-(time-lastActive)/600),2))*amount;
     if(power){recolor(shellMask,accent);ctx.save();ctx.globalAlpha=.38*power;ctx.drawImage(layer,0,0);ctx.restore();}
    }
-   for(const key of faceKeys)if(colors[key]?.rest||activeSkin&&p.buttonBaseColor!=='#ffffff')face(key,colors[key]?.rest||p.buttonBaseColor,false);
+   for(const key of faceKeys){if(colors[key]?.rest||activeSkin&&p.buttonBaseColor!=='#ffffff')face(key,colors[key]?.rest||p.buttonBaseColor,false);else if(modelGeometry&&!modelGeometry.floatArtwork&&faces[key].floatParts.length)face(key,faces[key].normal,false,true);}
    if(!activeSkin||['neon','rainbow'].includes(effect)){
     const nextKey=[activeSkinId,p.mode==='original'?'ambient':'trim',accent,glow].join('|');
     if(nextKey!==emissionKey){emissionKey=nextKey;recolor(activeSkin?images.nativeTrim:images[p.mode==='original'?'ambient':'trim'],accent);ec.clearRect(0,0,1672,941);ec.save();ec.shadowColor=accent;ec.shadowBlur=glow;ec.drawImage(layer,0,0);ec.restore();if(activeSkin){ec.globalCompositeOperation='destination-in';ec.drawImage(shellMask,0,0);ec.globalCompositeOperation='source-over';}}
@@ -245,20 +250,20 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
     if(nextKey!==artEmissionKey){artEmissionKey=nextKey;lc.clearRect(0,0,1672,941);lc.drawImage(artwork,0,0);if(p.mode==='text'){lc.globalCompositeOperation='source-in';lc.fillStyle=accent;lc.fillRect(0,0,1672,941);lc.globalCompositeOperation='source-over';}ae.clearRect(0,0,1672,941);ae.save();ae.shadowColor=accent;ae.shadowBlur=glow;ae.drawImage(layer,0,0);ae.restore();}
     ctx.save();ctx.globalAlpha=strength;ctx.drawImage(artEmission,0,0);ctx.restore();
    }
-   for(const key of faceKeys)if(state[key])face(key,color(key,'pressed'),true);
+   for(const key of faceKeys)if(state[key])face(key,modelGeometry&&['LT','RT'].includes(key)?mix(colors[key]?.rest||faces[key].normal,color(key,'pressed'),state[key]):color(key,'pressed'),true);
    themePainter.controls(p,state,time);
    stickLayout.forEach(([x,y,key,button,i,radius])=>{
     const axes=state.axes;
     // The base owns the fixed socket/rim. The isolated cap sits above it,
     // including the overlap at full travel; clipping to the socket cuts the cap.
     ctx.save();
-    x+=axes[i]*38;y+=axes[i+1]*38;
+    const travel=modelGeometry?radius*.42:38;x+=axes[i]*travel;y+=axes[i+1]*travel;
     const pressed=state[button],ink=color(button,pressed?'pressed':'rest');
     const size=180*radius/86;ctx.drawImage(cap(key,ink),x-size/2,y-size/2,size,size);
     if(pressed){ctx.save();ctx.beginPath();ctx.arc(x,y,radius,0,Math.PI*2);ctx.clip();label(button==='LSB'?'L3':'R3',x,y,33,contrast(ink));ctx.restore();}
     ctx.restore();
    });
-   ctx.restore();trigger(242,state.LT||0,false,color('LT','rest'),color('LT','pressed'));trigger(1430,state.RT||0,true,color('RT','rest'),color('RT','pressed'));ctx.restore();
+   if(modelGeometry){for(const key of ['LT','RT']){const f=faces[key];if(!f?.floatBounds)continue;const[bx,by,bw,bh]=f.floatBounds,right=key==='RT',x=right?bx+bw+75:bx-75,y=by+bh/2,pressure=state[key]||0,r=Math.min(105,bh*.55);ctx.lineWidth=9;ctx.strokeStyle='#a9bac5';ctx.beginPath();ctx.arc(x,y,r,right?-1.5:2.4,right?.74:4.64);ctx.stroke();if(pressure){ctx.strokeStyle=color(key,'pressed');ctx.beginPath();ctx.arc(x,y,r,right?-1.5:2.4,(right?-1.5:2.4)+2.24*pressure);ctx.stroke();}label(Math.round(pressure*100)+'%',x,y,28,color(key,'pressed'));}}ctx.restore();if(!modelGeometry){trigger(242,state.LT||0,false,color('LT','rest'),color('LT','pressed'));trigger(1430,state.RT||0,true,color('RT','rest'),color('RT','pressed'));}ctx.restore();
   }
  };
 }
@@ -267,7 +272,7 @@ function normalizeOverlayInput(state={}){
  const number=(v,min,max)=>typeof v==='number'&&Number.isFinite(v)?Math.max(min,Math.min(max,v)):0;
  const out={axes:Array.from({length:4},(_,i)=>number(state?.axes?.[i],-1,1))};
  for(const i of [0,2]){const length=Math.hypot(out.axes[i],out.axes[i+1]);if(length>1){out.axes[i]/=length;out.axes[i+1]/=length;}}
- for(const key of ['A','B','X','Y','LB','RB','Home','Share','Options','Capture','M','DPad_Up','DPad_Down','DPad_Left','DPad_Right','LSB','RSB'])out[key]=state?.[key]===true||number(state?.[key],0,1)>.5;
+ for(const key of ['A','B','X','Y','LB','RB','Home','Share','Options','Capture','M','DPad_Up','DPad_Down','DPad_Left','DPad_Right','LSB','RSB','L4','R4','L5','R5','C1','C2','C3','C4','T1','T2','T3'])out[key]=state?.[key]===true||number(state?.[key],0,1)>.5;
  out.LT=number(state?.LT,0,1);out.RT=number(state?.RT,0,1);return out;
 }
 function readStandardGamepad(pad){

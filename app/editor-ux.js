@@ -40,7 +40,7 @@ function syncProjectActions(){
  const unavailable=!rendererReady||!!projectAction;document.querySelector('main').inert=unavailable;$('name').disabled=unavailable||startScreenOpen;
  for(const id of ['open','save','exportMenu','html','png','upload','importTextures','customerExport','uploadCustomer','connectGitHub','openDelivery'])$(id).disabled=unavailable;
  if(startScreenOpen)for(const id of ['save','exportMenu','html','png','upload','importTextures'])$(id).disabled=true;
- $('returnToEditor').disabled=unavailable;syncStartScreen();
+ $('returnToEditor').disabled=rendererLoading||!!projectAction;syncStartScreen();
  $('publish').disabled=unavailable||startScreenOpen||!bridgeUsable();
  $('copy').disabled=!!projectAction||!bridgeUsable()||!$('obsUrl').value.startsWith('http');
  $('publicationStatus').dataset.kind=bridgeSetup.phase==='error'||publishedState&&!sameState(publishedState,projectState(project))?'warning':'info';

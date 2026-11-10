@@ -1,0 +1,2565 @@
+{
+  "archive": {
+    "name": "GameSir_Development_Files.zip",
+    "sha256": "cc9c3756f6b466378fa5bdddcd2cdb767030689cd6c86a9065bc5935f0669cd3",
+    "entries": 130,
+    "files": 106,
+    "expandedFileBytes": 28537843
+  },
+  "entryPoints": {
+    "OverlayWeb/dist/index.html": {
+      "scripts": [
+        "js/chunk-vendors.afd43107.js",
+        "js/app.7ab89ecc.js"
+      ],
+      "styles": [
+        "css/app.81be9198.css",
+        "css/app.81be9198.css"
+      ]
+    }
+  },
+  "bundles": [
+    {
+      "path": "OverlayWeb/dist/js/app.7ab89ecc.js",
+      "bytes": 1360806,
+      "sha256": "8807af8b4069f956944a09521d244829832010ac077fc231b70d9f4f7687c924",
+      "registries": [
+        {
+          "variable": "Ug",
+          "models": {
+            "C2": "is",
+            "G7Mini": "_s",
+            "G7SE": "ke",
+            "G7SEPlus": "cc",
+            "G7Pro": "Ja",
+            "G7ProCE": "Sa",
+            "G7ProS": "Rr",
+            "K1": "li",
+            "K2X": "Ii",
+            "K2_8K": "fl",
+            "N2S": "ao",
+            "T3CE": "Wo",
+            "T3Lite": "pn",
+            "T3Pro": "Un",
+            "T3ProXBox": "Sh",
+            "T3XS": "Xh",
+            "T7": "Md",
+            "T7Pro": "tC",
+            "T7ProW": "DC",
+            "T4N2": "og",
+            "T4NPro": "Vg"
+          },
+          "characterOffset": 1251524
+        }
+      ],
+      "themeKeys": [
+        "Black",
+        "C2/Black",
+        "C2/Pink",
+        "C2/White",
+        "G7Mini/Pink",
+        "G7Mini/Purple",
+        "G7Pro/Aimlabs",
+        "G7Pro/Amazon",
+        "G7Pro/Black",
+        "G7Pro/Blue",
+        "G7Pro/DragonsDogma",
+        "G7Pro/GradientGray",
+        "G7Pro/GradientPink",
+        "G7Pro/GradientSilver",
+        "G7Pro/Orange",
+        "G7Pro/Purple",
+        "G7Pro/RuLong",
+        "G7Pro/Silver",
+        "G7Pro/White",
+        "G7Pro/WuchangFallenFeathers",
+        "G7Pro/ZZZ",
+        "G7ProCE/Aimlabs",
+        "G7ProCE/Black",
+        "G7ProCE/Blue",
+        "G7ProCE/Crown",
+        "G7ProCE/G7Pro",
+        "G7ProCE/Gold",
+        "G7ProCE/GoldenApple",
+        "G7ProCE/GradientBlue",
+        "G7ProCE/NBA2K",
+        "G7ProCE/Nioh",
+        "G7ProCE/White",
+        "G7ProCE/XReal",
+        "G7ProCE/YingRen",
+        "G7ProS/Black",
+        "G7ProS/White",
+        "G7SE/Black",
+        "G7SE/White",
+        "G7SEPlus/Black",
+        "G7SEPlus/White",
+        "K1/Black",
+        "K1/Gold",
+        "K2X/Black",
+        "K2_8K/Black",
+        "N2S/Black",
+        "N2S/MaiShiranui",
+        "N2S/Nioh",
+        "N2S/Pink",
+        "N2S/White",
+        "Pink",
+        "Purple",
+        "T3CE/Default",
+        "T3CE/MenaRD",
+        "T3Lite/White",
+        "T3Pro/Black",
+        "T3ProXBox/White",
+        "T4N2/White",
+        "T4NPro/Black",
+        "T4NPro/HatsuneMiku",
+        "T4NPro/White",
+        "T4NPro/YYS",
+        "T7/White",
+        "T7Pro/RetroGreen",
+        "T7Pro/Sugar",
+        "T7ProW/Black",
+        "T7ProW/Floral",
+        "T7ProW/RetroGreen"
+      ],
+      "bareThemeAliases": [
+        "Black",
+        "Pink",
+        "Purple"
+      ],
+      "themeModuleCount": 20,
+      "readsGamepadAPI": false,
+      "usesWebViewBridge": true,
+      "usesEventSource": true,
+      "hasSourceMapReference": false
+    },
+    {
+      "path": "OverlayWeb/dist/js/app.db8c088d.js",
+      "bytes": 1080602,
+      "sha256": "3029ae76834177836a6e9749d2d11ad958f367b02a6ec82161391886852c0095",
+      "registries": [
+        {
+          "variable": "Wn",
+          "models": {
+            "C2": "At",
+            "C3": "vs",
+            "G7SE": "Xs",
+            "G7SEPlus": "Le",
+            "G7Pro": "fr",
+            "G7ProCE": "Fc",
+            "K1": "qr",
+            "N2S": "Ha",
+            "T3CE": "ai",
+            "T3Lite": "ki",
+            "T3Pro": "ll",
+            "T3ProXBox": "zl",
+            "T7": "Ho",
+            "T7Pro": "ah",
+            "T7ProW": "Oh",
+            "T4N2": "pn",
+            "T4NPro": "Gn"
+          },
+          "characterOffset": 1042061
+        }
+      ],
+      "themeKeys": [
+        "C2/White",
+        "C3/White",
+        "G7Pro/Amazon",
+        "G7Pro/Black",
+        "G7Pro/DragonsDogma",
+        "G7Pro/Orange",
+        "G7Pro/Purple",
+        "G7Pro/White",
+        "G7Pro/WuchangFallenFeathers",
+        "G7Pro/ZZZ",
+        "G7ProCE/Aimlabs",
+        "G7ProCE/G7Pro",
+        "G7ProCE/Gold",
+        "G7ProCE/GoldenApple",
+        "G7ProCE/NBA2K",
+        "G7ProCE/Nioh",
+        "G7SE/Black",
+        "G7SE/White",
+        "G7SEPlus/Black",
+        "G7SEPlus/White",
+        "K1/Black",
+        "K1/Gold",
+        "N2S/Black",
+        "N2S/White",
+        "T3CE/Default",
+        "T3Lite/White",
+        "T3Pro/Black",
+        "T3ProXBox/White",
+        "T4N2/White",
+        "T4NPro/Black",
+        "T4NPro/HatsuneMiku",
+        "T4NPro/White",
+        "T4NPro/YYS",
+        "T7/White",
+        "T7Pro/RetroGreen",
+        "T7Pro/Sugar",
+        "T7ProW/Black",
+        "T7ProW/Floral",
+        "T7ProW/RetroGreen"
+      ],
+      "bareThemeAliases": [],
+      "themeModuleCount": 17,
+      "readsGamepadAPI": false,
+      "usesWebViewBridge": true,
+      "usesEventSource": false,
+      "hasSourceMapReference": false
+    }
+  ],
+  "assetModels": {
+    "C2": {
+      "White": [
+        "Cover.svg"
+      ]
+    },
+    "C3": {
+      "White": [
+        "Cover.svg"
+      ]
+    },
+    "G7": {
+      "Black": [
+        "Cover.svg",
+        "FullCover.svg"
+      ]
+    },
+    "G7Mini": {
+      "Pink": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "Purple": [
+        "Cover.svg",
+        "FullCover.svg"
+      ]
+    },
+    "G7Pro": {
+      "Aimlabs": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "Amazon": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "Black": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "Blue": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "GradientGray": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "GradientPink": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "GradientSilver": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "Orange": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "Purple": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "RuLong": [
+        "Cover.svg",
+        "FullCover.svg",
+        "XYAB.svg"
+      ],
+      "Silver": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "White": [
+        "Cover.svg",
+        "FullCover.svg"
+      ]
+    },
+    "G7ProCE": {
+      "Aimlabs": [
+        "Cover.svg"
+      ],
+      "Black": [
+        "Cover.svg"
+      ],
+      "Blue": [
+        "Cover.svg"
+      ],
+      "G7Pro": [
+        "Cover.svg"
+      ],
+      "GoldenApple": [
+        "Cover.svg"
+      ],
+      "GradientBlue": [
+        "Cover.svg"
+      ],
+      "NBA2K": [
+        "Cover.svg"
+      ],
+      "Nioh": [
+        "Cover.svg"
+      ],
+      "White": [
+        "Cover.svg"
+      ],
+      "XReal": [
+        "Cover.svg"
+      ]
+    },
+    "G7SE": {
+      "Black": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "White": [
+        "Cover.svg",
+        "FullCover.svg"
+      ]
+    },
+    "G7SEPlus": {
+      "White": [
+        "Cover.svg",
+        "FullCover.svg"
+      ]
+    },
+    "K1": {
+      "Black": [
+        "FullCover.svg"
+      ],
+      "Gold": [
+        "FullCover.svg"
+      ]
+    },
+    "K2X": {
+      "Black": [
+        "Cover.svg",
+        "FullCover.svg"
+      ]
+    },
+    "K2_8K": {
+      "Black": [
+        "Cover.svg"
+      ]
+    },
+    "N2S": {
+      "Black": [
+        "Cover.svg",
+        "FullCover.svg",
+        "Screen.svg"
+      ],
+      "Nioh": [
+        "Cover.svg",
+        "FullCover.svg",
+        "Screen.svg"
+      ],
+      "Pink": [
+        "Cover.svg",
+        "FullCover.svg",
+        "Screen.svg",
+        "WallpaperWithMenu.svg"
+      ],
+      "White": [
+        "Cover.svg",
+        "FullCover.svg",
+        "Screen.svg"
+      ]
+    },
+    "T3CE": {
+      "Default": [
+        "Cover.svg"
+      ],
+      "MenaRD": [
+        "Cover.svg"
+      ]
+    },
+    "T3Lite": {
+      "White": [
+        "Cover.svg"
+      ]
+    },
+    "T3Pro": {
+      "Black": [
+        "Cover.svg"
+      ]
+    },
+    "T3ProXBox": {
+      "White": [
+        "Cover.svg",
+        "FullCover.svg"
+      ]
+    },
+    "T3XS": {
+      "Gray": [
+        "Cover.svg",
+        "L2R2.svg"
+      ],
+      "MenaRD": [
+        "Cover.svg",
+        "FullCover.svg",
+        "L2R2.svg"
+      ],
+      "White": [
+        "Cover.svg",
+        "L2R2.svg"
+      ]
+    },
+    "T4N2": {
+      "White": [
+        "Cover.svg"
+      ]
+    },
+    "T4NPro": {
+      "Black": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "HatsuneMiku": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "White": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "YYS": [
+        "FullCover.svg",
+        "FullCover.svg"
+      ]
+    },
+    "T7": {
+      "Sliver": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "White": [
+        "FullCover.svg"
+      ]
+    },
+    "T7Pro": {
+      "RetroGreen": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "Sugar": [
+        "Cover.svg",
+        "FullCover.svg"
+      ]
+    },
+    "T7ProW": {
+      "Black": [
+        "Cover.svg",
+        "FullCover.svg"
+      ],
+      "RetroGreen": [
+        "Cover.svg",
+        "FullCover.svg"
+      ]
+    }
+  },
+  "inventory": [
+    {
+      "path": "OverlayWeb/dist/css/app.59c16459.css",
+      "bytes": 32706,
+      "sha256": "4658bf4b5926a77eec0b4210f95fb91683ed78133dca52840fe16250f9547669"
+    },
+    {
+      "path": "OverlayWeb/dist/css/app.81be9198.css",
+      "bytes": 47354,
+      "sha256": "9262577688534105b1cde6e6677ea8880a3169af99c93a74eadae3f1fabc52c2"
+    },
+    {
+      "path": "OverlayWeb/dist/index.html",
+      "bytes": 795,
+      "sha256": "bdb5db5a561804772792d67e08e601a445722480bc3c9c84651e1f03048542ee"
+    },
+    {
+      "path": "OverlayWeb/dist/js/app.7ab89ecc.js",
+      "bytes": 1360806,
+      "sha256": "8807af8b4069f956944a09521d244829832010ac077fc231b70d9f4f7687c924"
+    },
+    {
+      "path": "OverlayWeb/dist/js/app.db8c088d.js",
+      "bytes": 1080602,
+      "sha256": "3029ae76834177836a6e9749d2d11ad958f367b02a6ec82161391886852c0095"
+    },
+    {
+      "path": "OverlayWeb/dist/js/chunk-vendors.afd43107.js",
+      "bytes": 67332,
+      "sha256": "bce2c198d510a541d1911fbcc8f58642e3d7a38d3490702c2a89ccbf2c2e4048"
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/C2/White/Cover.svg",
+      "bytes": 61082,
+      "sha256": "e4a94c07e7af27df99f3ad8166c7dc67bba327a647c2df6f7a46c00cd3651ccb",
+      "viewBox": "0 0 441.75 291.82",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 59,
+        "g": 16,
+        "polyline": 8,
+        "polygon": 8,
+        "line": 22,
+        "rect": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/C3/White/Cover.svg",
+      "bytes": 128437,
+      "sha256": "bb4c9cf34ac8f4fb56af0fc95f42462d42cda0a1d29a0aa90678bf0d5a5b1f61",
+      "viewBox": "0 0 442.15 289.41",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 2,
+        "path": 101,
+        "g": 78,
+        "polygon": 15,
+        "polyline": 39,
+        "circle": 54,
+        "line": 299,
+        "rect": 107
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7/Black/Cover.svg",
+      "bytes": 55883,
+      "sha256": "60743d11c6dcce3f54e6a685d42f45e0d025a2a74f13c3aa81e21bbc4c5fb38e",
+      "viewBox": "0 0 604.5 409.21",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 3,
+        "path": 55
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7/Black/FullCover.svg",
+      "bytes": 65724,
+      "sha256": "8ed31f4cc0304dbb327d5c8b27495418706f69fce386a81960845f8a7e237ec8",
+      "viewBox": "0 0 430.53 291.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 15,
+        "path": 48,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Mini/Pink/Cover.svg",
+      "bytes": 91801,
+      "sha256": "440c9beda89ce3b291d95bcfb2eb3c1dfbb02597cb47dd3abe84d3b741938570",
+      "viewBox": "0 0 393.35 266.62",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 8,
+        "path": 64,
+        "circle": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Mini/Pink/FullCover.svg",
+      "bytes": 91801,
+      "sha256": "440c9beda89ce3b291d95bcfb2eb3c1dfbb02597cb47dd3abe84d3b741938570",
+      "viewBox": "0 0 393.35 266.62",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 8,
+        "path": 64,
+        "circle": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Mini/Purple/Cover.svg",
+      "bytes": 91804,
+      "sha256": "a4300cbb0a252259d3278ad0ea51fd459c1c76f9a44e8c9726ca2f50852533f9",
+      "viewBox": "0 0 393.35 266.62",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 8,
+        "path": 64,
+        "circle": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Mini/Purple/FullCover.svg",
+      "bytes": 91804,
+      "sha256": "a4300cbb0a252259d3278ad0ea51fd459c1c76f9a44e8c9726ca2f50852533f9",
+      "viewBox": "0 0 393.35 266.62",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 8,
+        "path": 64,
+        "circle": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Aimlabs/Cover.svg",
+      "bytes": 85781,
+      "sha256": "a1a9978ff2e9d86f8124e8c888e3d47a03afdd3792f366caab1113f3a2373317",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 5,
+        "g": 18,
+        "path": 64,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Aimlabs/FullCover.svg",
+      "bytes": 85781,
+      "sha256": "a1a9978ff2e9d86f8124e8c888e3d47a03afdd3792f366caab1113f3a2373317",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 5,
+        "g": 18,
+        "path": 64,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Amazon/Cover.svg",
+      "bytes": 92343,
+      "sha256": "83d8ebd3d8c07a41c72425da28759870eaa911cfa554a803031d4980ca9f062f",
+      "viewBox": "0 0 430.53 291.94",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 7,
+        "g": 10,
+        "path": 55,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Amazon/FullCover.svg",
+      "bytes": 92343,
+      "sha256": "83d8ebd3d8c07a41c72425da28759870eaa911cfa554a803031d4980ca9f062f",
+      "viewBox": "0 0 430.53 291.94",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 7,
+        "g": 10,
+        "path": 55,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Black/Cover.svg",
+      "bytes": 89375,
+      "sha256": "39ca5707bc3a6998fc8e01312c4652ff165b4615bfa62a65c6a220288697dee4",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 7,
+        "g": 12,
+        "path": 55,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Black/FullCover.svg",
+      "bytes": 89375,
+      "sha256": "39ca5707bc3a6998fc8e01312c4652ff165b4615bfa62a65c6a220288697dee4",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 7,
+        "g": 12,
+        "path": 55,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Blue/Cover.svg",
+      "bytes": 89288,
+      "sha256": "0ee122197f07507a31a8cb2f7b4d95e3d9bfa90d6e941e104880838941c30df5",
+      "viewBox": "0 0 430.6 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 10,
+        "path": 53,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Blue/FullCover.svg",
+      "bytes": 89288,
+      "sha256": "0ee122197f07507a31a8cb2f7b4d95e3d9bfa90d6e941e104880838941c30df5",
+      "viewBox": "0 0 430.6 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 10,
+        "path": 53,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/GradientGray/Cover.svg",
+      "bytes": 90491,
+      "sha256": "982a9c87aedd51958670d5f837750fc673ef7cf10252d92dfc54da1c3e4b0a6b",
+      "viewBox": "0 0 430.56 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 8,
+        "g": 15,
+        "path": 53,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/GradientGray/FullCover.svg",
+      "bytes": 90491,
+      "sha256": "982a9c87aedd51958670d5f837750fc673ef7cf10252d92dfc54da1c3e4b0a6b",
+      "viewBox": "0 0 430.56 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 8,
+        "g": 15,
+        "path": 53,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/GradientPink/Cover.svg",
+      "bytes": 97354,
+      "sha256": "9258fbef2bb545d88c343342c0695b581346f3decf3801546a15cc0fcf327c48",
+      "viewBox": "0 0 430.6 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 7,
+        "g": 10,
+        "path": 55,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/GradientPink/FullCover.svg",
+      "bytes": 97354,
+      "sha256": "9258fbef2bb545d88c343342c0695b581346f3decf3801546a15cc0fcf327c48",
+      "viewBox": "0 0 430.6 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 7,
+        "g": 10,
+        "path": 55,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/GradientSilver/Cover.svg",
+      "bytes": 90361,
+      "sha256": "1721a3edda15c338c94c70a262f8674beb3cfc72efe7bb29ff085238b448fcb4",
+      "viewBox": "0 0 430.56 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 7,
+        "g": 12,
+        "path": 54,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/GradientSilver/FullCover.svg",
+      "bytes": 90361,
+      "sha256": "1721a3edda15c338c94c70a262f8674beb3cfc72efe7bb29ff085238b448fcb4",
+      "viewBox": "0 0 430.56 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 7,
+        "g": 12,
+        "path": 54,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Orange/Cover.svg",
+      "bytes": 95635,
+      "sha256": "84539512283de7a195fa28a8c98328360e2407d5b0b1c3bb38d1f7dc3279bdf6",
+      "viewBox": "0 0 430.53 292.04",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 9,
+        "path": 55,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Orange/FullCover.svg",
+      "bytes": 95635,
+      "sha256": "84539512283de7a195fa28a8c98328360e2407d5b0b1c3bb38d1f7dc3279bdf6",
+      "viewBox": "0 0 430.53 292.04",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 9,
+        "path": 55,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Purple/Cover.svg",
+      "bytes": 95413,
+      "sha256": "37c331fee2bcae27c16d577785066461958f2f59db8dc2e46dfbe85de3cdad25",
+      "viewBox": "0 0 430.53 292.04",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 9,
+        "path": 55,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Purple/FullCover.svg",
+      "bytes": 95413,
+      "sha256": "37c331fee2bcae27c16d577785066461958f2f59db8dc2e46dfbe85de3cdad25",
+      "viewBox": "0 0 430.53 292.04",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 9,
+        "path": 55,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/RuLong/Cover.svg",
+      "bytes": 408036,
+      "sha256": "3454595d9ee9239208577fa76b6d6039b18bdc0b94aa173c47cad10cfbcac0d1",
+      "viewBox": "0 0 430.53 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 103,
+        "g": 20,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/RuLong/FullCover.svg",
+      "bytes": 408036,
+      "sha256": "3454595d9ee9239208577fa76b6d6039b18bdc0b94aa173c47cad10cfbcac0d1",
+      "viewBox": "0 0 430.53 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 103,
+        "g": 20,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/RuLong/XYAB.svg",
+      "bytes": 20997,
+      "sha256": "708d495783d7cce8825b5462f731cadbc5cf2fbdf5d0df6d64c7c2813e3bf9a3",
+      "viewBox": "0 0 74.42 77.39",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 5,
+        "path": 4
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Silver/Cover.svg",
+      "bytes": 88394,
+      "sha256": "d7b43ed0b207917bfc83b9b95ae1cb7008dfadcd77116520bd70814b943e2908",
+      "viewBox": "0 0 430.56 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 11,
+        "path": 50,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/Silver/FullCover.svg",
+      "bytes": 88394,
+      "sha256": "d7b43ed0b207917bfc83b9b95ae1cb7008dfadcd77116520bd70814b943e2908",
+      "viewBox": "0 0 430.56 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 11,
+        "path": 50,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/White/Cover.svg",
+      "bytes": 86265,
+      "sha256": "d407fad47c54287bcf44f92476ead51ecfcf7532c7ecccce28352c3e76a46c69",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 11,
+        "path": 53,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7Pro/White/FullCover.svg",
+      "bytes": 86265,
+      "sha256": "d407fad47c54287bcf44f92476ead51ecfcf7532c7ecccce28352c3e76a46c69",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 11,
+        "path": 53,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7ProCE/Aimlabs/Cover.svg",
+      "bytes": 103144,
+      "sha256": "96dade41a4e8a7ef9b62b5a43dff4758b00f441679858d1c82758d5b2bffe0e3",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 5,
+        "clipPath": 1,
+        "path": 65,
+        "g": 14,
+        "polygon": 6,
+        "rect": 3,
+        "circle": 2
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7ProCE/Black/Cover.svg",
+      "bytes": 87233,
+      "sha256": "c82d835c08a455000721472f207b15a3e533a5d9137e486f116bb22fab95e0fc",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 10,
+        "path": 53,
+        "circle": 3,
+        "polygon": 7,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7ProCE/Blue/Cover.svg",
+      "bytes": 88386,
+      "sha256": "16a9975aea19e447594e80d75bcbd1efd23dc76035335ce75d8e11fabce25a45",
+      "viewBox": "0 0 430.6 292.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 10,
+        "path": 51,
+        "circle": 3,
+        "polygon": 7,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7ProCE/G7Pro/Cover.svg",
+      "bytes": 83104,
+      "sha256": "8718d8d19f3d4bb8e32fc6a5606c20330561e14a4de51198e1a4d4d8c2b11449",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 12,
+        "path": 51,
+        "circle": 3,
+        "polygon": 2,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7ProCE/GoldenApple/Cover.svg",
+      "bytes": 94193,
+      "sha256": "84d279bfe346af9d6b32c63fd3e03a7d9f6f421eb9b8caccf6fd747eb96b6a3b",
+      "viewBox": "82.3309 275.6700 430.5960 291.9500",
+      "width": "430.5960",
+      "height": "291.9500",
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "path": 53,
+        "g": 14,
+        "polygon": 6,
+        "rect": 3,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7ProCE/GradientBlue/Cover.svg",
+      "bytes": 89706,
+      "sha256": "0a4efd6840dc11ed4b4ca153d3058cb6de90f37e7090192815cd0cc43cd1b444",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 6,
+        "g": 14,
+        "path": 52,
+        "circle": 3,
+        "polygon": 6,
+        "rect": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7ProCE/NBA2K/Cover.svg",
+      "bytes": 89745,
+      "sha256": "74248049a8831ff77f7c408942a8ce1670e5ad49fcf89226149ac12c3ea61df9",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 11,
+        "path": 52,
+        "polygon": 8,
+        "rect": 3,
+        "circle": 2
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7ProCE/Nioh/Cover.svg",
+      "bytes": 942563,
+      "sha256": "07ee8a7cda73e28b5b935d60496d3178cc292eb62be286c8dd133f38f52a37d5",
+      "viewBox": "0 0 430.6 291.84",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 3,
+        "path": 57,
+        "g": 33,
+        "polygon": 5,
+        "circle": 3,
+        "image": 2
+      },
+      "embeddedImages": 2,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7ProCE/White/Cover.svg",
+      "bytes": 87479,
+      "sha256": "4fd335c4fc8de3f67f3caf93b5620c362538fc92ac034e193d32273e3075452a",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 8,
+        "path": 54,
+        "circle": 3,
+        "polygon": 7,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7ProCE/XReal/Cover.svg",
+      "bytes": 94976,
+      "sha256": "ca2b551c9a023bb02797a1a4f73246455b6ecb3d923acc8b71a22c361203d084",
+      "viewBox": "0 0 430.53 292.13",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "radialGradient": 1,
+        "stop": 2,
+        "clipPath": 3,
+        "path": 54,
+        "rect": 2,
+        "g": 14,
+        "circle": 3,
+        "polygon": 5,
+        "image": 1
+      },
+      "embeddedImages": 1,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7SE/Black/Cover.svg",
+      "bytes": 55883,
+      "sha256": "81a800338c321efc375afa2a1bb3eaa110afe785129759b02562f2e3c2053c90",
+      "viewBox": "0 0 603.0 408.61",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 3,
+        "path": 55
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7SE/Black/FullCover.svg",
+      "bytes": 65724,
+      "sha256": "8ed31f4cc0304dbb327d5c8b27495418706f69fce386a81960845f8a7e237ec8",
+      "viewBox": "0 0 430.53 291.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 15,
+        "path": 48,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7SE/White/Cover.svg",
+      "bytes": 48216,
+      "sha256": "736cb3f8f3f912c5357682e80d5d66ab4684e14127e5975566153694fefaee48",
+      "viewBox": "0 0 604.5 408.61",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 1,
+        "path": 49
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7SE/White/FullCover.svg",
+      "bytes": 48216,
+      "sha256": "736cb3f8f3f912c5357682e80d5d66ab4684e14127e5975566153694fefaee48",
+      "viewBox": "0 0 604.5 408.61",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 1,
+        "path": 49
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7SEPlus/White/Cover.svg",
+      "bytes": 82123,
+      "sha256": "543bb701b375a3c066ef8944bd7b03f689bac16e8941d58a63401aff7c88008f",
+      "viewBox": "0 0 430.31 291.05",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 14,
+        "path": 80,
+        "polygon": 4,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/G7SEPlus/White/FullCover.svg",
+      "bytes": 82123,
+      "sha256": "543bb701b375a3c066ef8944bd7b03f689bac16e8941d58a63401aff7c88008f",
+      "viewBox": "0 0 430.31 291.05",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 14,
+        "path": 80,
+        "polygon": 4,
+        "rect": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/K1/Black/FullCover.svg",
+      "bytes": 135176,
+      "sha256": "ab3882d5ad9c25a9b37181dbf1a8637bf8ab77dbac9b2a731dd1097020619dc4",
+      "viewBox": "0 0 503.7 332.1",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "style": 1,
+        "path": 114,
+        "g": 44,
+        "defs": 2,
+        "clipPath": 2,
+        "use": 2,
+        "polygon": 15,
+        "polyline": 38,
+        "line": 299,
+        "circle": 43,
+        "rect": 93,
+        "ellipse": 7
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/K1/Gold/FullCover.svg",
+      "bytes": 1532018,
+      "sha256": "8c41abca862eb7fe14a644ad28ed66e9bf49c0c7fa8580975bd8a689ae97c412",
+      "viewBox": "0 0 503.8 332.1",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "style": 1,
+        "path": 445,
+        "g": 32,
+        "defs": 2,
+        "clipPath": 2,
+        "use": 2,
+        "polygon": 6,
+        "rect": 3,
+        "circle": 10,
+        "ellipse": 2
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/K2X/Black/Cover.svg",
+      "bytes": 404557,
+      "sha256": "b992237a4ed754b31b5d89c2712be3c47a82733c4e05df371b51bb98a4cefe64",
+      "viewBox": "0 0 442.3 292.02",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 5,
+        "rect": 83,
+        "path": 971,
+        "g": 16,
+        "polygon": 71,
+        "line": 250,
+        "polyline": 1102
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/K2X/Black/FullCover.svg",
+      "bytes": 422339,
+      "sha256": "c2b9b2de9e648ec8b6c1769de86c4ff2c76791bbc936aa2b3df108d607a177cc",
+      "viewBox": "0 0 442.3 292.02",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 7,
+        "rect": 83,
+        "path": 975,
+        "g": 18,
+        "polygon": 71,
+        "line": 250,
+        "polyline": 1102
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/K2_8K/Black/Cover.svg",
+      "bytes": 405629,
+      "sha256": "c46c31eff57273325ae1f641f905f9b7284ea578263d128a0054652e02731703",
+      "viewBox": "0 0 442.3 292.02",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 3,
+        "rect": 81,
+        "path": 965,
+        "g": 10,
+        "polygon": 78,
+        "line": 250,
+        "polyline": 1102
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/Black/Cover.svg",
+      "bytes": 70537,
+      "sha256": "3e628051cc97b04c2a9524c57e26bbffeac34c297552aff78b2ba102e98bbf03",
+      "viewBox": "0 0 440.16 296.21",
+      "width": "440.16",
+      "height": "296.21",
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 6,
+        "path": 57,
+        "circle": 6,
+        "polygon": 33,
+        "rect": 7,
+        "line": 2
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/Black/FullCover.svg",
+      "bytes": 71873,
+      "sha256": "2b65aa5024f391bea96728377605eaf7588cf500e4785303185404c57c31914f",
+      "viewBox": "0 0 440.16 296.21",
+      "width": "440.16",
+      "height": "296.21",
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 10,
+        "path": 57,
+        "circle": 6,
+        "polygon": 33,
+        "rect": 9,
+        "line": 2
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/Black/Screen.svg",
+      "bytes": 11160,
+      "sha256": "1f9dc771581e9509afba3ff3bc15a19eda3590595ed0709c8a8bf1b932888e4e",
+      "viewBox": "0 0 160 80",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "rect": 3,
+        "mask": 1,
+        "path": 11,
+        "g": 1,
+        "defs": 1,
+        "radialGradient": 2,
+        "stop": 20,
+        "clipPath": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/Nioh/Cover.svg",
+      "bytes": 1312479,
+      "sha256": "ffd4c24efcf1e6a796d94c64a2aabb94860c2b061eb079d39c56e74af4aef56d",
+      "viewBox": "0 0 440.16 296.21",
+      "width": "440.16",
+      "height": "296.21",
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 6,
+        "path": 58,
+        "linearGradient": 1,
+        "stop": 2,
+        "rect": 10,
+        "polygon": 25,
+        "g": 23,
+        "image": 3,
+        "circle": 2
+      },
+      "embeddedImages": 3,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/Nioh/FullCover.svg",
+      "bytes": 1312479,
+      "sha256": "ffd4c24efcf1e6a796d94c64a2aabb94860c2b061eb079d39c56e74af4aef56d",
+      "viewBox": "0 0 440.16 296.21",
+      "width": "440.16",
+      "height": "296.21",
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 6,
+        "path": 58,
+        "linearGradient": 1,
+        "stop": 2,
+        "rect": 10,
+        "polygon": 25,
+        "g": 23,
+        "image": 3,
+        "circle": 2
+      },
+      "embeddedImages": 3,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/Nioh/Screen.svg",
+      "bytes": 11160,
+      "sha256": "1f9dc771581e9509afba3ff3bc15a19eda3590595ed0709c8a8bf1b932888e4e",
+      "viewBox": "0 0 160 80",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "rect": 3,
+        "mask": 1,
+        "path": 11,
+        "g": 1,
+        "defs": 1,
+        "radialGradient": 2,
+        "stop": 20,
+        "clipPath": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/Pink/Cover.svg",
+      "bytes": 265059,
+      "sha256": "89b269c55bf55d4eec381ac90777853a3bd3ce25d328cc7b965c0ac00c3ce420",
+      "viewBox": "0 0 482.04 311.47",
+      "width": "482.04",
+      "height": "311.47",
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 52,
+        "linearGradient": 1,
+        "stop": 9,
+        "g": 11,
+        "rect": 8,
+        "image": 1,
+        "circle": 7,
+        "polygon": 23
+      },
+      "embeddedImages": 1,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/Pink/FullCover.svg",
+      "bytes": 265059,
+      "sha256": "89b269c55bf55d4eec381ac90777853a3bd3ce25d328cc7b965c0ac00c3ce420",
+      "viewBox": "0 0 482.04 311.47",
+      "width": "482.04",
+      "height": "311.47",
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 52,
+        "linearGradient": 1,
+        "stop": 9,
+        "g": 11,
+        "rect": 8,
+        "image": 1,
+        "circle": 7,
+        "polygon": 23
+      },
+      "embeddedImages": 1,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/Pink/Screen.svg",
+      "bytes": 2228,
+      "sha256": "8895e64fb90fe664e24c0cb5305b22abf5ec9e5f4542d66473314187ae883f48",
+      "viewBox": "0 0 160 80",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "mask": 1,
+        "g": 3,
+        "rect": 2,
+        "path": 7,
+        "clipPath": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/Pink/WallpaperWithMenu.svg",
+      "bytes": 43374,
+      "sha256": "fb5be0f1e907d0322e2ae050402199a3fe3dd6364ba59f6bcddbded810c8d185",
+      "viewBox": "0 0 160 80",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "image": 2
+      },
+      "embeddedImages": 2,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/White/Cover.svg",
+      "bytes": 64230,
+      "sha256": "3db8fb6f79a33a3e5c09a5e7f6262e695f8a58c2ffa64faa77172aecf342b16e",
+      "viewBox": "0 0 440.16 296.21",
+      "width": "440.16",
+      "height": "296.21",
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 4,
+        "path": 49,
+        "circle": 4,
+        "polygon": 23,
+        "rect": 5
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/White/FullCover.svg",
+      "bytes": 65935,
+      "sha256": "b68a7dede20c47148ce1146df160a0b9ae5699954dbf1c6fb79db4395ebea453",
+      "viewBox": "0 0 440.16 296.21",
+      "width": "440.16",
+      "height": "296.21",
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 8,
+        "path": 49,
+        "circle": 4,
+        "polygon": 23,
+        "rect": 7
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/N2S/White/Screen.svg",
+      "bytes": 11160,
+      "sha256": "1f9dc771581e9509afba3ff3bc15a19eda3590595ed0709c8a8bf1b932888e4e",
+      "viewBox": "0 0 160 80",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "rect": 3,
+        "mask": 1,
+        "path": 11,
+        "g": 1,
+        "defs": 1,
+        "radialGradient": 2,
+        "stop": 20,
+        "clipPath": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3CE/Default/Cover.svg",
+      "bytes": 598642,
+      "sha256": "f3d58eb10dd3a3c45466d6fc56dac4dde264c5892bb4ffd14b7e1d05f3dd77c6",
+      "viewBox": "0 0 460.8 285.96",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 132,
+        "g": 31,
+        "line": 1,
+        "circle": 14,
+        "rect": 13,
+        "polygon": 6,
+        "polyline": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3CE/MenaRD/Cover.svg",
+      "bytes": 252861,
+      "sha256": "38414228802e353bd74ad8e5d11ddaf47107a47522d1043bd6770cc98b3bb3e0",
+      "viewBox": "0 0 460.78 285.89",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 2,
+        "stop": 6,
+        "g": 31,
+        "path": 376,
+        "rect": 1,
+        "polygon": 222,
+        "polyline": 1,
+        "line": 1,
+        "circle": 14
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3Lite/White/Cover.svg",
+      "bytes": 64338,
+      "sha256": "877abec5a2a179772eb2721cedb9a18a74d7a33dc205323378797a8693894b6f",
+      "viewBox": "0 0 461.88 280.1",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 13,
+        "path": 100,
+        "circle": 6,
+        "line": 18,
+        "polyline": 1,
+        "polygon": 3,
+        "rect": 4
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3Pro/Black/Cover.svg",
+      "bytes": 2650048,
+      "sha256": "2f834cb155f943c092f218964e52a7df8ddc32304ca6fc25e03ba1b39c129f8b",
+      "viewBox": "0 0 460.79 284.14",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 6,
+        "path": 418,
+        "rect": 1,
+        "g": 32,
+        "line": 1251,
+        "circle": 8
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3ProXBox/White/Cover.svg",
+      "bytes": 191044,
+      "sha256": "218478bd0c8abb5227eb12d75cb24dac909ea4c07edc2371fc62e5a60fe85bc7",
+      "viewBox": "0 0 460.79 284.14",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "style": 1,
+        "defs": 1,
+        "clipPath": 1,
+        "path": 469,
+        "g": 17,
+        "use": 52,
+        "circle": 11
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3ProXBox/White/FullCover.svg",
+      "bytes": 565365,
+      "sha256": "e9c71e11a3301d198f73f4678ea97b823df3897259ced5418908ea12a7336719",
+      "viewBox": "0 0 460.79 284.14",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 101,
+        "linearGradient": 1,
+        "stop": 2,
+        "g": 24,
+        "polyline": 2346,
+        "line": 3393,
+        "circle": 11
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3XS/Gray/Cover.svg",
+      "bytes": 66459,
+      "sha256": "98b2c9066a2a7f52afc46876670b3ab305fb06433e3a4d77c5606dba2bb54dc2",
+      "viewBox": "0 0 461.88 280.1",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 100,
+        "g": 18,
+        "circle": 10,
+        "line": 15,
+        "polyline": 1,
+        "polygon": 3,
+        "rect": 8
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3XS/Gray/L2R2.svg",
+      "bytes": 8325,
+      "sha256": "fde3611856e0c62ac13c7993d683096e71a659956bebff2972d7e3ee38f07375",
+      "viewBox": "0 0 335.61 59.07",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 3,
+        "path": 6
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3XS/MenaRD/Cover.svg",
+      "bytes": 74660,
+      "sha256": "29a5166cf4a773955429a43c771b2c566ce92df9ea26199a4441479bfe2047f4",
+      "viewBox": "0 0 461.88 280.1",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 16,
+        "path": 101,
+        "circle": 10,
+        "line": 15,
+        "polyline": 1,
+        "polygon": 3,
+        "rect": 4
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3XS/MenaRD/FullCover.svg",
+      "bytes": 76448,
+      "sha256": "2b79fab1c73a68dc01dcd9906876e48d772e35b6da569ed56a763cca949bdf38",
+      "viewBox": "0 0 461.88 280.1",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 16,
+        "path": 102,
+        "circle": 10,
+        "line": 15,
+        "polyline": 1,
+        "polygon": 3,
+        "rect": 4
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3XS/MenaRD/L2R2.svg",
+      "bytes": 8375,
+      "sha256": "20e4e516437283a887d89603898aafcc1ed75af3292c9ce965e691eab5827039",
+      "viewBox": "0 0 335.61 59.07",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 3,
+        "path": 6
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3XS/White/Cover.svg",
+      "bytes": 66000,
+      "sha256": "a63964dd878e7c409f26ad69e8900d53e6830cf52afc8861f54cb5c76c068558",
+      "viewBox": "0 0 461.88 280.1",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 13,
+        "path": 102,
+        "circle": 6,
+        "line": 16,
+        "polyline": 1,
+        "polygon": 3,
+        "rect": 4
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T3XS/White/L2R2.svg",
+      "bytes": 8325,
+      "sha256": "8dd656d9d2f43008b0dbe8f44215eb121a2ad06035219d6fe409c30124adc890",
+      "viewBox": "0 0 335.61 59.07",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 3,
+        "path": 6
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T4N2/White/Cover.svg",
+      "bytes": 56530,
+      "sha256": "61cb257a3f9408f3914f53a08945d0ba0cad6c29ecb3b2c5912568e53b55c1ec",
+      "viewBox": "0 0 439.87 295.92",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 5,
+        "path": 50
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T4NPro/Black/Cover.svg",
+      "bytes": 54128,
+      "sha256": "d7adfbec391c8a11c3af39bbc5e0e901849ae92f53a84ae961709e2fb10f9afd",
+      "viewBox": "0 0 439.55 295.57",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 2,
+        "g": 5,
+        "path": 51,
+        "polyline": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T4NPro/Black/FullCover.svg",
+      "bytes": 64648,
+      "sha256": "aecd2602b23e9d4824be69d155ccd193fe20981e7ef4abb5abbe905802152878",
+      "viewBox": "0 0 439.55 295.57",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 3,
+        "stop": 11,
+        "g": 5,
+        "path": 53,
+        "polyline": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T4NPro/HatsuneMiku/Cover.svg",
+      "bytes": 3866054,
+      "sha256": "0891f76b11d7f041d553fdbacd8c88681f9a479a6d503cd2fbb4dd036c4780a7",
+      "viewBox": "0 0 439.55 295.57",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 39,
+        "g": 12,
+        "image": 1
+      },
+      "embeddedImages": 1,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T4NPro/HatsuneMiku/FullCover.svg",
+      "bytes": 3879801,
+      "sha256": "20b110d21abf56cc180e2fd3abcc075a7c7f4e49bace260d68791a2eab94fc36",
+      "viewBox": "0 0 439.55 295.57",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 45,
+        "linearGradient": 2,
+        "stop": 7,
+        "g": 13,
+        "image": 1
+      },
+      "embeddedImages": 1,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T4NPro/White/Cover.svg",
+      "bytes": 53513,
+      "sha256": "df5359fe528f0848801126f4dff29f7839f90b6de72f65cc477ad1cfb51dd28b",
+      "viewBox": "0 0 439.55 295.57",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 2,
+        "g": 7,
+        "path": 51,
+        "polyline": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T4NPro/White/FullCover.svg",
+      "bytes": 63905,
+      "sha256": "d360a3a22b7a42bcfe7caaabdeee1d2cf6a8e89604e47a387f362b2d7b3b9f22",
+      "viewBox": "0 0 439.55 295.57",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 3,
+        "stop": 10,
+        "g": 7,
+        "path": 53,
+        "polyline": 1
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T4NPro/YYS/FullCover.svg",
+      "bytes": 251290,
+      "sha256": "e4c73f954c9addc02aaf6cd2c4bfbb54cc6a6993a6363a09c98b4f9db8532957",
+      "viewBox": "0 0 440.12 296.14",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 2,
+        "path": 56,
+        "linearGradient": 2,
+        "stop": 2,
+        "g": 9,
+        "rect": 1534
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T4NPro/YYS/SVG/FullCover.svg",
+      "bytes": 251290,
+      "sha256": "e4c73f954c9addc02aaf6cd2c4bfbb54cc6a6993a6363a09c98b4f9db8532957",
+      "viewBox": "0 0 440.12 296.14",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 2,
+        "path": 56,
+        "linearGradient": 2,
+        "stop": 2,
+        "g": 9,
+        "rect": 1534
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7/Sliver/Cover.svg",
+      "bytes": 46584,
+      "sha256": "d543580db0bb03fff91f62ba16e3e3139353362fb0b52469f169c2630f29f35f",
+      "viewBox": "0 0 604.5 408.61",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 6,
+        "path": 48,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7/Sliver/FullCover.svg",
+      "bytes": 46584,
+      "sha256": "d543580db0bb03fff91f62ba16e3e3139353362fb0b52469f169c2630f29f35f",
+      "viewBox": "0 0 604.5 408.61",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 6,
+        "path": 48,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7/White/FullCover.svg",
+      "bytes": 52042,
+      "sha256": "435b8abad6c1903c266d3672e59bd5355adf64ad7121eb244bd85a6132c75305",
+      "viewBox": "0 0 430.53 291.26",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 13,
+        "path": 48,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7Pro/RetroGreen/Cover.svg",
+      "bytes": 65506,
+      "sha256": "8259270fdf106c583dcc1607fdd37c8c1051f487b8dd797b3b28ee22afafd6b1",
+      "viewBox": "0 0 430.53 291.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 6,
+        "g": 15,
+        "path": 47,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7Pro/RetroGreen/FullCover.svg",
+      "bytes": 65506,
+      "sha256": "8259270fdf106c583dcc1607fdd37c8c1051f487b8dd797b3b28ee22afafd6b1",
+      "viewBox": "0 0 430.53 291.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 6,
+        "g": 15,
+        "path": 47,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7Pro/Sugar/Cover.svg",
+      "bytes": 85723,
+      "sha256": "b82ff7817be7dfb0686f39a1f4ad4c1b35f926fafcc616609760218f38d7e2a4",
+      "viewBox": "0 0 430.6 291.33",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 69,
+        "g": 17,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7Pro/Sugar/FullCover.svg",
+      "bytes": 85723,
+      "sha256": "b82ff7817be7dfb0686f39a1f4ad4c1b35f926fafcc616609760218f38d7e2a4",
+      "viewBox": "0 0 430.6 291.33",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "clipPath": 1,
+        "path": 69,
+        "g": 17,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7ProW/Black/Cover.svg",
+      "bytes": 65724,
+      "sha256": "8ed31f4cc0304dbb327d5c8b27495418706f69fce386a81960845f8a7e237ec8",
+      "viewBox": "0 0 430.53 291.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 15,
+        "path": 48,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7ProW/Black/FullCover.svg",
+      "bytes": 65724,
+      "sha256": "8ed31f4cc0304dbb327d5c8b27495418706f69fce386a81960845f8a7e237ec8",
+      "viewBox": "0 0 430.53 291.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "g": 15,
+        "path": 48,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7ProW/RetroGreen/Cover.svg",
+      "bytes": 65506,
+      "sha256": "8259270fdf106c583dcc1607fdd37c8c1051f487b8dd797b3b28ee22afafd6b1",
+      "viewBox": "0 0 430.53 291.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 6,
+        "g": 15,
+        "path": 47,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    },
+    {
+      "path": "OverlayWeb/dist/static/devices/T7ProW/RetroGreen/FullCover.svg",
+      "bytes": 65506,
+      "sha256": "8259270fdf106c583dcc1607fdd37c8c1051f487b8dd797b3b28ee22afafd6b1",
+      "viewBox": "0 0 430.53 291.16",
+      "width": null,
+      "height": null,
+      "tags": {
+        "svg": 1,
+        "defs": 1,
+        "style": 1,
+        "linearGradient": 1,
+        "stop": 6,
+        "g": 15,
+        "path": 47,
+        "polygon": 2,
+        "rect": 1,
+        "circle": 3
+      },
+      "embeddedImages": 0,
+      "externalReferences": []
+    }
+  ],
+  "interpretation": "Resource inventory and declared frontend models; not physical-controller or OBS support certification."
+}

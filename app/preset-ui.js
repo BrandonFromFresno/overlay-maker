@@ -1,4 +1,4 @@
-let presetFavorites=new Set(),presetsStarted=false;
+let presetFavorites=new Set(),presetsStarted=false,presetPreviewKey='';
 try{const saved=JSON.parse(localStorage.getItem('overlay-preset-favorites')||'[]');if(Array.isArray(saved))presetFavorites=new Set(saved.filter(id=>PRESET_DATA.some(p=>p.id===id)));}catch{}
 function syncPresetOrigin(){
  const preset=PRESET_DATA.find(p=>p.id===(project.presetOrigin||project.presetId));
@@ -11,10 +11,10 @@ function filterPresets(){
  $('presetCount').textContent=visible+(visible===1?' theme':' themes');$('presetEmpty').hidden=visible>0;$('presetEmpty').textContent=favorites?'No matching favorites. Star a theme to save it here.':'No matching themes. Try Naruto, Dragon Ball or water.';
 }
 async function startPresetPreviews(){
- if(presetsStarted)return;presetsStarted=true;
- try{const canvas=document.createElement('canvas');canvas.width=1672;canvas.height=1241;const painter=await createOverlayRenderer(canvas,ASSET_DATA,FONT_DATA);
-  for(const preset of PRESET_DATA){const p=buildPresetProject({...defaults,text:''},preset);painter.draw({...p,breathing:false,glow:3},{},1200,true);const target=document.querySelector('[data-preset="'+preset.id+'"] canvas');target?.getContext('2d').drawImage(canvas,0,0,280,210);await new Promise(resolve=>requestAnimationFrame(resolve));}
- }catch{status('Some theme previews could not load. Presets are still available.');}
+ const snapshot={...project},key=controllerAppearanceKey(snapshot);if(presetsStarted&&presetPreviewKey===key)return;presetsStarted=true;presetPreviewKey=key;
+ try{const canvas=document.createElement('canvas');canvas.width=1672;canvas.height=1241;const painter=await createOverlayRenderer(canvas,await controllerAssetsFor(snapshot),FONT_DATA);
+  for(const preset of PRESET_DATA){if(presetPreviewKey!==key)return;const p=buildPresetProject({...defaults,visualModel:visualModelOf(snapshot),nativeSkin:snapshot.nativeSkin,text:''},preset);painter.draw({...p,breathing:false,glow:3},{},1200,true);const target=document.querySelector('[data-preset="'+preset.id+'"] canvas');target?.getContext('2d').drawImage(canvas,0,0,280,210);await new Promise(resolve=>requestAnimationFrame(resolve));}
+ }catch{if(presetPreviewKey===key)presetsStarted=false;status('Some theme previews could not load. Presets are still available.');}
 }
 function initializePresetUI(){
  for(const preset of PRESET_DATA){

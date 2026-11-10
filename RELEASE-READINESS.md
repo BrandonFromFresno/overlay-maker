@@ -1,4 +1,31 @@
-# Current candidate: 0.11.0 default overlay and abstract waves prerelease
+# Current candidate: 0.12.0 universal visual model prerelease
+
+22 visual families / 60 variants now share the existing production editor and
+standard gamepad input pipeline. Layout selection is independent of hardware;
+face inputs follow physical positions. Original G7 skins and old saved jobs are
+preserved. See [CONTROLLER-MODELS.md](CONTROLLER-MODELS.md) for the resource audit,
+source substitutions, architecture, missing dependencies and artwork-rights status.
+
+Model packages load on demand; customer output embeds just the selected variant
+alongside the shared renderer. Preview/apply/continue, keep-customization,
+model-preserving reset and Undo, restoration, optional control visibility and
+export are integrated. Supplied fixed rims, LCD artwork, Home shapes and detached
+trigger artwork receive separate handling. Thin original cap edges and lost
+light-on-gray legends were corrected during visual review.
+
+The release gate is syntax plus all 25 suites, including 47 new variant/control
+checks, 16 stick directions per new default layout, trigger depths, compound
+inputs, exact neutral return, fixed rims, shell isolation, standard-input brands,
+restoration and self-contained customer output. Windows publication must match
+the exact successful source SHA and pass archive/checksum verification.
+
+Remaining acceptance: physical controllers/firmware and nonstandard mapping,
+Windows executable with real OBS/Streamlabs sources, target-device performance,
+and commercial redistribution rights for supplied artwork. No vendor native
+backend or GameSir installation is modified or shipped. This remains a prerelease,
+not a claim of physical certification for all source model IDs.
+
+# Historical release: 0.11.0 default overlay and abstract waves prerelease
 
 Prepared November 10, 2026 (America/Los_Angeles). Publication follows the user's
 standing instruction to publish after successful checks. The editor now provides
