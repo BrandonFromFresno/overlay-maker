@@ -55,7 +55,7 @@ Stick caps are isolated from the fixed housing/rims. Source SVG circular plates 
 
 ## Limits and release checks
 
-The browser must expose a standard mapping. Raw HID/nonstandard mappings need a validated adapter; universal visual selection does not manufacture missing hardware signals. Optional L4/R4/L5/R5, C1–C4 and T1–T3 artwork can be simulated where supplied. They are not advertised as independently live unless an actual distinct input is available. Models without Home artwork do not receive a fabricated Home button.
+The browser must expose a standard mapping. Raw HID/nonstandard mappings need a validated adapter; universal visual selection does not manufacture missing hardware signals. Optional L4/R4/L5/R5, C1–C4 and T1–T3 artwork can be simulated where supplied. They are preview-only in this version. Independent live support requires a validated distinct-input adapter; merely exposing an extra browser button does not install such an adapter. Models without Home artwork do not receive a fabricated Home button.
 
 Automated model checks exercise every included geometry control, compound inputs, diagonal D-pad, trigger depth, stick travel/clicks and exact release to neutral. They also cover brand-independent standard input, isolated gallery selection, restoration/reset/Undo and self-contained customer output. Physical controllers, vendor firmware/modes, actual OBS/Streamlabs focus and target-machine performance still require hardware validation. Test the customer’s actual controller and final source before delivery.
 
