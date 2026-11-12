@@ -20,7 +20,9 @@ re-export to add these features to an existing delivery; old URLs stay immutable
 Joystick controls match the demonstrated Tilt/Both/Trail modes, trail length
 and preset/custom colors. Existing cap movement remains the default; trails
 are clipped inside the fixed sockets and use bounded time-based histories.
-Their endpoints follow current input immediately. See [STICK-VISUALIZATION.md](STICK-VISUALIZATION.md).
+Their endpoints follow current input immediately. Comic repeat cadence is
+checked at 30/60/144 Hz; rapid lettering handoffs preserve readable words
+without resetting older instances. See [STICK-VISUALIZATION.md](STICK-VISUALIZATION.md).
 
 Release gates: syntax, all 30 suites, Windows x64 build, exact packaged source
 and SVG masters, ZIP integrity and published checksum from the same source SHA.

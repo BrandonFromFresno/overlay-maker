@@ -37,7 +37,11 @@ function createComicGunfirePainter(ctx,getLayout,random=Math.random){
   if(!placement)return;
   let word=p.comicSelection;
   if(word==='random'){if(!bag.length){bag=['bang','zap','boom','pow'];for(let i=3;i>0;i--){const j=Math.floor(random()*(i+1));[bag[i],bag[j]]=[bag[j],bag[i]];}}word=bag.pop();}
-  bursts.push({word,start:time,duration:p.comicDuration,intensity:p.comicIntensity,rotation:(random()*2-1)*p.comicRotation*Math.PI/180,jx:(random()*2-1)*7,jy:(random()*2-1)*4,placement:{...placement},id:++serial});
+  const overlap=bursts.length>0;
+  // Keep each instance's clock and motion intact; hand off lettering so rapid shots
+  // never stack a small unreadable word over a full-size word.
+  for(const old of bursts)if(old.handoffStart===undefined){old.handoffStart=time;old.handoffDuration=p.comicDuration;}
+  bursts.push({word,overlap,start:time,duration:p.comicDuration,intensity:p.comicIntensity,rotation:(random()*2-1)*p.comicRotation*Math.PI/180,jx:(random()*2-1)*7,jy:(random()*2-1)*4,placement:{...placement},id:++serial});
  }
  function drawLayer(layer,alpha,secondary,power){for(const [i,s]of layer.shapes.entries()){ctx.save();if(layer.role==='accent'){const direction=[[-1,-1],[1,-1],[1,1],[-1,1]][i%4];ctx.translate(direction[0]*14*secondary*power,direction[1]*10*secondary*power);ctx.rotate((i%2?1:-1)*.018*secondary*power);}ctx.translate(s.dx||0,s.dy||0);ctx.globalAlpha=alpha*(s.opacity??1);if(s.clip){ctx.beginPath();ctx.rect(...s.clip);ctx.clip();}ctx.fillStyle=s.fill;ctx.fill(s.path);if(s.width&&s.stroke!=='none'){ctx.strokeStyle=s.stroke;ctx.lineWidth=s.width;ctx.lineJoin='round';ctx.stroke(s.path);}ctx.restore();}}
  return {
@@ -56,9 +60,11 @@ function createComicGunfirePainter(ctx,getLayout,random=Math.random){
    const depth=state.RT||0,threshold=p.comicThreshold??.18,release=Math.max(.01,threshold-.08);
    if(pressed&&depth<=release){pressed=false;nextRepeat=Infinity;}
    if(!pressed&&depth>=threshold){pressed=true;spawn(p,time);nextRepeat=time+p.comicInterval;}
-   else if(pressed&&p.comicRepeat&&time>=nextRepeat){spawn(p,time);nextRepeat=time+p.comicInterval;}
+   else if(pressed&&p.comicRepeat&&time>=nextRepeat){spawn(p,time);nextRepeat+=(Math.floor((time-nextRepeat)/p.comicInterval)+1)*p.comicInterval;}
    if(!p.comicRepeat)nextRepeat=time+p.comicInterval;
-   for(const b of bursts){
+   // Composite every burst silhouette first, then all lettering. Incoming geometry
+   // must never paint over the outgoing word during its readable handoff.
+   for(const lettering of [false,true])for(const b of bursts){
     if(!b.placement)continue;
     const ms=(time-b.start)*350/b.duration;if(ms<0)continue;const a=artwork[b.word],reduced=p.animationMode==='reduced',power=b.intensity*(reduced?.35:1),exit=smooth((ms-200)/150),alpha=(.24+.76*smooth(ms/25))*(1-exit);
     const impact=ms<25?lerp(.42,.34,smooth(ms/25)):ms<70?lerp(.34,1+.10*power,1-(1-(ms-25)/45)**3):1+.10*power*Math.exp(-(ms-70)/32)*Math.cos((ms-70)/32);
@@ -66,9 +72,11 @@ function createComicGunfirePainter(ctx,getLayout,random=Math.random){
     ctx.save();ctx.translate(b.placement.x+b.jx,b.placement.y+b.jy-12*exit*power);ctx.rotate(b.rotation+a.tilt*(reduced?.25:1)*(1-exit));ctx.scale(b.placement.scale,b.placement.scale);
     for(const layer of a.layers){
      const type=layer.role==='type'||layer.role==='shine',accent=layer.role==='accent',cloud=layer.role==='cloud';
+     if(type!==lettering)continue;
      const s=(type?settle:impact)*(1-(type?.12:.06)*exit)*(accent?1+.10*secondary*power:cloud?1+.025*secondary*power:1);
      ctx.save();const snap=1-smooth(ms/130);if(type&&b.word==='zap')ctx.scale(1+.055*snap*power,1-.035*snap*power);if(type&&b.word==='pow')ctx.scale(1+.025*snap*power,1-.065*snap*power);if(cloud)ctx.scale(1+.03*secondary*power,1+.04*secondary*power);ctx.scale(s,s);if(!type)ctx.rotate((b.word==='zap'?-.025:.018)*power*secondary*(reduced?.25:1));if(type)ctx.translate(0,ms<90?(1-s)*10:0);
-     drawLayer(layer,alpha*(accent?1-.25*exit:1),secondary,power);ctx.restore();
+     const handoff=b.handoffStart===undefined?0:smooth(((time-b.handoffStart)*350/b.handoffDuration-35)/20),arrive=b.overlap&&type?smooth((ms-35)/20):1;
+     drawLayer(layer,alpha*arrive*(type?1-handoff:1-.92*handoff)*(accent?1-.25*exit:1),secondary,power);ctx.restore();
     }
     ctx.restore();
    }

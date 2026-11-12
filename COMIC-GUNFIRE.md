@@ -15,6 +15,11 @@ Advanced placement & firing contains X/Y offsets, intensity, rotation variation,
 threshold, repeat interval and the maximum active-burst limit. Repeat interval
 is disabled when repeat is off. The active limit also applies to rapid taps.
 At the limit, new emissions are skipped; existing bursts finish independently.
+During overlap, lettering crossfades into the next full-size word rather than
+stacking a small new word over it. Older burst geometry continues its motion
+and fades underneath; instance start times and lifetimes are never reset.
+All burst silhouettes composite before lettering, so an incoming shape cannot
+cover the outgoing word.
 
 **Preview RT** produces a simulated press (or a 1.1-second hold when repeat is
 on). It selects the manual Rest preview and releases automatically. Select
@@ -51,6 +56,8 @@ Duration scales the full choreography without frame-count dependence.
 
 ![Five animation phases per word](docs/comic-phases-0.15.png)
 
+![Clean lettering handoff during repeated firing](docs/comic-repeat-0.15.png)
+
 ## Placement and performance
 
 The renderer provides the selected model's actual floating RT geometry and
@@ -67,7 +74,8 @@ clear their transient animation state. The output stays 1672 × 1241.
 Vector Path2D geometry is created once when first enabled, then reused. No
 images or fonts load on a press. Each instance has its own start time and seed;
 completed instances are removed. The repeat scheduler emits at most once per
-frame and never queues missed shots after a stall. Disabling or Still motion
+frame, preserves the configured cadence across 30/60/144 Hz and never queues
+missed shots after a stall. Disabling or Still motion
 clears transient bursts immediately. Reduced motion lowers displacement,
 rotation and overshoot. Trigger highlighting still uses the original renderer.
 
