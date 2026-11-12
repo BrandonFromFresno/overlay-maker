@@ -1,4 +1,24 @@
-# Current candidate: 0.13.0 customer setup and navigation prerelease
+# Current candidate: 0.14.0 customizable press and analog effects prerelease
+
+Four original press bursts and four continuous analog responses share color,
+strength and size controls, with separate burst timing and a trigger/stick/both
+input selection. Defaults preserve the existing rings and add no continuous
+response to older jobs. The shared painter is embedded into customer exports.
+See [PRESS-EFFECTS.md](PRESS-EFFECTS.md).
+
+Effects stay on the shell, preserve artwork/control geometry and use current
+trigger travel or stick deflection rather than claiming force sensing. Press
+bursts expire without held-input retriggers; trigger hysteresis prevents jitter
+from repeatedly starting bursts. Stick-click anchors follow model geometry.
+Demo input now varies both sticks and triggers; real input forwarding is unchanged.
+Renderer revision 5 requires re-export when updating an older delivery.
+
+Release gates: syntax, all 28 suites, Windows x64 packaging, packaged source/assets,
+archive integrity and checksum on the exact source SHA. Physical input, firmware
+modes, target OBS/Streamlabs behavior and target-device performance remain manual
+acceptance checks. This is an unsigned prerelease.
+
+# Historical release: 0.13.0 customer setup and navigation prerelease
 
 Customer pages now include an optional same-file setup view with direct-input
 status, activation help, clean-URL copying and OBS/Streamlabs instructions.

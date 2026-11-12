@@ -1,10 +1,10 @@
 # Overlay Studio
 
-Internal Windows production tool for creating, testing and delivering controller customer overlays. Version 0.13.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
+Internal Windows production tool for creating, testing and delivering controller customer overlays. Version 0.14.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
 
 ## Run the Windows app
 
-Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.13.0/Overlay-Studio-Windows-x64.zip) from the [0.13.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.13.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
+Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.14.0/Overlay-Studio-Windows-x64.zip) from the [0.14.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.14.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
 
 The extracted app needs no account, Node.js, internet connection or GameSir server. Connect a browser-standard gamepad, focus the app and press a button. Live preview starts automatically. Connection feedback, the input-device picker and setup help are below the preview.
 
@@ -31,6 +31,10 @@ New customer handoffs include a setup-guide link with live controller feedback, 
 Shell tint, patterns and shell effects remain separate from the controls. Stick sockets/rims stay fixed while caps move. Inputs, selected device and design settings have separate lifecycle handling; simulated previews are temporary.
 
 Included fonts: Rajdhani, Orbitron, Oxanium, Teko, Bebas Neue, Barlow Condensed, Montserrat and Inter. Only the selected included family is embedded in HTML, with its license. System fonts must be installed on the displaying computer. Sources/licenses are in [app/fonts/licenses](app/fonts/licenses).
+
+## Press and analog effects
+
+**Effects → Button press & analog effects** adds four press bursts and four continuous responses driven by trigger depth or stick movement. Customize color, strength, size and burst duration; use each input’s pressed color for individual palettes. Settings save and export with the overlay. See [press effect controls and limits](PRESS-EFFECTS.md).
 
 ## Visual models
 

@@ -81,7 +81,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  for(const [x,y,r] of [[833.28,209.7,65],[634.34,529.42,124],[456,290,125],[1033,523,125]]){cm.beginPath();cm.arc(x,y,r,0,Math.PI*2);cm.fill();}
  const shellMask=document.createElement('canvas');shellMask.width=1672;shellMask.height=941;
  const sm=shellMask.getContext('2d');sm.drawImage(images.base,0,0,1672,941);sm.globalCompositeOperation='destination-out';sm.drawImage(controlMask,0,0);sm.globalCompositeOperation='source-over';
- const themePainter=createThemePainter(ctx,faces,shellMask),texturePainter=createTexturePainter(ctx,shellMask),surfacePainter=createSurfacePainter(ctx,shellMask),holoPainter=createHolographicPainter(ctx,shellMask),abstractPainter=createAbstractPainter(ctx,shellMask);
+ const themePainter=createThemePainter(ctx,faces,shellMask,()=>({id:activeSkinId,sticks:stickLayout})),texturePainter=createTexturePainter(ctx,shellMask),surfacePainter=createSurfacePainter(ctx,shellMask),holoPainter=createHolographicPainter(ctx,shellMask),abstractPainter=createAbstractPainter(ctx,shellMask);
 
  // Native skin art is fitted uniformly into the existing body layer. The supplied
  // SVG control paths and placement data use GameSir's 1000×720 reference space.

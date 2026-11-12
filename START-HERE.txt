@@ -1,4 +1,4 @@
-OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.13.0 WINDOWS PRERELEASE
+OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.14.0 WINDOWS PRERELEASE
 
 This application is for the producer. Customers receive a hosted overlay URL.
 
@@ -88,6 +88,12 @@ bridge; confirm the picture in OBS. If the connection is unavailable, close
 other copies of Overlay Studio and use Retry local connection.
 
 INPUT AND PREVIEWS
+Effects > Button press & analog effects offers four press bursts and four
+continuous responses. Choose trigger depth, stick movement or both; adjust
+color, strength, size and burst duration. These use travel/deflection, not
+physical force. Try effect demo cycles both sticks and triggers. Still mode
+pauses these effects while normal pressed highlights keep working.
+
 Only standard browser gamepad mapping is supported. Home depends on what
 Windows exposes. Capture, M and vendor-only inputs remain preview-only.
 Preview & test options contains Rest, Peak glow, demo and simulated presses.

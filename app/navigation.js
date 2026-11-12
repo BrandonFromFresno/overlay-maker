@@ -11,6 +11,7 @@ const STUDIO_TASKS=[
  {id:'verify',name:'Verify physical controller inputs',hint:'Open the live input check without starting it.',words:'hardware connect testing press release stick diagonal'},
  {id:'customer',name:'Preview the customer experience',hint:'Open the customer setup page in a separate Windows review window.',words:'buyer checkout obs streamlabs setup delivery preview'},
  {id:'export',name:'Export and deliver an overlay',hint:'Customer URLs, HTML, PNG and studio OBS testing.',words:'save download upload github hosting handoff finish'},
+ {id:'press-effects',name:'Customize button and analog effects',hint:'Choose a press burst or depth-sensitive analog response.',panel:'effects',target:'inputBurst',words:'press pressure trigger triggers l2 r2 lt rt analog depth squeeze stick feedback ripple sparks shockwave halo'},
  {id:'effects',name:'Adjust effects and button artwork',hint:'Open motion, glow and signature artwork.',panel:'effects',target:'effect',words:'animation particle fire smoke home rasengan swap'},
  {id:'layout',name:'Position the controller or artwork',hint:'Open movement and precise positioning controls.',panel:'layout',target:'moveController',words:'drag align center move x y layout'},
  {id:'holographic',name:'Add a holographic finish',hint:'Open liquid, chrome and foil finishes.',panel:'holographic',target:'holoEnabled',words:'iridescent holo shine'},

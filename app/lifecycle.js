@@ -20,7 +20,7 @@ function renderInputFrame(time){
  forwardControllerInput(actual,time);syncStartConnection(pad);if(!startScreenOpen)observeProductionInput(pad,actual);lastInputTime=time;
  if(!rendererReady)return;
  let visible=mode==='live'?actual:input;
- if(mode==='demo'){visible={axes:[Math.sin(time/700)*.6,Math.cos(time/700)*.6,0,0],LT:(1+Math.sin(time/700))/2,RT:(1+Math.cos(time/900))/2};visible[keys[Math.floor(time/500)%keys.length]]=true;}
+ if(mode==='demo'){const ls=(1+Math.sin(time/1100))/2,rs=(1+Math.cos(time/1300))/2;visible={axes:[Math.sin(time/700)*ls,Math.cos(time/700)*ls,Math.cos(time/900)*rs,Math.sin(time/900)*rs],LT:(1+Math.sin(time/700))/2,RT:(1+Math.cos(time/900))/2};visible[keys[Math.floor(time/500)%keys.length]]=true;}
  renderer.draw(previewProject(),visible,time,mode==='peak');
 }
 function scheduleInputFrame(){

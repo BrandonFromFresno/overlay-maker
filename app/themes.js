@@ -1,9 +1,9 @@
 // Procedural theme artwork: no network, image downloads or external runtime dependencies.
 // Kept as a factory so the same painter is embedded verbatim in exported overlays.
-function createThemePainter(ctx, faces, shellMask) {
+function createThemePainter(ctx, faces, shellMask, getLayout) {
  const artwork=createButtonArtworkPainter();
  const TAU=Math.PI*2, layer=document.createElement('canvas');layer.width=1672;layer.height=941;
- const g=layer.getContext('2d');let cacheKey='',previous={},impacts=new Map(),lastTime=-1;
+ const g=layer.getContext('2d');let cacheKey='';const press=createPressEffectPainter(ctx,faces,shellMask,getLayout);
  const ring=(c,x,y,r)=>{c.beginPath();c.arc(x,y,r,0,TAU);c.stroke();};
  const line=(c,points)=>{c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.stroke();};
  const star=(c,x,y,r,n=5)=>{c.beginPath();for(let i=0;i<n*2;i++){const a=i*Math.PI/n-Math.PI/2,d=i%2?r*.42:r;c.lineTo(x+Math.cos(a)*d,y+Math.sin(a)*d);}c.closePath();c.fill();};
@@ -67,9 +67,7 @@ function createThemePainter(ctx, faces, shellMask) {
  function button(key,style,p,state,time){artwork.draw(ctx,faces[key],key,style,p,state,time);}
  return {
   update(p,state,time){
-   if(time<lastTime){impacts.clear();previous={};}lastTime=time;
-   for(const key of [...Object.keys(faces),'LSB','RSB','LT','RT']){const down=typeof state[key]==='number'?state[key]>.15:!!state[key];if(down&&!previous[key])impacts.set(key,time);previous[key]=down;}
-   for(const [key,start] of impacts)if(time-start>700)impacts.delete(key);
+   press.update(p,state,time);
   },
   shell(p,state,time){
    const style=p.themeStyle||'none',amount=p.themeIntensity??.7;if(style==='none'||amount===0)return;
@@ -87,11 +85,7 @@ function createThemePainter(ctx, faces, shellMask) {
    ctx.save();ctx.globalAlpha=amount*(p.animationMode==='reduced'?.16:.38);ctx.drawImage(pulse,0,0);ctx.restore();
   },
   bursts(p,time){
-   if(!p.inputBurst||p.animationMode==='still'||!impacts.size)return;
-   // Reuse a small transient canvas; pulses are confined to shell, never button faces.
-   const c=pc;c.globalCompositeOperation='source-over';c.clearRect(0,0,1672,941);
-   for(const [key,start]of impacts){const progress=(time-start)/700,f=faces[key],pos=f?.center||({LT:[456,25],RT:[1180,25]})[key];if(!pos)continue;motion.burst(pos[0],pos[1],f?.radius||42,progress,p.accent,key.charCodeAt(0));}
-   c.globalAlpha=1;c.globalCompositeOperation='destination-in';c.drawImage(shellMask,0,0);ctx.drawImage(pulse,0,0);c.globalCompositeOperation='source-over';
+   press.draw(p,time);
   },
   controls(p,state,time){for(const key of ['A','B','X','Y'])button(key,p.buttonStyle,p,state,time);button('Home',p.homeStyle,p,state,time);},
   sample(c,kind,color){c.save();c.translate(32,32);c.strokeStyle=c.fillStyle=color;sigil(c,kind,23);c.restore();}
