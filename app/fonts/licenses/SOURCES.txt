@@ -8,3 +8,4 @@ https://github.com/google/fonts/tree/main/ofl/bebasneue
 https://github.com/google/fonts/tree/main/ofl/barlowcondensed
 https://github.com/google/fonts/tree/main/ofl/montserrat
 https://github.com/google/fonts/tree/main/ofl/inter
+Comic Gunfire lettering: Bangers, https://github.com/google/fonts/tree/main/ofl/bangers (SIL OFL). Outlined in original compositions; no runtime font request.

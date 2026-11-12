@@ -1,4 +1,4 @@
-OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.14.0 WINDOWS PRERELEASE
+OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.15.0 WINDOWS PRERELEASE
 
 This application is for the producer. Customers receive a hosted overlay URL.
 
@@ -134,3 +134,21 @@ Each retained version counts separately; review repository growth as it grows.
 Browser-host background-input regressions exist, including OBS 33.0.1 on
 Windows. Test the exact supported OBS/Streamlabs version before handoff.
 Hosting alone cannot make an unsupported Gamepad API work.
+
+COMIC GUNFIRE FX
+Effects > Right trigger > Comic Gunfire FX is optional and starts off.
+Enable it, choose a word or Random, and use Preview RT for a simulated burst.
+Hold RT to repeat supports configurable firing interval and a bounded burst count.
+Advanced settings include placement, intensity, rotation and activation threshold.
+The full animation is auto-fitted to clear space; the panel reports size reduction.
+Select Live controller after previewing to verify actual RT input.
+Customer exports include all four graphics with true transparency.
+Re-export an older job to deliver the new effects. Existing customer URLs stay intact.
+
+JOYSTICK STYLES
+Effects > Joystick movement & trails offers Tilt, Both and Trail.
+Tilt preserves the original cap movement. Both adds a fading path.
+Trail keeps the cap centered while a marker shows the current input.
+Choose Short, Medium or Long and a preset or custom trail color.
+The fixed sockets/rims and stick-click feedback are preserved.
+Try input demo previews both sticks; select Live controller to test hardware.

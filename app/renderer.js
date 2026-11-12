@@ -83,6 +83,19 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  const sm=shellMask.getContext('2d');sm.drawImage(images.base,0,0,1672,941);sm.globalCompositeOperation='destination-out';sm.drawImage(controlMask,0,0);sm.globalCompositeOperation='source-over';
  const themePainter=createThemePainter(ctx,faces,shellMask,()=>({id:activeSkinId,sticks:stickLayout})),texturePainter=createTexturePainter(ctx,shellMask),surfacePainter=createSurfacePainter(ctx,shellMask),holoPainter=createHolographicPainter(ctx,shellMask),abstractPainter=createAbstractPainter(ctx,shellMask);
 
+ const stickPainter=createStickTrailPainter(ctx,()=>({id:activeSkinId||'legacy',sticks:stickLayout}));
+
+ // Comic bursts share the output coordinate plane, outside the shell-clipped finish stack.
+ const comicPainter=createComicGunfirePainter(ctx,()=>{
+  const reserved=[],triggerRects={};
+  for(const key of ['LT','RT']){
+   const bounds=faces[key]?.floatBounds;
+   if(bounds){const[x,y,w,h]=bounds,gr=Math.min(105,h*.55),gx=key==='RT'?x+w+75:x-75;triggerRects[key]=[x,y+300,w,h];reserved.push(triggerRects[key],[gx-gr,y+300+h/2-gr,gr*2,gr*2]);}
+   else{triggerRects[key]=[key==='RT'?1090:365,38,185,200];reserved.push(triggerRects[key],[key==='RT'?1320:132,28,220,220]);}
+  }
+  return{id:activeSkinId||'legacy',body:images.base,floatImage:modelGeometry?images.modelFloat:null,rt:triggerRects.RT,reserved};
+ });
+
  // Native skin art is fitted uniformly into the existing body layer. The supplied
  // SVG control paths and placement data use GameSir's 1000×720 reference space.
  function shapePath(shape){const a=shape.attrs,p=new Path2D();if(shape.tag==='path')return new Path2D(a.d);if(shape.tag==='circle')p.arc(+a.cx,+a.cy,+a.r,0,Math.PI*2);else if(shape.tag==='ellipse')p.ellipse(+a.cx,+a.cy,+a.rx,+a.ry,0,0,Math.PI*2);else if(shape.tag==='rect')p.rect(+a.x||0,+a.y||0,+a.width,+a.height);else{const points=a.points.trim().split(/[ ,]+/).map(Number);for(let i=0;i<points.length;i+=2)i?p.lineTo(points[i],points[i+1]):p.moveTo(points[i],points[i+1]);if(shape.tag==='polygon')p.closePath();}return p;}
@@ -202,6 +215,8 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
  return {
   hitTest(x,y){for(const key of faceKeys)if(modelGeometry?faces[key].parts.some(p=>ctx.isPointInPath(p.path,x,y,p.rule)):ctx.isPointInPath(faces[key].path,x,y))return key;for(const[sx,sy,,key,,radius]of stickLayout)if(Math.hypot(x-sx,y-sy)<radius*90/86)return key;if(!modelGeometry&&y>-262&&y<-62){if(x>365&&x<550)return 'LT';if(x>1090&&x<1275)return 'RT';}return null;},
   abstractPhase:()=>abstractPainter.phase(),
+  comicState:()=>comicPainter.inspect(),
+  stickTrailState:()=>stickPainter.inspect(),
   async setTexture(src){await texturePainter.setImage(src||'');},
   async setLogo(src) {
    if(src===logoSrc){if(logoLoadingSrc!==null){logoRequest++;logoLoadingSrc=null;logoLoading=null;}return;}
@@ -212,7 +227,7 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
   },
   draw(p,state={},time=0,peak=false) {
    activateSkin(p.nativeSkin||'');state=normalizeOverlayInput(state);
-   const rawTime=time;themePainter.update(p,state,rawTime);time=p.animationMode==='still'?1200:p.animationMode==='reduced'?time*.35:time;
+   const rawTime=time;themePainter.update(p,state,rawTime);stickPainter.update(p,state,rawTime);time=p.animationMode==='still'?1200:p.animationMode==='reduced'?time*.35:time;
    const colors=p.buttonColors||{}, color=(key,which)=>colors[key]?.[which]||(which==='rest'?(activeSkin&&['LT','RT'].includes(key)&&p.buttonBaseColor==='#ffffff'?activeSkin.testing.L2R2.Normal:(p.buttonBaseColor||'#ffffff')):p.pressed);
    const effect=p.effect||'none', amount=(p.effectIntensity??.6)*(p.animationMode==='reduced'?.45:1), seconds=p.effectSpeed||5;
    const accent=effect==='rainbow'?mix(p.accent,rainbow(time,seconds),amount):p.accent;
@@ -252,18 +267,20 @@ async function createOverlayRenderer(canvas, assets, fontAssets = {}) {
    }
    for(const key of faceKeys)if(state[key])face(key,modelGeometry&&['LT','RT'].includes(key)?mix(colors[key]?.rest||faces[key].normal,color(key,'pressed'),state[key]):color(key,'pressed'),true);
    themePainter.controls(p,state,time);
-   stickLayout.forEach(([x,y,key,button,i,radius])=>{
+   stickLayout.forEach(([x,y,key,button,i,radius],index)=>{
     const axes=state.axes;
     // The base owns the fixed socket/rim. The isolated cap sits above it,
     // including the overlap at full travel; clipping to the socket cuts the cap.
     ctx.save();
-    const travel=modelGeometry?radius*.42:38;x+=axes[i]*travel;y+=axes[i+1]*travel;
+    const travel=modelGeometry?radius*.42:38;if(p.stickStyle!=='trail'){x+=axes[i]*travel;y+=axes[i+1]*travel;}
     const pressed=state[button],ink=color(button,pressed?'pressed':'rest');
     const size=180*radius/86;ctx.drawImage(cap(key,ink),x-size/2,y-size/2,size,size);
+    stickPainter.draw(p,state,index,rawTime);
     if(pressed){ctx.save();ctx.beginPath();ctx.arc(x,y,radius,0,Math.PI*2);ctx.clip();label(button==='LSB'?'L3':'R3',x,y,33,contrast(ink));ctx.restore();}
     ctx.restore();
    });
    if(modelGeometry){for(const key of ['LT','RT']){const f=faces[key];if(!f?.floatBounds)continue;const[bx,by,bw,bh]=f.floatBounds,right=key==='RT',x=right?bx+bw+75:bx-75,y=by+bh/2,pressure=state[key]||0,r=Math.min(105,bh*.55);ctx.lineWidth=9;ctx.strokeStyle='#a9bac5';ctx.beginPath();ctx.arc(x,y,r,right?-1.5:2.4,right?.74:4.64);ctx.stroke();if(pressure){ctx.strokeStyle=color(key,'pressed');ctx.beginPath();ctx.arc(x,y,r,right?-1.5:2.4,(right?-1.5:2.4)+2.24*pressure);ctx.stroke();}label(Math.round(pressure*100)+'%',x,y,28,color(key,'pressed'));}}ctx.restore();if(!modelGeometry){trigger(242,state.LT||0,false,color('LT','rest'),color('LT','pressed'));trigger(1430,state.RT||0,true,color('RT','rest'),color('RT','pressed'));}ctx.restore();
+   comicPainter.draw(p,state,rawTime);
   }
  };
 }

@@ -21,7 +21,7 @@ function renderInputFrame(time){
  if(!rendererReady)return;
  let visible=mode==='live'?actual:input;
  if(mode==='demo'){const ls=(1+Math.sin(time/1100))/2,rs=(1+Math.cos(time/1300))/2;visible={axes:[Math.sin(time/700)*ls,Math.cos(time/700)*ls,Math.cos(time/900)*rs,Math.sin(time/900)*rs],LT:(1+Math.sin(time/700))/2,RT:(1+Math.cos(time/900))/2};visible[keys[Math.floor(time/500)%keys.length]]=true;}
- renderer.draw(previewProject(),visible,time,mode==='peak');
+ renderer.draw(previewProject(),visible,time,mode==='peak');syncComicPlacementFeedback();
 }
 function scheduleInputFrame(){
  if(inputPaused||inputFrameId!==null)return;
@@ -43,7 +43,7 @@ async function loadOverlayRenderer(){
   renderer=next;rendererAssetKey=requestedKey;sync();
   let warning=startupNotice;
   try{await logoPending;}catch{warning='Saved artwork or texture could not load. Replace the image or open a valid project.';}
-  rendererReady=true;createStartThumbnails();$('previewLoading').hidden=true;
+  rendererReady=true;syncComicGunfire();syncStickVisualization();createStartThumbnails();$('previewLoading').hidden=true;
   status('Ready. '+(warning||(startScreenOpen?'Choose a starting skin or continue your current job.':'Customize your job, then verify inputs and export.')),warning?'warning':'info');
   renderInputFrame(performance.now());scheduleInputFrame();
  }catch(error){

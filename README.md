@@ -1,10 +1,10 @@
 # Overlay Studio
 
-Internal Windows production tool for creating, testing and delivering controller customer overlays. Version 0.14.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
+Internal Windows production tool for creating, testing and delivering controller customer overlays. Version 0.15.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
 
 ## Run the Windows app
 
-Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.14.0/Overlay-Studio-Windows-x64.zip) from the [0.14.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.14.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
+Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.15.0/Overlay-Studio-Windows-x64.zip) from the [0.15.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.15.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
 
 The extracted app needs no account, Node.js, internet connection or GameSir server. Connect a browser-standard gamepad, focus the app and press a button. Live preview starts automatically. Connection feedback, the input-device picker and setup help are below the preview.
 
@@ -17,6 +17,16 @@ The app opens with 22 visual families and 60 supplied skins, including the origi
 Use **Find a tool** (Ctrl+K / Command+K or F1) to search tasks and jump to their controls. **Try input demo** works without a controller and stays separate from live verification. **Export & OBS → Preview customer experience** opens the customer setup page locally in the Windows app, without GitHub setup.
 
 New customer handoffs include a setup-guide link with live controller feedback, a copyable clean OBS URL and dimensions. The normal URL stays transparent and menu-free. Both views use the same exported HTML, with no customer installation or account. See [customer experience and review workflow](CUSTOMER-EXPERIENCE.md).
+
+## Joystick styles from the reference recording
+
+**Effects → Joystick movement & trails** adds **Tilt**, **Both** and **Trail**, Short/Medium/Long fading paths and red/white/cyan/yellow or custom colors. Tilt preserves the existing cap movement. Both adds a trace; Trail keeps the cap centered and uses a live position marker. Sockets and rims stay fixed. Settings save with the job and are embedded in customer overlays. See [joystick behavior and verification](STICK-VISUALIZATION.md).
+
+## Comic Gunfire FX
+
+**Effects → Right trigger · Comic Gunfire FX** adds original layered BANG!, ZAP!, BOOM! and POW! bursts to RT / R2. Choose a word or shuffled random mode, adjust size and duration, and optionally hold to repeat. Advanced settings cover placement, intensity, rotation, activation threshold, repeat interval and the active-burst limit. **Preview RT** simulates a press or short hold without forwarding it to OBS; select Live controller for hardware testing.
+
+The animation uses crisp font-independent vectors, separate lettering/burst/cloud/accent motion and true alpha. Placement fits the entire animated envelope into clear space near RT; when trigger gauges occupy the available headroom, it uses adjacent space and reports the fitted size. Old projects keep this optional effect off. Graphics and behavior are embedded in customer and studio exports, with no additional downloads. See [comic quality and implementation review](COMIC-GUNFIRE.md).
 
 ## Make an overlay
 

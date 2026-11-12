@@ -1,4 +1,38 @@
-# Current candidate: 0.14.0 customizable press and analog effects prerelease
+# Current candidate: 0.15.0 comic gunfire and joystick visualization prerelease
+
+Optional RT / R2 comic bursts add four original layered vector compositions:
+BANG!, ZAP!, BOOM! and POW!, with transparent 1920 × 1080 SVG masters.
+Lettering, bursts, cloud, cel highlights and directional accents animate
+independently. No ActionVFX material or cropped reference-image art is used.
+
+Threshold hysteresis gives one burst per distinct press; optional hold-repeat
+has an interval and hard simultaneous-burst cap. Older bursts retain their own
+start times. A paused page does not replay a backlog or retrigger a held input.
+Geometry-driven placement reserves controller silhouettes, floating triggers,
+gauges and the full animation envelope. Extreme size/offset settings auto-fit;
+the editor reports the effective size. No controller artwork or input mapping
+was rebuilt. See [COMIC-GUNFIRE.md](COMIC-GUNFIRE.md).
+
+Older version-1 projects restore with this feature off. Settings save, undo,
+reset and embed into both customer and studio HTML. Renderer revision 6 requires
+re-export to add these features to an existing delivery; old URLs stay immutable.
+
+Joystick controls match the demonstrated Tilt/Both/Trail modes, trail length
+and preset/custom colors. Existing cap movement remains the default; trails
+are clipped inside the fixed sockets and use bounded time-based histories.
+Their endpoints follow current input immediately. See [STICK-VISUALIZATION.md](STICK-VISUALIZATION.md).
+
+Release gates: syntax, all 30 suites, Windows x64 build, exact packaged source
+and SVG masters, ZIP integrity and published checksum from the same source SHA.
+Browser tests cover synthetic standard-gamepad inputs and representative layouts,
+not physical devices. Real Windows controllers, OBS/Streamlabs alpha/performance
+and background gamepad availability still need producer acceptance testing.
+This remains an unsigned Windows prerelease. These manual checks block calling
+it a physically certified stable release; they do not block a review prerelease.
+Optional future work: additional authored comic sets and broader physical-device
+acceptance coverage. No new controller models or delivery service changes.
+
+# Historical release: 0.14.0 customizable press and analog effects prerelease
 
 Four original press bursts and four continuous analog responses share color,
 strength and size controls, with separate burst timing and a trigger/stick/both
