@@ -16,6 +16,7 @@ const STUDIO_TASKS=[
  {id:'holographic',name:'Add a holographic finish',hint:'Open liquid, chrome and foil finishes.',panel:'holographic',target:'holoEnabled',words:'iridescent holo shine'},
  {id:'textures',name:'Apply a shell texture',hint:'Open built-in finishes and your local image library.',panel:'textures',target:'textureBlend',words:'grain paint scratches texture import'},
  {id:'abstract',name:'Add abstract waves',hint:'Open flowing color folds.',panel:'abstract',target:'abstractEnabled',words:'fffuel wave abstract'},
+ {id:'save',name:'Save an editable project',hint:'Save an .overlay backup of the current design.',words:'save project backup file customer job configuration'},
  {id:'open',name:'Open a saved project',hint:'Choose an editable .overlay or .json project.',words:'restore backup customer job file'}
 ];
 function syncQuickDemo(){for(const id of ['startDemo','quickDemo']){const button=$(id);button.textContent=mode==='demo'?'Stop demo · use live input':'Try input demo';button.setAttribute('aria-pressed',String(mode==='demo'));button.disabled=!rendererReady||!!projectAction;}}
@@ -33,6 +34,7 @@ function runStudioTask(task){
  if(task.id==='demo'){toggleQuickDemo();(startScreenOpen?$('startDemo'):$('quickDemo')).focus();return;}
  if(task.id==='open'){$('open').click();return;}
  if(startScreenOpen)$('startEditing').click();
+ if(task.id==='save'){$('save').click();return;}
  if(task.panel){selectInspector(task.panel,true);const target=$(task.target),details=target.closest('details');if(details)details.open=true;target.focus();target.scrollIntoView({block:'nearest'});return;}
  if(task.id==='verify'){$('verifyWorkspace').click();return;}
  openExport();if(task.id==='customer'){if(!$('previewCustomer').disabled)$('previewCustomer').click();else if(customerFontIssue()){status(customerFontIssue(),'warning');$('chooseDeliveryFont').focus();}else{status(window.desktop?.previewCustomer?'Retry the local connection to open the customer preview. Customer HTML can still be saved.':'Customer preview is available in the Windows app. You can save the customer HTML here.','info');$('customerExport').focus();}}
