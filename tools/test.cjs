@@ -16,7 +16,7 @@ const server=http.createServer(async(req,res)=>{
  const failed=[];async function run(file){console.log(`\nRunning ${file}`);const code=await new Promise(resolve=>{const child=spawn(process.execPath,[file],{cwd:root,env,stdio:'inherit'});child.on('error',error=>{console.error(error.message);resolve(1);});child.on('exit',code=>resolve(code??1));});if(code!==0)failed.push(file);}
  try{
   // Native suites share a fixed loopback port; browser suites use isolated contexts.
-  const native=new Set(['bridge-test.cjs','setup-bridge-test.cjs','release-native-test.cjs','github-delivery-test.cjs']);for(const file of suites.filter(file=>native.has(file)))await run(file);
+  const native=new Set(['bridge-test.cjs','setup-bridge-test.cjs','release-native-test.cjs','github-delivery-test.cjs','customer-preview-test.cjs']);for(const file of suites.filter(file=>native.has(file)))await run(file);
   const queue=suites.filter(file=>!native.has(file));async function worker(){while(queue.length)await run(queue.shift());}await Promise.all([worker(),worker()]);
   console.log(`\n${suites.length-failed.length}/${suites.length} suites passed. Test artifacts: ${output}`);if(failed.length){console.error('Failed: '+failed.join(', '));process.exitCode=1;}
  }finally{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}

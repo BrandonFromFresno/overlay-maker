@@ -1,4 +1,23 @@
-# Current candidate: 0.12.0 universal visual model prerelease
+# Current candidate: 0.13.0 customer setup and navigation prerelease
+
+Customer pages now include an optional same-file setup view with direct-input
+status, activation help, clean-URL copying and OBS/Streamlabs instructions.
+The normal source stays transparent and free of interface elements. Handoffs
+include both links. A sandboxed local customer review window needs no delivery
+account and prevents copying its temporary URL as a customer handoff.
+
+App navigation adds searchable tasks, keyboard routing, a short walkthrough,
+an obvious simulated demo and visible upload-connection feedback. Existing
+settings, templates, input mappings and saved-job format remain in place.
+Renderer revision 4 requires re-export before older deliveries claim these changes.
+See [CUSTOMER-EXPERIENCE.md](CUSTOMER-EXPERIENCE.md).
+
+Release gates: syntax, all 27 suites, Windows x64 ZIP, packaged source/assets,
+archive integrity and checksum on the exact source SHA. Physical controller,
+Windows review-window and target OBS/Streamlabs acceptance remain manual.
+This update does not certify background Gamepad API behavior or vendor-only inputs.
+
+# Historical release: 0.12.0 universal visual model prerelease
 
 22 visual families / 60 variants now share the existing production editor and
 standard gamepad input pipeline. Layout selection is independent of hardware;

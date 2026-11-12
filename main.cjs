@@ -18,8 +18,11 @@ app.whenReady().then(()=>{
  ipcMain.handle('delivery-check',(_,id)=>delivery.check(id));
  ipcMain.handle('delivery-project',(_,id)=>delivery.openProject(id));
  ipcMain.handle('delivery-help',(_,kind)=>shell.openExternal(kind==='token'?'https://github.com/settings/personal-access-tokens/new':kind==='hosting'?'https://dash.cloudflare.com/':'https://github.com/BrandonFromFresno/Controlverlay-Farm'));
+ const customerPreview=require('./customer-preview.cjs').createCustomerPreview({BrowserWindow,parent:()=>win,origin:'http://127.0.0.1:18777',isReady:()=>server?.listening});
+ ipcMain.handle('preview-customer',(_,html)=>customerPreview.open(html));
  const stored=path.join(app.getPath('userData'),'live.html');try{if(fs.existsSync(stored))live=fs.readFileSync(stored,'utf8');}catch{storedOverlayWarning='The previous OBS overlay could not be restored. Send this design to replace it.';}
  server=http.createServer((req,res)=>{
+  if(customerPreview.respond(req,res))return;
   if(req.url==='/events'){res.writeHead(200,{'Content-Type':'text/event-stream','Cache-Control':'no-cache','Access-Control-Allow-Origin':'*'});res.write(': connected\n\ndata: '+JSON.stringify(Date.now()-lastInputAt<=1000?lastInput:{})+'\n\n');clients.add(res);const cleanup=()=>clients.delete(res);res.on('close',cleanup);res.on('error',cleanup);return;}
   if(req.url==='/overlay'){res.writeHead(live?200:404,{'Content-Type':'text/html','Cache-Control':'no-store'});res.end(live||'Open Overlay Studio and choose Send to OBS.');return;}
   res.writeHead(404);res.end();

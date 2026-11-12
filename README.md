@@ -1,16 +1,22 @@
 # Overlay Studio
 
-Internal Windows production tool for creating, testing and delivering controller customer overlays. Version 0.12.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
+Internal Windows production tool for creating, testing and delivering controller customer overlays. Version 0.13.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
 
 ## Run the Windows app
 
-Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.12.0/Overlay-Studio-Windows-x64.zip) from the [0.12.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.12.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
+Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.13.0/Overlay-Studio-Windows-x64.zip) from the [0.13.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.13.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
 
 The extracted app needs no account, Node.js, internet connection or GameSir server. Connect a browser-standard gamepad, focus the app and press a button. Live preview starts automatically. Connection feedback, the input-device picker and setup help are below the preview.
 
 ## Production workspace and GameSir skin gallery
 
 The app opens with 22 visual families and 60 supplied skins, including the original 13 G7 Pro 8K designs, live previews and safe saved-job resume. Choose **Start without a template** for the neutral overlay. In the editor, **Shell → Use default overlay** restores the current visual model’s default appearance while keeping the job name; Undo restores the previous design. **Project options → Reset to selected skin** remains a separate action. Selected skins persist in projects and are embedded in finished customer overlays. New layouts retain supplied geometry in data packages with high-resolution transparent artwork; existing Studio projects retain their artwork. See [opening-gallery review](REVIEW-START-SCREEN.md). The preview is centered between a compact tool rail and a contextual inspector. Job naming stays in the header; movement and verification controls are above the canvas. Customer delivery and studio testing have distinct areas.
+
+## Easier navigation and customer setup
+
+Use **Find a tool** (Ctrl+K / Command+K or F1) to search tasks and jump to their controls. **Try input demo** works without a controller and stays separate from live verification. **Export & OBS → Preview customer experience** opens the customer setup page locally in the Windows app, without GitHub setup.
+
+New customer handoffs include a setup-guide link with live controller feedback, a copyable clean OBS URL and dimensions. The normal URL stays transparent and menu-free. Both views use the same exported HTML, with no customer installation or account. See [customer experience and review workflow](CUSTOMER-EXPERIENCE.md).
 
 ## Make an overlay
 

@@ -1,8 +1,11 @@
-OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.12.0 WINDOWS PRERELEASE
+OVERLAY STUDIO — INTERNAL PRODUCTION TOOL — 0.13.0 WINDOWS PRERELEASE
 
 This application is for the producer. Customers receive a hosted overlay URL.
 
 START
+Use Find a tool (Ctrl+K / Command+K or F1) to search for an action.
+Try input demo works without a controller and never counts as physical verification.
+
 1. Extract the entire Windows ZIP. Open Overlay Studio.exe and keep the
    adjacent files and folders together. Run one copy at a time.
 2. Choose a visual model and skin and select Use, or continue/open a saved
@@ -49,6 +52,11 @@ Leave the token empty to reuse this repository's protected connection. Stored
 overlays get URLs without another upload. No paid hosting plan, purchased
 domain or Cloudflare API token is required within free limits.
 
+CUSTOMER REVIEW
+Export & OBS > Preview customer experience opens a separate Windows review
+window with direct controller input. No GitHub connection is needed. Local
+review URLs expire and cannot be copied as customer delivery URLs.
+
 CUSTOMER DELIVERY — EACH JOB
 Name the job before saving; filenames use that name. Customize a reusable
 configuration, then run Verify customer inputs with the physical controller.
@@ -60,6 +68,9 @@ page to the repository. Earlier customer versions are preserved. Wait for the
 live-URL check, test that URL in OBS/Streamlabs with the game focused and after
 reconnect, then confirm and copy the handoff. Reopen earlier deliveries from
 private backups without changing their existing customer URLs.
+New handoffs include a setup guide (the same URL with setup=1) and the clean
+overlay URL. The setup guide shows live status, activation help and Copy OBS URL.
+The copied clean URL displays only the transparent overlay, without instructions.
 Customers only add the supplied Browser Source URL at 1672 x 1241. They do
 not install this application, assemble assets or edit code. The customer page
 reads their own controller directly; it does not need your local bridge.

@@ -37,8 +37,9 @@ function navigateHistory(redo=false){
  try{sync();persist();}finally{historyNavigation=false;}status(redo?'Change restored.':'Last change undone.');
 }
 function syncProjectActions(){
+ syncQuickDemo();if($('toolDialog').open)renderStudioTasks();
  const unavailable=!rendererReady||!!projectAction;document.querySelector('main').inert=unavailable;$('name').disabled=unavailable||startScreenOpen;
- for(const id of ['open','save','exportMenu','html','png','upload','importTextures','customerExport','uploadCustomer','connectGitHub','openDelivery'])$(id).disabled=unavailable;
+ for(const id of ['open','save','exportMenu','html','png','upload','importTextures','customerExport','previewCustomer','uploadCustomer','connectGitHub','openDelivery'])$(id).disabled=unavailable;
  if(startScreenOpen)for(const id of ['save','exportMenu','html','png','upload','importTextures'])$(id).disabled=true;
  $('returnToEditor').disabled=rendererLoading||!!projectAction;syncStartScreen();
  $('publish').disabled=unavailable||startScreenOpen||!bridgeUsable();
@@ -52,7 +53,7 @@ async function runProjectAction(id,label,action){
  if(projectAction||!rendererReady)return;projectAction=id;editElement=null;
  const button=$(id),original=button.textContent,focused=document.activeElement===button;
  button.textContent=label;button.setAttribute('aria-busy','true');document.querySelector('main').inert=true;syncProjectActions();status(label);
- try{await action();}catch(error){status('Could not '+({save:'save the project',open:'open the project',upload:'import the logo',html:'export HTML',png:'export PNG',publish:'update OBS',importTextures:'import textures',customerExport:'export the customer overlay',uploadCustomer:'upload the customer overlay',connectGitHub:'connect GitHub',openDelivery:'open the delivery project'}[id]||'complete the action')+': '+(error.message||'Please try again.'),'error');}
+ try{await action();}catch(error){status('Could not '+({save:'save the project',open:'open the project',upload:'import the logo',html:'export HTML',png:'export PNG',publish:'update OBS',importTextures:'import textures',previewCustomer:'open the customer preview',customerExport:'export the customer overlay',uploadCustomer:'upload the customer overlay',connectGitHub:'connect GitHub',openDelivery:'open the delivery project'}[id]||'complete the action')+': '+(error.message||'Please try again.'),'error');}
  finally{projectAction='';button.textContent=original;button.removeAttribute('aria-busy');document.querySelector('main').inert=false;syncProjectActions();if(focused&&!button.disabled)button.focus({preventScroll:true});}
 }
 function syncManualPreview(){
