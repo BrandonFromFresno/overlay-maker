@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Controller Layer Preview</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#252931;color:#f6f7fa;font:15px system-ui,sans-serif}
+main{height:100vh;display:grid;grid-template-rows:auto minmax(0,1fr);gap:12px;padding:18px}
+header{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+button,select{font:inherit;padding:6px 10px;color:inherit;background:#363c48;border:1px solid #737b8c;border-radius:5px}
+button[aria-pressed=true]{background:#285297}
+.stage{display:grid;place-items:center;min-height:0}
+canvas{display:block;max-width:100%;max-height:100%;object-fit:contain}
+body.clean{background:transparent}
+.clean header{display:none}
+.clean main{display:flex;align-items:center;justify-content:center;padding:0}
+.clean .stage{width:100%;height:100%}
+</style>
+</head>
+<body>
+<main>
+<header>
+<label for="skin">Controller</label><select id="skin"></select>
+<button id="demo" aria-pressed="false">Run demo</button>
+<button id="next">Next gamepad</button>
+<span id="status" role="status">Loading artwork…</span>
+</header>
+<div class="stage"><canvas aria-label="Controller input preview"></canvas></div>
+</main>
+<script src="manifest.js"></script>
+<script>
+const skins = window.controllerAssets;
+const selector = document.querySelector('#skin');
+const canvas = document.querySelector('canvas');
+const context = canvas.getContext('2d');
+const status = document.querySelector('#status');
+const demoButton = document.querySelector('#demo');
+const options = new URLSearchParams(location.search);
+const labels = {
+  'ps1-black':'PS1 Black','ps1-white':'PS1 White',
+  'ps2-black':'PS2 Black','ps2-white':'PS2 White',
+  'ps3-black':'PS3 Black','ps3-white':'PS3 White',
+  'xbox360-black':'Xbox 360 Black','xbox360-white':'Xbox 360 White',
+  'xbox-elite-1':'Xbox Elite 1','xbox-elite-2':'Xbox Elite 2'
+};
+const buttons = {
+  south:0,east:1,west:2,north:3,lb:4,rb:5,lt:6,rt:7,select:8,start:9,
+  up:12,down:13,left:14,right:15,home:16
+};
+let active;
+let requestedSkin;
+let selectedPad;
+let demoStart = options.get('demo') === '1' ? performance.now() : null;
+document.body.classList.toggle('clean', options.get('clean') === '1');
+for (const [key,label] of Object.entries(labels)) selector.add(new Option(label,key));
+selector.value = Object.hasOwn(skins,options.get('skin')) ? options.get('skin') : 'ps2-white';
+function image(url) {
+  return new Promise((resolve,reject) => {
+    const bitmap = new Image();
+    bitmap.onload = () => resolve(bitmap);
+    bitmap.onerror = () => reject(new Error(url));
+    bitmap.src = url;
+  });
+}
+async function loadSkin(key) {
+  requestedSkin = key;
+  const skin = skins[key];
+  const prefix = 'assets/' + key + '/';
+  try {
+    const entries = Object.entries(skin.layers);
+    const [original,...layers] = await Promise.all([
+      image(prefix + skin.original),
+      ...entries.map(async ([name,layer]) => {
+        const [cap,well] = await Promise.all([image(prefix + layer.file),layer.well ? image(prefix + layer.well) : null]);
+        return [name,{...layer,cap,well}];
+      })
+    ]);
+    if (requestedSkin !== key) return;
+    canvas.width = skin.width;
+    canvas.height = skin.height;
+    active = {original,layers:Object.fromEntries(layers)};
+  } catch (error) {
+    if (requestedSkin === key) status.textContent = 'Artwork failed to load. Extract the full ZIP before opening.';
+  }
+}
+function gamepads() {
+  try { return Array.from(navigator.getGamepads?.() || []).filter(Boolean); }
+  catch { return []; }
+}
+function setDemo(enabled) {
+  demoStart = enabled ? performance.now() : null;
+  demoButton.setAttribute('aria-pressed',String(enabled));
+  demoButton.textContent = enabled ? 'Stop demo' : 'Run demo';
+}
+selector.addEventListener('change',() => loadSkin(selector.value));
+demoButton.addEventListener('click',() => setDemo(demoStart === null));
+document.querySelector('#next').addEventListener('click',() => {
+  const pads = gamepads();
+  if (pads.length) selectedPad = pads[(pads.findIndex(pad => pad.index === selectedPad)+1)%pads.length].index;
+  setDemo(false);
+});
+function demoInput(time) {
+  const sequence = ['south','east','west','north','up','right','down','left','lb','rb','lt','rt','select','start','home','analog','profile'];
+  const seconds = (time - demoStart)/1000 % 17;
+  const phase = (seconds-1)/.43;
+  const pressed = {};
+  if (phase >= 0 && phase < sequence.length) {
+    const name = sequence[Math.floor(phase)];
+    const fraction = phase % 1;
+    pressed[name] = name === 'lt' || name === 'rt' ? Math.sin(Math.PI*fraction) : Number(fraction < .72);
+  }
+  if (seconds >= 9 && seconds < 13) {
+    const angle = (seconds-9)*Math.PI;
+    const strength = Math.min(1,(seconds-9)*5,(13-seconds)*5);
+    pressed.ls = strength > .9 && seconds > 10 && seconds < 10.45 ? 1 : 0;
+    pressed.rs = strength > .9 && seconds > 12 && seconds < 12.45 ? 1 : 0;
+    return {pressed,axes:[Math.cos(angle)*strength,Math.sin(angle)*strength,Math.sin(angle)*strength,Math.cos(angle)*strength]};
+  }
+  if (seconds > 14 && seconds < 15) Object.assign(pressed,{up:1,right:1,south:1,rb:1});
+  return {pressed,axes:[]};
+}
+function hardwareInput(pad) {
+  const level = i => pad.buttons[i]?.value || Number(pad.buttons[i]?.pressed) || 0;
+  const pressed = Object.fromEntries(Object.entries(buttons).map(([name,i]) => [name,level(i)]));
+  pressed.ls = level(10);
+  pressed.rs = level(11);
+  return {pressed,axes:pad.axes};
+}
+function paint(layer, amount, dx=0, dy=0) {
+  const {x,y,width,height,cap,well} = layer;
+  if (well && (dx || dy)) context.drawImage(well,x,y);
+  context.save();
+  context.filter = amount ? 'brightness(' + (1+amount*.85) + ') saturate(' + (1+amount*.3) + ')' : 'none';
+  context.drawImage(cap,x+dx,y+dy,width,height);
+  context.restore();
+}
+function render(time) {
+  const pads = gamepads();
+  const pad = pads.find(item => item.index === selectedPad) || pads.find(item => item.mapping === 'standard');
+  if (active) {
+    const live = pad?.mapping === 'standard';
+    const demo = demoStart !== null;
+    const input = demo ? demoInput(time) : live ? hardwareInput(pad) : {pressed:{},axes:[]};
+    const message = demo ? 'Demo running' : live ? pad.id : pads.length ? 'Gamepad detected without a standard browser mapping.' : 'Press a gamepad button to connect.';
+    if (status.textContent !== message && requestedSkin === selector.value) status.textContent = message;
+    const {pressed,axes} = input;
+    context.clearRect(0,0,canvas.width,canvas.height);
+    context.drawImage(active.original,0,0);
+    for (const [name,layer] of Object.entries(active.layers)) {
+      if (name === 'dpad') {
+        const dx = Number(!!pressed.right)-Number(!!pressed.left);
+        const dy = Number(!!pressed.down)-Number(!!pressed.up);
+        if (dx || dy) {
+          context.save();
+          context.beginPath();
+          const px = layer.x+layer.width/2;
+          const py = layer.y+layer.height/2;
+          const angle = Math.atan2(dy,dx);
+          context.moveTo(px,py);
+          context.arc(px,py,layer.width,angle-.61,angle+.61);
+          context.closePath();
+          context.clip();
+          paint(layer,1);
+          context.restore();
+        }
+      } else if (layer.well) {
+        const axis = name === 'ls' ? 0 : 2;
+        const x = axes[axis] || 0;
+        const y = axes[axis+1] || 0;
+        const distance = Math.hypot(x,y);
+        const travel = distance > .12 ? layer.travel*(Math.min(1,distance)-.12)/(.88*distance) : 0;
+        if (travel || pressed[name]) paint(layer,pressed[name],x*travel,y*travel);
+      } else if (pressed[name]) {
+        paint(layer,pressed[name]);
+      }
+    }
+  }
+  requestAnimationFrame(render);
+}
+demoButton.setAttribute('aria-pressed',String(demoStart !== null));
+if (demoStart !== null) demoButton.textContent = 'Stop demo';
+loadSkin(selector.value);
+requestAnimationFrame(render);
+</script>
+</body>
+</html>

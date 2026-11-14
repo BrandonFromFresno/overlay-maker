@@ -5,10 +5,10 @@ function validateStickVisualization(value,p){
  if(typeof p.stickTrailColor!=='string'||!/^#[0-9a-f]{6}$/i.test(p.stickTrailColor))throw Error('Invalid stick trail color');
 }
 function syncStickVisualization(){
- const trail=project.stickStyle!=='tilt';$('previewSticks').textContent=mode==='demo'?'Stop demo · live input':'Try input demo';$('previewSticks').setAttribute('aria-pressed',String(mode==='demo'));$('previewSticks').disabled=!rendererReady;$('stickTrailOptions').hidden=!trail;
+ const hasSticks=visualControlKeys(project).includes('LSB'),trail=hasSticks&&project.stickStyle!=='tilt';$('stickStyle').disabled=!hasSticks;$('resetSticks').disabled=!hasSticks;$('previewSticks').textContent=mode==='demo'?'Stop demo · live input':'Try input demo';$('previewSticks').setAttribute('aria-pressed',String(mode==='demo'));$('previewSticks').disabled=!rendererReady||!hasSticks;$('stickTrailOptions').hidden=!trail;
  for(const key of ['stickTrailLength','stickTrailColor'])$(key).disabled=!trail;
- for(const b of document.querySelectorAll('[data-stick-color]'))b.setAttribute('aria-pressed',String(trail&&b.dataset.stickColor.toLowerCase()===project.stickTrailColor.toLowerCase()));
- $('stickStyleNote').textContent=project.stickStyle==='trail'?'The cap stays centered; the marker shows live position and the path fades behind it. Stick clicks still highlight.':project.stickStyle==='both'?'The cap follows live input while a fading path shows movement inside the fixed socket.':'Original cap movement. Sockets and rims stay fixed; no movement trail.';
+ for(const b of document.querySelectorAll('[data-stick-color]')){b.disabled=!hasSticks;b.setAttribute('aria-pressed',String(trail&&b.dataset.stickColor.toLowerCase()===project.stickTrailColor.toLowerCase()));}
+ $('stickStyleNote').textContent=!hasSticks?'This template has no analog sticks. Physical stick inputs can still be checked.':project.stickStyle==='trail'?'The cap stays centered; the marker shows live position and the path fades behind it. Stick clicks still highlight.':project.stickStyle==='both'?'The cap follows live input while a fading path shows movement inside the fixed socket.':'Original cap movement. Sockets and rims stay fixed; no movement trail.';
  $('stickTrailStillNote').hidden=!trail||project.animationMode!=='still';
 }
 function initializeStickVisualization(){

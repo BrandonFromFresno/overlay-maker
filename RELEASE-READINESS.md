@@ -1,4 +1,14 @@
-# Current candidate: 0.15.0 comic gunfire and joystick visualization prerelease
+# Current candidate: 0.16.0 additional controller templates
+
+Five more visual families and ten skins are available beside existing options, taking the inventory to 32 / 80. Original cover, cap and socket bytes and the supplied pivots/travel are retained. Alpha-defined controls share universal standard input, editing, presets and customer export. Stickless PS1 feedback, preview-only Analog/Profile labels, dark-shell tinting and shell neon support complete compatibility. See [CONTROLLER-LAYER-PACK.md](CONTROLLER-LAYER-PACK.md). Renderer revision is 7; Version 0.16.0 publication uses the exact successful Windows build and its verified archive checksum.
+
+# Included in 0.16.0: independent Xelu starting templates
+
+Five additional visual models (DualSense, DualShock 4, Xbox Series, Xbox One and Amazon Luna) add ten labeled/clean outline variants. The inventory is now 27 families / 70 skins. Existing model definitions, renderer, input reader and saved schema are unchanged. Original Xelu folder structure and file bytes are preserved. See [ASSET-LIBRARY.md](ASSET-LIBRARY.md).
+
+Focused browser checks cover all exposed inputs, exact neutral return, contained highlights, fixed rims, analog depth, per-button and shell customization, materials, artwork, anime presets, gallery isolation, saved restoration, reset/Undo and standalone customer output. The ASAR source/asset verifier includes every new model, thumbnail and the source readme. Physical hardware, firmware modes and real OBS/Streamlabs acceptance remain manual. Included in the 0.16.0 release candidate.
+
+# Historical release: 0.15.0 comic gunfire and joystick visualization prerelease
 
 Optional RT / R2 comic bursts add four original layered vector compositions:
 BANG!, ZAP!, BOOM! and POW!, with transparent 1920 × 1080 SVG masters.

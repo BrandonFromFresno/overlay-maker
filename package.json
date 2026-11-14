@@ -1,6 +1,6 @@
 {
   "name": "cudi-overlay-studio",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "Offline controller overlay production studio with universal standard-gamepad input",
   "main": "main.cjs",
   "private": true,

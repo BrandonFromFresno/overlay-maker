@@ -1,0 +1,122 @@
+[
+  {
+    "model": "LayerPS1",
+    "variant": "Black",
+    "sourceSkin": "ps1-black",
+    "controls": 14,
+    "sticks": 0,
+    "source": {
+      "folder": "controller-layer-pack/assets/ps1-black",
+      "originalSHA256": "290ae9f970e7e1d81c6cf04f4ed14d7c2d1061a965c0b6994a12a41447f32e5a",
+      "manifestSHA256": "8e1278eb9a06d5d235b4f5d77afcec755ff8c74e4b9af2fcac80fe7a40b67f97"
+    }
+  },
+  {
+    "model": "LayerPS1",
+    "variant": "White",
+    "sourceSkin": "ps1-white",
+    "controls": 14,
+    "sticks": 0,
+    "source": {
+      "folder": "controller-layer-pack/assets/ps1-white",
+      "originalSHA256": "24613fe432bd9bb2121f7d9e90ea32a08fc96cd983db4e20c91cb12b1334f4a4",
+      "manifestSHA256": "8e1278eb9a06d5d235b4f5d77afcec755ff8c74e4b9af2fcac80fe7a40b67f97"
+    }
+  },
+  {
+    "model": "LayerPS2",
+    "variant": "Black",
+    "sourceSkin": "ps2-black",
+    "controls": 15,
+    "sticks": 2,
+    "source": {
+      "folder": "controller-layer-pack/assets/ps2-black",
+      "originalSHA256": "04087fac0c6cb7f5b3e4c4076d3ea006887f614789cf200522e9fe16db0ba06c",
+      "manifestSHA256": "8e1278eb9a06d5d235b4f5d77afcec755ff8c74e4b9af2fcac80fe7a40b67f97"
+    }
+  },
+  {
+    "model": "LayerPS2",
+    "variant": "White",
+    "sourceSkin": "ps2-white",
+    "controls": 15,
+    "sticks": 2,
+    "source": {
+      "folder": "controller-layer-pack/assets/ps2-white",
+      "originalSHA256": "f8be9fd9002bcc18a1c22c6953f7ad83fcb9625a24f8f74ac11c08d44eccc06c",
+      "manifestSHA256": "8e1278eb9a06d5d235b4f5d77afcec755ff8c74e4b9af2fcac80fe7a40b67f97"
+    }
+  },
+  {
+    "model": "LayerPS3",
+    "variant": "Black",
+    "sourceSkin": "ps3-black",
+    "controls": 15,
+    "sticks": 2,
+    "source": {
+      "folder": "controller-layer-pack/assets/ps3-black",
+      "originalSHA256": "ac435c33a2460a3c3ce3d01facfb1ab6d9abcde478207453be4dc4456355f7a8",
+      "manifestSHA256": "8e1278eb9a06d5d235b4f5d77afcec755ff8c74e4b9af2fcac80fe7a40b67f97"
+    }
+  },
+  {
+    "model": "LayerPS3",
+    "variant": "White",
+    "sourceSkin": "ps3-white",
+    "controls": 15,
+    "sticks": 2,
+    "source": {
+      "folder": "controller-layer-pack/assets/ps3-white",
+      "originalSHA256": "69a655267481822f4e47441117fee92af92aea7de17ab9f51e38a9ed120422fb",
+      "manifestSHA256": "8e1278eb9a06d5d235b4f5d77afcec755ff8c74e4b9af2fcac80fe7a40b67f97"
+    }
+  },
+  {
+    "model": "LayerXbox360",
+    "variant": "Black",
+    "sourceSkin": "xbox360-black",
+    "controls": 15,
+    "sticks": 2,
+    "source": {
+      "folder": "controller-layer-pack/assets/xbox360-black",
+      "originalSHA256": "0276c0afe451165d420ce5404d3fc886f6d7649d4cfc152eddde9d112493af6d",
+      "manifestSHA256": "8e1278eb9a06d5d235b4f5d77afcec755ff8c74e4b9af2fcac80fe7a40b67f97"
+    }
+  },
+  {
+    "model": "LayerXbox360",
+    "variant": "White",
+    "sourceSkin": "xbox360-white",
+    "controls": 15,
+    "sticks": 2,
+    "source": {
+      "folder": "controller-layer-pack/assets/xbox360-white",
+      "originalSHA256": "eb6aecb9c2ee96c11eab29e7b1fcc6d27602414e10707b40382f7d333cdb0c42",
+      "manifestSHA256": "8e1278eb9a06d5d235b4f5d77afcec755ff8c74e4b9af2fcac80fe7a40b67f97"
+    }
+  },
+  {
+    "model": "LayerXboxElite",
+    "variant": "Elite1",
+    "sourceSkin": "xbox-elite-1",
+    "controls": 16,
+    "sticks": 2,
+    "source": {
+      "folder": "controller-layer-pack/assets/xbox-elite-1",
+      "originalSHA256": "0563a004ef390fa3357a14432def57046c02236dee1c4f9d1fe486e04b3035c7",
+      "manifestSHA256": "8e1278eb9a06d5d235b4f5d77afcec755ff8c74e4b9af2fcac80fe7a40b67f97"
+    }
+  },
+  {
+    "model": "LayerXboxElite",
+    "variant": "Elite2",
+    "sourceSkin": "xbox-elite-2",
+    "controls": 16,
+    "sticks": 2,
+    "source": {
+      "folder": "controller-layer-pack/assets/xbox-elite-2",
+      "originalSHA256": "227aef036257ec0fe55303e6cd63e5aaa567fbc208e90ca297dc014bb2289532",
+      "manifestSHA256": "8e1278eb9a06d5d235b4f5d77afcec755ff8c74e4b9af2fcac80fe7a40b67f97"
+    }
+  }
+]

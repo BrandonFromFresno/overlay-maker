@@ -10,10 +10,20 @@ Models load on demand. Only the chosen variant is embedded in customer HTML. Cus
 
 ## Included visual inventory
 
-22 visual families, 60 variants: the established 13 G7 Pro 8K skins plus 47 additional supplied variants. Source identifiers are retained where an official marketing name cannot be verified. These are visual templates, not claims that the matching hardware was physically tested.
+32 visual families, 80 variants: the established 13 G7 Pro 8K skins plus 47 additional supplied GameSir variants and 10 independent Xelu outline variants, plus 10 skins from the Controller Layer Pack. See [layered controller integration](CONTROLLER-LAYER-PACK.md) for those five additional families. See [ASSET-LIBRARY.md](ASSET-LIBRARY.md) for the five added controller layouts, provenance and input limitations. Source identifiers are retained where an official marketing name cannot be verified. These are visual templates, not claims that the matching hardware was physically tested.
 
 | Source model ID | Variants | Available artwork |
 | --- | ---: | --- |
+| Layer Pack PlayStation original | 2 | Black, White; no analog sticks |
+| Layer Pack PlayStation 2 | 2 | Black, White |
+| Layer Pack PlayStation 3 | 2 | Black, White |
+| Layer Pack Xbox 360 | 2 | Black, White |
+| Layer Pack Xbox Elite artwork | 2 | Elite 1 and Elite 2 source designs |
+| Xelu DualSense | 2 | Labeled outline, Clean outline |
+| Xelu DualShock 4 | 2 | Labeled outline, Clean outline |
+| Xelu Xbox Series | 2 | Labeled outline, Clean outline |
+| Xelu Xbox One | 2 | Labeled outline, Clean outline |
+| Xelu Amazon Luna | 2 | Labeled outline, Clean outline |
 | G7ProCE | 13 | Gold, Aimlabs, GoldenApple, Crown, White, Black, Blue, GradientBlue, G7Pro, XReal, NBA2K, Nioh, YingRen |
 | C2 | 1 | White |
 | C3 | 1 | White |

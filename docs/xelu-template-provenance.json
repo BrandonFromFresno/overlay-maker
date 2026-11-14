@@ -1,0 +1,62 @@
+[
+  {
+    "model": "XeluDualSense",
+    "variant": "Labeled",
+    "file": "PS5/PS5_Diagram.png",
+    "sha256": "b8273541d55921eeb71de5a90efcfa9335f786c9b41b06cf6b6625dc4a4f507d"
+  },
+  {
+    "model": "XeluDualSense",
+    "variant": "Clean",
+    "file": "PS5/PS5_Diagram_Simple.png",
+    "sha256": "549e69df811b65af3354d43af9921be009d04a361bc58a6ddd6d6f1e21d1b653"
+  },
+  {
+    "model": "XeluDualShock4",
+    "variant": "Labeled",
+    "file": "Others/PS4/PS4_Diagram.png",
+    "sha256": "ef3004fb39557a29f0edaf52e383a640a68086196c3f6f578f89c7b2b82defe9"
+  },
+  {
+    "model": "XeluDualShock4",
+    "variant": "Clean",
+    "file": "Others/PS4/PS4_Diagram_Simple.png",
+    "sha256": "ca5864fdb7da64c5ead864c1ba0ba79900a89b906f4fd760630f0f07e31e0fd9"
+  },
+  {
+    "model": "XeluXboxSeries",
+    "variant": "Labeled",
+    "file": "Xbox Series/XboxSeriesX_Diagram.png",
+    "sha256": "c0ab77511db9a8427e9ace0bd2aca64a7e013a9235979b50f9fccc4183ca6063"
+  },
+  {
+    "model": "XeluXboxSeries",
+    "variant": "Clean",
+    "file": "Xbox Series/XboxSeriesX_Diagram_Simple.png",
+    "sha256": "3e31edaffd4c76f1976643d0d46709be6f0b00cd968f91c4fff82a089fbc0e23"
+  },
+  {
+    "model": "XeluXboxOne",
+    "variant": "Labeled",
+    "file": "Others/Xbox One/XboxOne_Diagram.png",
+    "sha256": "59878f741728e47b6f34ca1c9a39d5a89dadf41a843f68f73ac79bcfad34ba4c"
+  },
+  {
+    "model": "XeluXboxOne",
+    "variant": "Clean",
+    "file": "Others/Xbox One/XboxOne_Diagram_Simple.png",
+    "sha256": "043173cac64de750c6dc57ddcf9f16d0e29fcf050126b38f83bd3be581e2067a"
+  },
+  {
+    "model": "XeluLuna",
+    "variant": "Labeled",
+    "file": "Others/Amazon Luna/Luna_Diagram.png",
+    "sha256": "c5318a2a894b6a8068424f4f89ef1033a65703cd38e91a6c75de3c1ba0760384"
+  },
+  {
+    "model": "XeluLuna",
+    "variant": "Clean",
+    "file": "Others/Amazon Luna/Luna_Diagram_Simple.png",
+    "sha256": "6647c6d0bbc3a3399accf1668bffd42ea073102eb2de8219c4ff2056a9bf3cdb"
+  }
+]
