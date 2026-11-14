@@ -1,6 +1,7 @@
 // A visual template never identifies or restricts the physical input device.
 const CONTROLLER_PACKS=Object.create(null),controllerPackLoads=new Map();
 const DEFAULT_VISUAL_MODEL='G7ProCE';
+const REMOVED_VISUAL_MODELS=new Set(["XeluDualSense", "XeluDualShock4", "XeluXboxSeries", "XeluXboxOne", "XeluLuna"]);
 const MODEL_EXTRA_KEYS=['L4','R4','L5','R5','C1','C2','C3','C4','T1','T2','T3'];
 function visualModelOf(p){return p.visualModel||DEFAULT_VISUAL_MODEL;}
 function controllerDefinition(id){return CONTROLLER_CATALOG.find(m=>m.id===id);}

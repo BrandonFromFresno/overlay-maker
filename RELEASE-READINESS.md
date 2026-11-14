@@ -1,4 +1,8 @@
-# Current candidate: 0.16.0 additional controller templates
+# Current candidate: 0.16.1 Xelu overlay removal
+
+All five Xelu families / ten skins, generated packs, thumbnails and import tooling are removed. Original source files move outside the shipped app. The gallery now has 27 families / 70 skins. GameSir and Controller Layer Pack assets and input behavior are unchanged. Retired project imports have a specific error; previous autosaves have a recoverable raw backup and never silently convert into another model. Old standalone deliveries remain self-contained.
+
+# Historical release: 0.16.0 additional controller templates
 
 Five more visual families and ten skins are available beside existing options, taking the inventory to 32 / 80. Original cover, cap and socket bytes and the supplied pivots/travel are retained. Alpha-defined controls share universal standard input, editing, presets and customer export. Stickless PS1 feedback, preview-only Analog/Profile labels, dark-shell tinting and shell neon support complete compatibility. See [CONTROLLER-LAYER-PACK.md](CONTROLLER-LAYER-PACK.md). Renderer revision is 7; Version 0.16.0 publication uses the exact successful Windows build and its verified archive checksum.
 

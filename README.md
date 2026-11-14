@@ -1,16 +1,16 @@
 # Overlay Studio
 
-Internal Windows production tool for creating, testing and delivering controller customer overlays. Version 0.16.0 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
+Internal Windows production tool for creating, testing and delivering controller customer overlays. Version 0.16.1 is a **Windows prerelease** for producer acceptance testing. Physical-controller and target-app validation limits are documented below.
 
 ## Run the Windows app
 
-Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.16.0/Overlay-Studio-Windows-x64.zip) from the [0.16.0 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.16.0). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
+Download [Overlay-Studio-Windows-x64.zip](https://github.com/BrandonFromFresno/overlay-maker/releases/download/v0.16.1/Overlay-Studio-Windows-x64.zip) from the [0.16.1 prerelease](https://github.com/BrandonFromFresno/overlay-maker/releases/tag/v0.16.1). Extract the entire ZIP, then open **Overlay Studio.exe**. Keep the adjacent files together. The ZIP includes [START-HERE.txt](START-HERE.txt).
 
 The extracted app needs no account, Node.js, internet connection or GameSir server. Connect a browser-standard gamepad, focus the app and press a button. Live preview starts automatically. Connection feedback, the input-device picker and setup help are below the preview.
 
 ## Production workspace and GameSir skin gallery
 
-The app opens with 32 visual families and 80 supplied skins, including the original 13 G7 Pro 8K designs, live previews and safe saved-job resume. Choose **Start without a template** for the neutral overlay. In the editor, **Shell → Use default overlay** restores the current visual model’s default appearance while keeping the job name; Undo restores the previous design. **Project options → Reset to selected skin** remains a separate action. Selected skins persist in projects and are embedded in finished customer overlays. New layouts retain supplied geometry in data packages with high-resolution transparent artwork; existing Studio projects retain their artwork. See [opening-gallery review](REVIEW-START-SCREEN.md). The preview is centered between a compact tool rail and a contextual inspector. Job naming stays in the header; movement and verification controls are above the canvas. Customer delivery and studio testing have distinct areas.
+The app opens with 27 visual families and 70 supplied skins, including the original 13 G7 Pro 8K designs, live previews and safe saved-job resume. Choose **Start without a template** for the neutral overlay. In the editor, **Shell → Use default overlay** restores the current visual model’s default appearance while keeping the job name; Undo restores the previous design. **Project options → Reset to selected skin** remains a separate action. Selected skins persist in projects and are embedded in finished customer overlays. New layouts retain supplied geometry in data packages with high-resolution transparent artwork; existing Studio projects retain their artwork. See [opening-gallery review](REVIEW-START-SCREEN.md). The preview is centered between a compact tool rail and a contextual inspector. Job naming stays in the header; movement and verification controls are above the canvas. Customer delivery and studio testing have distinct areas.
 
 ## Easier navigation and customer setup
 
@@ -48,7 +48,7 @@ Included fonts: Rajdhani, Orbitron, Oxanium, Teko, Bebas Neue, Barlow Condensed,
 
 ## Visual models
 
-Templates now separates the visual model from the connected gamepad. Choose from 32 source-backed visual families and 80 skins; any browser-standard gamepad can drive any layout. Saved jobs retain their model. See [controller models, audit and limitations](CONTROLLER-MODELS.md).
+Templates now separates the visual model from the connected gamepad. Choose from 27 source-backed visual families and 70 skins; any browser-standard gamepad can drive any layout. Saved jobs retain their model. See [controller models, audit and limitations](CONTROLLER-MODELS.md).
 
 ## Produce and deliver customer overlays
 
@@ -91,6 +91,5 @@ Close the desktop app before running bridge tests, which use port 18777.
 
 The Windows workflow runs the same checks before packaging. See [DEVELOPMENT.md](DEVELOPMENT.md) for architecture and source provenance. The project schema and existing application identity remain unchanged to preserve saved configurations.
 
-Five separate Xelu outline models (DualSense, DualShock 4, Xbox Series, Xbox One and Amazon Luna) add labeled and clean starting templates. See [asset library and model limitations](ASSET-LIBRARY.md). Existing GameSir artwork is unchanged.
 
-The [Controller Layer Pack](CONTROLLER-LAYER-PACK.md) adds ten additional PlayStation and Xbox skins using their supplied caps, socket patches and measured input layers. Existing GameSir and Xelu options remain available.
+The [Controller Layer Pack](CONTROLLER-LAYER-PACK.md) adds ten additional PlayStation and Xbox skins using their supplied caps, socket patches and measured input layers. Existing GameSir options remain available.

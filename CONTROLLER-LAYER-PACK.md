@@ -1,6 +1,6 @@
 # Additional layered controller templates
 
-These options are added alongside all existing GameSir and Xelu templates in **Templates → Visual model**. No existing family is replaced.
+These options are added alongside all existing GameSir templates in **Templates → Visual model**. No existing family is replaced.
 
 | Visual model | Included variants | Visible capabilities |
 | --- | --- | --- |
@@ -34,4 +34,4 @@ Run `python tools/import-controller-layer-pack.py` with Pillow and NumPy install
 
 ## Completed verification
 
-All 32 regression suites and 120 JavaScript syntax checks passed. The packaged ASAR verifier confirmed all 31 model data packages, thumbnails and required source files. All 184 files in the supplied ZIP remain byte-for-byte unchanged; SHA-256 `05ea3f30c384f31b24d98db1e2473ade8b80d1aeed72a536b4ff937f849885d3`. Original GameSir model definitions compare exactly to the previous catalog; existing Xelu templates also pass their full workflow checks. Neutral and pressed/customized renderings were visually reviewed. Included in the 0.16.0 release candidate; physical-controller and OBS/Streamlabs acceptance remain manual.
+All 32 regression suites and 120 JavaScript syntax checks passed. The packaged ASAR verifier confirmed all 31 model data packages, thumbnails and required source files. All 184 files in the supplied ZIP remain byte-for-byte unchanged; SHA-256 `05ea3f30c384f31b24d98db1e2473ade8b80d1aeed72a536b4ff937f849885d3`. Original GameSir model definitions compare exactly to the previous catalog; Xelu templates are removed in version 0.16.1. Neutral and pressed/customized renderings were visually reviewed. Included in the 0.16.0 release candidate; physical-controller and OBS/Streamlabs acceptance remain manual.
